@@ -1,10 +1,10 @@
 # Battleship
-simple game
+Simple game
 
-Members
+# Members
 
-Afonso Ferreira
-Bruno Correia
-Diogo Fonseca
-Diogo Recharte
-Rafael Kraemer
+- Afonso Ferreira
+- Bruno Correia
+- Diogo Fonseca
+- Diogo Recharte
+- Rafael Kraemer
