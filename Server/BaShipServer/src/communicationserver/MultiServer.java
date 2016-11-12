@@ -8,6 +8,7 @@ package communicationserver;
 
 import java.net.*;
 import java.io.*;
+import java.sql.*;
 
 /**
  *
@@ -18,6 +19,25 @@ public class MultiServer {
         ServerSocket serverSocket = null;
         boolean listening = true;
  
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch ( ClassNotFoundException e) {
+            System.out.println("Can't found postgres Driver");
+            e.printStackTrace();
+        }
+        
+        String user = "postgres";
+        String password = "postgres";
+        String url = "jdbc:postgresql://localhost/baship";
+        Connection con = null;
+        
+        try {
+            con = DriverManager.getConnection(url, user, password); 
+        } catch (SQLException e) {
+            System.out.println("Can't connect SQL data base");
+            e.printStackTrace();
+        }
+        
         try {
              serverSocket = new ServerSocket(4020);
         } catch (IOException e) {
