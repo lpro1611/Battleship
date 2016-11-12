@@ -38,7 +38,6 @@ public class MultiServerThread extends Thread {
             }
             
             out.print(reply);
-            System.out.println(reply);
             
             out.close();
             in.close();

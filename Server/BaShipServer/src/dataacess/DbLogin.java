@@ -58,7 +58,10 @@ public class DbLogin {
     }
     
     private Pair<Integer, String> getPlayerByName(String name, Connection con) throws SQLException, NotFoundException {
-        ResultSet rs = con.createStatement().executeQuery("SELECT id, pass FROM player WHERE name = '" + name + "'");
+        String selectPlayer = "SELECT id, pass FROM player WHERE name = ?";
+        PreparedStatement prepSt = con.prepareStatement(selectPlayer);
+        prepSt.setString(1, name);
+        ResultSet rs = prepSt.executeQuery();
 
         if (rs.next()) {
             return new Pair<Integer, String>(rs.getInt("id"), rs.getString("pass"));
@@ -68,12 +71,11 @@ public class DbLogin {
     }
     
     private boolean checkIfNameExists(String name, Connection con) throws SQLException {
-        ResultSet rs = con.createStatement().executeQuery("SELECT id FROM player WHERE name = '" + name + "'");
+        String checkPlayer = "SELECT id FROM player WHERE name = ?";
+        PreparedStatement prepSt = con.prepareStatement(checkPlayer);
+        prepSt.setString(1, name);
+        ResultSet rs = prepSt.executeQuery();
 
-        if (rs.next()) {
-            return true;
-        } 
-        
-        return false;
+        return rs.next();
     }
 }
