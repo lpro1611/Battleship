@@ -8,7 +8,6 @@ package communicationserver;
 
 import java.net.*;
 import java.io.*;
-import java.sql.*;
 
 /**
  *
@@ -19,22 +18,6 @@ public class MultiServer {
         ServerSocket serverSocket = null;
         boolean listening = true;
  
-        System.setProperty("java.library.path", "/home/diogo/BaShip/Battleship/Server/BaShipServer/build/classes/");
-        
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-        URL[] urls = ((URLClassLoader)cl).getURLs();
-        
-        for(URL url: urls) {
-            System.out.println(url.getFile());
-        }
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println("não encontrou o driver");
-            e.printStackTrace();
-            return;
-        }
-        
         try {
              serverSocket = new ServerSocket(4020);
         } catch (IOException e) {
