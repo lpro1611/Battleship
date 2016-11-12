@@ -12,24 +12,22 @@ import javafx.util.Pair;
  */
 public class Protocol {
     private final String OPCODE1 = "login";
+    private final String OPCODE2 = "register";
     
-    public Protocol() {}
+    private String reply;
     
-    public void ProtocolDecode(String a) {
+    public String ProtocolDecode(String a) {
         String opcode[] = a.split("#");
         
         switch (opcode[0]) {
             case OPCODE1:   Pair<String,String> login = new Pair<>(opcode[1],opcode[2]);
-                            VerifyLogin(login);
+                            Login log = new Login(login);
+                            reply = log.VerifyLogin();
                             break;
             
             default: System.out.println("treta");             
         }
-    }
-    
-    // redundância
-    public void VerifyLogin(Pair<String,String> login) {
-        Login log = new Login(login);
-        log.VerifyLogin();
+        
+    return reply;    
     }
 }

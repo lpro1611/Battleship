@@ -2,15 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/BusinessLogic/Authenticated.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/Interfaces/LoginGUI.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/Interfaces/RegisterGUI.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/BusinessLogic/LoginBL.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/clientsocket/CommunicationSocket.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/BusinessLogic/RegisterBL.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/BusinessLogic/User.java</file>
-            <file>file:/C:/Users/diogo/OneDrive/Documents/NetBeansProjects/Client_1/src/Interfaces/MainFrame.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

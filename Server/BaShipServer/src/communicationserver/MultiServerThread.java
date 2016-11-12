@@ -26,13 +26,15 @@ public class MultiServerThread extends Thread {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
  
-            String inputLine;
+            String inputLine, reply = null;
     
             Protocol p = new Protocol();
             
             if((inputLine = in.readLine()) != null) {
-                p.ProtocolDecode(inputLine);
+                reply = p.ProtocolDecode(inputLine);
             }
+            
+            out.print(reply);
              
             out.close();
             in.close();
