@@ -6,21 +6,27 @@
 
 package businesslogicserver;
 
-import javafx.util.Pair;
+import dataacess.DbLogin;
+import exceptions.DuplicatedNameException;
+import exceptions.NotFoundException;
+import exceptions.WrongPasswordException;
+import java.sql.*;
+import java.util.Properties;
 
 /**
  *
  * @author Alunos-i221-16
  */
 public class Login {
-    public final Pair<String,String> login;
+    public static int verify(String name, String pass, Properties props) throws SQLException, NotFoundException, WrongPasswordException {
+        DbLogin dblogin = new DbLogin();
         
-    public Login(Pair<String,String> login){
-        this.login = login;
+        return dblogin.verifyPlayer(name, pass, props);
     }
-     
-    public String VerifyLogin(){
-        System.out.println("key: " + login.getKey() + "\nvalue: " + login.getValue() + "\n");
-        return "true"; 
+    
+    public static int register(String email, String name, String pass, Properties props) throws SQLException, DuplicatedNameException, NotFoundException {
+        DbLogin dblogin = new DbLogin();
+        
+        return dblogin.registerPlayer(email, name, pass, props);
     }
 }

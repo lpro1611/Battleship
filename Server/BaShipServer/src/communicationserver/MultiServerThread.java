@@ -34,11 +34,12 @@ public class MultiServerThread extends Thread {
             Protocol p = new Protocol();
             
             if((inputLine = in.readLine()) != null) {
-                reply = p.ProtocolDecode(inputLine);
+                reply = p.ProtocolDecode(inputLine, props);
             }
             
             out.print(reply);
-             
+            System.out.println(reply);
+            
             out.close();
             in.close();
             socket.close();

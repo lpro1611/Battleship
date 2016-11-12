@@ -6,11 +6,14 @@
 
 package communicationserver;
 
-import dataacess.DbUtils;
+import dataacess.DbLogin;
+import exceptions.DuplicatedNameException;
 import java.util.Properties;
 import java.net.*;
 import java.io.*;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,24 +33,6 @@ public class MultiServer {
             Class.forName("org.postgresql.Driver");
         } catch ( ClassNotFoundException e) {
             System.out.println("Can't found postgres Driver");
-            e.printStackTrace();
-        }
-        
-        String user = props.getProperty("dbuser");
-        String password = props.getProperty("dbpass");
-        String url = props.getProperty("dburl");
-        /*Connection con = null;
-        
-        try {
-            con = DriverManager.getConnection(url, user, password); 
-        } catch (SQLException e) {
-            System.out.println("Can't connect SQL data base");
-            e.printStackTrace();
-        }*/
-        DbUtils dbtest = new DbUtils();
-        try {
-            dbtest.registerPlayer("diogo@diogo.com", "diogo", "o_melhor", props);
-        } catch ( SQLException e) {
             e.printStackTrace();
         }
         

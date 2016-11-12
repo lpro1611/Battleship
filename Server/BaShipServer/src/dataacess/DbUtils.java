@@ -25,26 +25,5 @@ public class DbUtils {
         con.close();
     }
     
-    public int registerPlayer(String email, String name, String pass, Properties props) throws SQLException {
-        Connection con = openConnection(props);
-        String insertPlayer = "INSERT INTO player (email, name, pass) values (?, ?, ?)";
-        PreparedStatement prepSt = con.prepareStatement(insertPlayer);
-        prepSt.setString(1, email);
-        prepSt.setString(2, name);
-        prepSt.setString(3, pass);
-        
-        try {
-            ResultSet rs = con.createStatement().executeQuery("SELECT id FROM player WHERE name = '" + name + "'");
-
-            if (rs.next()) {
-                throw new SQLException("duplicated");
-            }
-
-            prepSt.executeUpdate();
-        } finally {
-            closeConnection(con);
-        }
-        
-        return 0;
-    }
+    
 }
