@@ -22,7 +22,7 @@ public class MultiServer {
              serverSocket = new ServerSocket(4020);
         } catch (IOException e) {
              System.err.println("Could not listen on port: 4020.");
-            System.exit(-1);
+             System.exit(-1);
         }
  
         while (listening) {

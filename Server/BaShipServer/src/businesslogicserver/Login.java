@@ -19,8 +19,8 @@ public class Login {
         this.login = login;
     }
      
-    public int VerifyLogin(){
+    public String VerifyLogin(){
         System.out.println("key: " + login.getKey() + "\nvalue: " + login.getValue() + "\n");
-        return 1; 
+        return "true"; 
     }
 }
