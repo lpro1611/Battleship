@@ -12,17 +12,17 @@ Simple game
 # Como Criar
 
 * Instalar o git 
-** recomendado para linux: git-gui, gitk, gitg
-** recomendado para windows: git-bash
+ * recomendado para linux: git-gui, gitk, gitg
+ * recomendado para windows: git-bash
 * Numa bash 
-** Na pasta para colocar o projeto fazer: git clone https://github.com/lpro1611/Battleship.github
-** Nota: É possível que ele se queixa de falta de chaves SSH, nesse caso seguir as instruções no site da github
+ * Na pasta para colocar o projeto fazer: git clone https://github.com/lpro1611/Battleship.github
+ * Nota: É possível que ele se queixa de falta de chaves SSH, nesse caso seguir as instruções no site da github
 
 # Como Usar
 
 * O git tem o conceito de ramos
-** O ramo master é o principal, e logo não se trabalha diretamente lá
-** Para trabalhar numa nova cena cria-se um ramo chamado nome-cena (ex: dinis-db)
+ * O ramo master é o principal, e logo não se trabalha diretamente lá
+ * Para trabalhar numa nova cena cria-se um ramo chamado nome-cena (ex: dinis-db)
 * Criar ramo: git checkout -b nome-cena
 * Mudar de ramo: git checkout outronome-outracena
 * Buscar alterações do servidor: git pull
