@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interfaces;
+package interfaces;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,13 +13,16 @@ import java.awt.*;
  * @author diogo
  */
 public class MainFrame extends JFrame{
-    static MainFrame frame1;
+    static MainFrame mainFrame;
     static final String FIRST = "First panel";
     static final String SECOND = "Second panel";
     static JPanel mainPanel;
     
     public MainFrame(){
         
+        initComponents();
+    }
+    private void initComponents(){
         this.setSize(1028, 720);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,6 +38,6 @@ public class MainFrame extends JFrame{
     }
     
     public static void main(String[] args){
-        frame1 = new MainFrame();
+        mainFrame = new MainFrame();
     }
 }
