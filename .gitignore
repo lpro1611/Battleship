@@ -1,4 +1,4 @@
-Server/BaShipServer/build/*
-Client/build/*
-Server/ClientTest/build/*
-
+*/build/*
+*/dist/*
+*/nbproject/private/*
+*.directory
