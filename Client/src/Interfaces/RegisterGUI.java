@@ -3,8 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Interfaces;
-import BusinessLogic.*;
+package interfaces;
+import businesslogicclient.RegisterBL;
 import java.awt.*;
 import javax.swing.*;
 /**
@@ -13,12 +13,6 @@ import javax.swing.*;
  */
 public class RegisterGUI extends javax.swing.JPanel {
 
-    private String email="";
-    private String username = "";
-    private String password = "";
-    private String confirmPassword="";
-    private boolean termsAccepted=false;
-    RegisterBL registerBL;
     /**
      * Creates new form NewJPanel1
      */
@@ -240,21 +234,22 @@ public class RegisterGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_registerButtonActionPerformed
 
 private void registerAction(){
-    email = emailTextField.getText();
-    username = usernameTextField.getText();
-    password = String.valueOf(passwordField.getPassword());
-    confirmPassword = String.valueOf(confirmPasswordField.getPassword());
-    termsAccepted=termsCheckbox.isSelected();
     
+    String email = emailTextField.getText();
+    String username = usernameTextField.getText();
+    char[] password = passwordField.getPassword();
+    char[] confirmPassword = confirmPasswordField.getPassword();
+    boolean termsAccepted = termsCheckbox.isSelected();
+    RegisterBL registerBL;
     
     
 
     registerBL = new RegisterBL(email, username, password, confirmPassword, termsAccepted);
     String status=registerBL.status();
-    if(status.equals("Ok"))
+    if(status.equals("ok"))
         JOptionPane.showMessageDialog(RegisterGUI.this, "Registered", "Register", JOptionPane.INFORMATION_MESSAGE);
     else
-        JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Failed: " + status, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(RegisterGUI.this, status, "Registration Failed", JOptionPane.ERROR_MESSAGE);
     //registerButton.setSelected(false);
 }
 

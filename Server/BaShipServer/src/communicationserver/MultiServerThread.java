@@ -13,12 +13,15 @@ import java.io.*;
  *
  * @author Alunos-i221-16
  */
+import java.util.Properties;
 public class MultiServerThread extends Thread {
     private Socket socket = null;
+    private final Properties props;
  
-    public MultiServerThread(Socket socket) {
+    public MultiServerThread(Socket socket, Properties props) {
         super("MultiServerThread");
         this.socket = socket;
+        this.props = props;
     }
  
     public void run() {
@@ -31,11 +34,11 @@ public class MultiServerThread extends Thread {
             Protocol p = new Protocol();
             
             if((inputLine = in.readLine()) != null) {
-                reply = p.ProtocolDecode(inputLine);
+                reply = p.ProtocolDecode(inputLine, props);
             }
             
             out.print(reply);
-             
+            
             out.close();
             in.close();
             socket.close();

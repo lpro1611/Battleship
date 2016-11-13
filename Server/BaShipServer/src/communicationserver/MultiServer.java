@@ -6,8 +6,14 @@
 
 package communicationserver;
 
+import dataacess.DbLogin;
+import exceptions.DuplicatedNameException;
+import java.util.Properties;
 import java.net.*;
 import java.io.*;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +23,19 @@ public class MultiServer {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         boolean listening = true;
- 
+        Properties props = new Properties();
+        
+        props.setProperty("dburl", "jdbc:postgresql://localhost/baship");
+        props.setProperty("dbpass", "postgres");
+        props.setProperty("dbuser", "postgres");
+        
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch ( ClassNotFoundException e) {
+            System.out.println("Can't found postgres Driver");
+            e.printStackTrace();
+        }
+        
         try {
              serverSocket = new ServerSocket(4020);
         } catch (IOException e) {
@@ -26,9 +44,10 @@ public class MultiServer {
         }
  
         while (listening) {
-            new MultiServerThread(serverSocket.accept()).start();
+            new MultiServerThread(serverSocket.accept(), props).start();
         }
  
         serverSocket.close();
+        
     }
 }
