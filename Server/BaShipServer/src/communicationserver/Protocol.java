@@ -5,6 +5,11 @@
  */
 package communicationserver;
 import businesslogicserver.*;
+import exceptions.DuplicatedNameException;
+import exceptions.NotFoundException;
+import exceptions.WrongPasswordException;
+import java.sql.SQLException;
+import java.util.Properties;
 import javafx.util.Pair;
 /**
  *
@@ -12,24 +17,44 @@ import javafx.util.Pair;
  */
 public class Protocol {
     private final String OPCODE1 = "login";
+    private final String OPCODE2 = "register";
     
-    public Protocol() {}
+    private String reply;
     
-    public void ProtocolDecode(String a) {
+    public String ProtocolDecode(String a, Properties props) {
         String opcode[] = a.split("#");
         
         switch (opcode[0]) {
-            case OPCODE1:   Pair<String,String> login = new Pair<>(opcode[1],opcode[2]);
-                            VerifyLogin(login);
-                            break;
-            
-            default: System.out.println("treta");             
+            case OPCODE1:   
+                reply = OPCODE1 + "#";
+                try {
+                    int id = Login.verify(opcode[1], opcode[2], props);
+                    reply += "ok#" + id;
+                } catch (SQLException e) {
+                    reply += "error";
+                } catch (WrongPasswordException e) {
+                    reply += "wrongpass";
+                } catch (NotFoundException e) {
+                    reply += "notfound";
+                }
+                break;
+                            
+            case OPCODE2: 
+                reply = OPCODE2 + "#";
+                try {
+                    int id = Login.register(opcode[1], opcode[2], opcode[3], props);
+                    reply += "ok#" + id;
+                } catch (SQLException | NotFoundException e) {
+                    reply += "error";
+                } catch (DuplicatedNameException e) {
+                    reply += "duplicated";
+                }
+                break;
+                
+            default: 
+                reply = "error";             
         }
-    }
-    
-    // redundância
-    public void VerifyLogin(Pair<String,String> login) {
-        Login log = new Login(login);
-        log.VerifyLogin();
+        
+    return reply;    
     }
 }
