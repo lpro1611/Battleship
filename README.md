@@ -23,6 +23,7 @@ Simple game
 * O git tem o conceito de ramos
  * O ramo master é o principal, e logo não se trabalha diretamente lá
  * Para trabalhar numa nova cena cria-se um ramo chamado nome-cena (ex: dinis-db)
+* Atualizar informação local com a do servidor: git fetch
 * Criar ramo: git checkout -b nome-cena
 * Mudar de ramo: git checkout outronome-outracena
 * Buscar alterações do servidor: git pull
@@ -34,8 +35,8 @@ Simple game
 
 # Notas
 
-Pessoal que usa windows, as minhas isntruções não são completas, 
-portanto as instruções devem ser completadas por quem teve resolver 
-problemas, de forma a ajudar os outros.
+- Neste momento, como não temos acesso à base de dados do professor só dá para testar na minha máquina, pois tenho uma base de dados configurada localmente
 
-Manual de git não faz mal a ninguém, eu faço parte do grupo ;)
+- Pessoal que usa windows, as minhas isntruções não são completas, portanto as instruções devem ser completadas por quem teve resolver problemas, de forma a ajudar os outros.
+
+- Manual de git não faz mal a ninguém, eu faço parte do grupo ;)

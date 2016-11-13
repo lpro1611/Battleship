@@ -6,14 +6,9 @@
 
 package communicationserver;
 
-import dataacess.DbLogin;
-import exceptions.DuplicatedNameException;
 import java.util.Properties;
 import java.net.*;
 import java.io.*;
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -25,9 +20,9 @@ public class MultiServer {
         boolean listening = true;
         Properties props = new Properties();
         
-        props.setProperty("dburl", "jdbc:postgresql://localhost/baship");
-        props.setProperty("dbpass", "postgres");
-        props.setProperty("dbuser", "postgres");
+        props.setProperty("dburl", "jdbc:postgresql://dbm.fe.up.pt/lpro1611");
+        props.setProperty("dbpass", "G!7367hxf");
+        props.setProperty("dbuser", "lpro1611");
         
         try {
             Class.forName("org.postgresql.Driver");
@@ -48,6 +43,5 @@ public class MultiServer {
         }
  
         serverSocket.close();
-        
     }
 }
