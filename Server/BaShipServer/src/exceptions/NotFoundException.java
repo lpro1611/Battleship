@@ -6,8 +6,11 @@
 package exceptions;
 
 /**
- *
+ * Exception triggered when a visitor try to log in with a name 
+ * thant don't exist in Data Base
+ * 
  * @author diogo
+ * @version 1.0
  */
 public class NotFoundException extends Exception {
     
