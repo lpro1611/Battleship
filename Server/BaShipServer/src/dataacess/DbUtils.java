@@ -12,7 +12,7 @@ import java.util.Properties;
  *
  * @author diogo
  */
-public class DbUtils {
+class DbUtils {
     public static Connection openConnection(Properties props) throws SQLException {
         String user = props.getProperty("dbuser");
         String password = props.getProperty("dbpass");
