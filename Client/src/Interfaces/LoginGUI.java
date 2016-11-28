@@ -5,7 +5,7 @@
  */
 package interfaces;
 
-import businesslogicclient.LoginBL;
+import businesslogicclient.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -13,11 +13,8 @@ import javax.swing.*;
  *
  * @author diogo
  */
-public class LoginGUI extends javax.swing.JPanel {
+public class LoginGUI extends JPanel {
 
-    private String username = "";
-    private char[] password;
-    LoginBL loginBL;
     
     /**
      * Creates new form NewJPanel
@@ -185,12 +182,13 @@ public class LoginGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_loginButtonActionPerformed
 
 private void loginAction(){
+    String username;
+    char[] password;
     username = usernameTextField.getText();
     password = passwordField.getPassword();
     //System.out.println("username: " + username + "\npassword: " + password);
 
-    loginBL = new LoginBL(username, password);
-    if(loginBL.isValid())
+    if(Visitor.login(username, password))
         JOptionPane.showMessageDialog(LoginGUI.this, "Authenticated", "Login", JOptionPane.INFORMATION_MESSAGE);
     else
         JOptionPane.showMessageDialog(LoginGUI.this, "Authentication Failed", "Error", JOptionPane.ERROR_MESSAGE);

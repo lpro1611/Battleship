@@ -6,8 +6,11 @@
 package exceptions;
 
 /**
- *
+ * Exception triggered when a visitor tries to create an account with a name
+ * that already exist.
+ * 
  * @author diogo
+ * @version 1.0
  */
 public class DuplicatedNameException extends Exception {
     

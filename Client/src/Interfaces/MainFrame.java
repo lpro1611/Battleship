@@ -13,7 +13,6 @@ import java.awt.*;
  * @author diogo
  */
 public class MainFrame extends JFrame{
-    static MainFrame mainFrame;
     static final String FIRST = "First panel";
     static final String SECOND = "Second panel";
     static JPanel mainPanel;
@@ -38,6 +37,6 @@ public class MainFrame extends JFrame{
     }
     
     public static void main(String[] args){
-        mainFrame = new MainFrame();
+        MainFrame mainFrame = new MainFrame();
     }
 }

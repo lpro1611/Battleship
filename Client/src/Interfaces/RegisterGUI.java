@@ -4,14 +4,14 @@
  * and open the template in the editor.
  */
 package interfaces;
-import businesslogicclient.RegisterBL;
+import businesslogicclient.*;
 import java.awt.*;
 import javax.swing.*;
 /**
  *
  * @author diogo
  */
-public class RegisterGUI extends javax.swing.JPanel {
+public class RegisterGUI extends JPanel {
 
     /**
      * Creates new form NewJPanel1
@@ -240,12 +240,8 @@ private void registerAction(){
     char[] password = passwordField.getPassword();
     char[] confirmPassword = confirmPasswordField.getPassword();
     boolean termsAccepted = termsCheckbox.isSelected();
-    RegisterBL registerBL;
     
-    
-
-    registerBL = new RegisterBL(email, username, password, confirmPassword, termsAccepted);
-    String status=registerBL.status();
+    String status=Visitor.register(email, username, password, confirmPassword, termsAccepted);
     if(status.equals("ok"))
         JOptionPane.showMessageDialog(RegisterGUI.this, "Registered", "Register", JOptionPane.INFORMATION_MESSAGE);
     else

@@ -14,10 +14,32 @@ import javafx.util.Pair;
 
 
 /**
- *
- * @author diogo
+ * Class that acesses the DB to get, set and update data
+ * for login and register actions.
+ * 
+ * @author Diogo Dinis
+ * @version 1.0
+ * 
  */
 public class DbLogin {
+    /**
+     * Creates a new player to play this game.
+     * <p>
+     * The password should arrive encrypted, because this method 
+     * doesn't do any kind of encryption.
+     * <p>
+     * When this method has some type of problems it throws an 
+     * exception.
+     * 
+     * @param email E-mail address of the new player.
+     * @param name  Name of the new player.
+     * @param pass  Password of the new player.
+     * @param props Properties for DB connection.
+     * @return      DB identifier for the player.
+     * @throws SQLException Problems interacting with DB.
+     * @throws DuplicatedNameException  The name already exists in DB.
+     * @throws NotFoundException   Cannot find the ID of the player in DB.
+     */
     public int registerPlayer(String email, String name, String pass, Properties props) throws SQLException, DuplicatedNameException, NotFoundException {
         Connection con = DbUtils.openConnection(props);
         String insertPlayer = "INSERT INTO player (email, name, pass) values (?, ?, ?)";
@@ -40,6 +62,19 @@ public class DbLogin {
         }
     }
     
+    /**
+     * Verify if this player exists in the DB.
+     * <p>
+     * When this method has some type of problems it throws an 
+     * exception.
+     * @param name  Name of the player.
+     * @param pass  Passsword of the player.
+     * @param props Properties for the DB connection.
+     * @return      DB identifier of the player.
+     * @throws SQLException Problems interacting with DB
+     * @throws NotFoundException Cannot find the ID of the player in DB.
+     * @throws WrongPasswordException The password used was incorrect.
+     */
     public int verifyPlayer(String name, String pass, Properties props) throws SQLException, NotFoundException, WrongPasswordException {
         Connection con = DbUtils.openConnection(props);
         

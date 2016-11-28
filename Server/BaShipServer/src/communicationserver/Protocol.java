@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 import javafx.util.Pair;
 /**
- *
+ *Class that implements the protocol between the server and the cliente on the server side.
  * @author Alunos-i221-16
  */
 public class Protocol {
@@ -20,7 +20,17 @@ public class Protocol {
     private final String OPCODE2 = "register";
     
     private String reply;
-    
+    /**
+     *Receives the messages from the client ,and interprets it acording to the protocol.
+     * <p>
+     * This method checks the contents of the received message, and using a series of
+     * opcodes it determines the correct bussiness logic functionality to call. 
+     * It then awaits the response of the bussiness logig, and send it to the client.
+     * <p>
+     * @param a String that holds the recieved message
+     * @param props Properties of the communication
+     * @return  a String holding the reply to the client
+     */
     public String ProtocolDecode(String a, Properties props) {
         String opcode[] = a.split("#");
         

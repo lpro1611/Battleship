@@ -6,9 +6,13 @@
 package exceptions;
 
 /**
- *
- * @author diogo
+ * Exception triggered when a visitor tries to login 
+ * with a wrong password.
+ * 
+ * @author Diogo Dinis
+ * @version 1.0
  */
+
 public class WrongPasswordException extends Exception {
     
 }
