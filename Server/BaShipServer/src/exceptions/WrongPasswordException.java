@@ -6,8 +6,8 @@
 package exceptions;
 
 /**
- * Exception triggered when a visitor try to log in 
- * with a wrong password
+ * Exception triggered when a visitor tries to login 
+ * with a wrong password.
  * 
  * @author Diogo Dinis
  * @version 1.0

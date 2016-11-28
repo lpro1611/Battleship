@@ -6,9 +6,9 @@
 
 /**
  * Provides the classes necessary to implement the data access of 
- * Server for the BaShip Project.
+ * the Server for the BaShip Project.
  * <p>
- * Classes of this package can access to postgreSQL data base 
- * used on this project
+ * Classes of this package can access the postgreSQL data base 
+ * used on this project.
  */
 package dataacess;

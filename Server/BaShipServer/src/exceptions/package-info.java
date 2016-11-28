@@ -6,6 +6,6 @@
 
 /**
  * Provides the classes necessary to implement the exceptions used on
- * Server of the BaShip Project.
+ * the Server of the BaShip Project.
  */
 package exceptions;

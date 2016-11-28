@@ -14,8 +14,8 @@ import javafx.util.Pair;
 
 
 /**
- * Class that do the DB access to get, set and update data in DB
- * for login and register actions
+ * Class that acesses the DB to get, set and update data
+ * for login and register actions.
  * 
  * @author Diogo Dinis
  * @version 1.0
@@ -23,22 +23,22 @@ import javafx.util.Pair;
  */
 public class DbLogin {
     /**
-     * Creates a new player for play this game.
+     * Creates a new player to play this game.
      * <p>
      * The password should arrive encrypted, because this method 
-     * didn't do any king of encryption.
+     * doesn't do any kind of encryption.
      * <p>
-     * This method returns always with success, when it have some
-     * type of problems it throw an exception to caller method.
+     * When this method has some type of problems it throws an 
+     * exception.
      * 
-     * @param email an e-mail address of new player
-     * @param name  the name of the new player
-     * @param pass  the password for new player log in
-     * @param props properties for DB connection
-     * @return      the DB identifier for the player
-     * @throws SQLException Problems interacting with DB
-     * @throws DuplicatedNameException  The name already exist in DB
-     * @throws NotFoundException   Cannot found the ID of the player in DB
+     * @param email E-mail address of the new player.
+     * @param name  Name of the new player.
+     * @param pass  Password of the new player.
+     * @param props Properties for DB connection.
+     * @return      DB identifier for the player.
+     * @throws SQLException Problems interacting with DB.
+     * @throws DuplicatedNameException  The name already exists in DB.
+     * @throws NotFoundException   Cannot find the ID of the player in DB.
      */
     public int registerPlayer(String email, String name, String pass, Properties props) throws SQLException, DuplicatedNameException, NotFoundException {
         Connection con = DbUtils.openConnection(props);
@@ -65,16 +65,15 @@ public class DbLogin {
     /**
      * Verify if this player exists in the DB.
      * <p>
-     * This method returns always with success, when it have some
-     * type of problems it throw an exception to caller method.
-     * 
-     * @param name  the name of the player
-     * @param pass  the passsword of the player
-     * @param props properties for the DB connection
-     * @return      the DB identifier of the player
+     * When this method has some type of problems it throws an 
+     * exception.
+     * @param name  Name of the player.
+     * @param pass  Passsword of the player.
+     * @param props Properties for the DB connection.
+     * @return      DB identifier of the player.
      * @throws SQLException Problems interacting with DB
-     * @throws NotFoundException Cannot found the ID of the player in DB 
-     * @throws WrongPasswordException The password used was incorrect
+     * @throws NotFoundException Cannot find the ID of the player in DB.
+     * @throws WrongPasswordException The password used was incorrect.
      */
     public int verifyPlayer(String name, String pass, Properties props) throws SQLException, NotFoundException, WrongPasswordException {
         Connection con = DbUtils.openConnection(props);

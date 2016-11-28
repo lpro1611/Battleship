@@ -6,6 +6,6 @@
 
 /**
  * Provides the classes necessary to implement the communication of 
- * Server for the BaShip Project.
+ * the Server for the BaShip Project.
  */
 package communicationserver;

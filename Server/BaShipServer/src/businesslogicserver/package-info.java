@@ -6,6 +6,6 @@
 
 /**
  * Provides the classes necessary to implement the bussiness logic of 
- * Server for the BaShip Project.
+ * the Server for the BaShip Project.
  */
 package businesslogicserver;

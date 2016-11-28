@@ -6,7 +6,7 @@
 package exceptions;
 
 /**
- * Exception triggered when a visitor try to create an account with a name
+ * Exception triggered when a visitor tries to create an account with a name
  * that already exist.
  * 
  * @author diogo

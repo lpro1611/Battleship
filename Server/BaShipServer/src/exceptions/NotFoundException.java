@@ -6,8 +6,8 @@
 package exceptions;
 
 /**
- * Exception triggered when a visitor try to log in with a name 
- * thant don't exist in Data Base
+ * Exception triggered when a visitor tries to login with a name 
+ * that doesn't exist in the Data Base.
  * 
  * @author diogo
  * @version 1.0
