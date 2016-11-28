@@ -11,10 +11,21 @@ import java.net.*;
 import java.io.*;
 
 /**
- *
+ *This class deal with generating all the Sockets
+ *to communicate with multiple clients simultaneously.
  * @author Alunos-i221-16
  */
 public class MultiServer {
+    /**
+     * Develops mutltiple Threads to, eacho to communicate with a client
+     * <p>
+     * This main method listens to the port of the server. 
+     * After it detects a client it generates a thread to comunicate with the client.
+     * <p>
+     * @param args 
+     * @throws IOException exception thrown in case of erros handly the port
+     */
+   
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         boolean listening = true;

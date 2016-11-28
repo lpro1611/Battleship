@@ -12,13 +12,25 @@ import java.util.Properties;
 
 
 /**
- *
+ *Class that implements the protocol between the server and the clinet on the client side.
+ * and client on the client side.
  * @author diogo
  */
 public class Protocol {
     private static final String OPCODE1 = "login";
     private static final String OPCODE2 = "register";
-    
+    /**
+     * Prepares and sends the message to the server, to validate the login data.
+     * <p>
+     * This method receives a username and a pasword, and 
+     * combines them with the login opcode to generate a login message for the
+     * server. Aferward it sends the message, awaits the response from the server,
+     * and passes it to be 
+     * interpreted.
+     * <p>
+     * @param username String that holds the received username
+     * @param password String that holds the received password
+     */
     
     public static void validateLogin(String username, String password){
         SocketClient cSocket = new SocketClient();
@@ -47,6 +59,19 @@ public class Protocol {
         
     }
     
+   /**
+    * Prepares and sends the message to the server, to validate the register data.
+    * <p>
+    * This method receives a username, a pasword, an email and 
+    * combines them with the register opcode to generate a register message for the
+    * server. All of these data are Strings. 
+    * Aferward it sends the message, and awaits the response from the server,
+    * and passes it to be interpreted.
+    * <p>
+    * @param email String that holds the email to register
+    * @param username  String that holds the username to register
+    * @param password   String that holds the password to register
+    */
     public static void validateRegister(String email, String username, String password){
         SocketClient cSocket = new SocketClient();
         String inputLine = "";
@@ -70,6 +95,16 @@ public class Protocol {
         }
         
     }
+    /**
+     * Interprets the messages received from  the server
+     * <p>
+     * This method receives the message from the server and the valid opcode.
+     * It then checks the validity of the reply from the server, with the received opcode.
+     * Afterwards it saves the important data to be used by the business logic.
+     * <p>
+     * @param input String tha holds the message received
+     * @param operation  String that hold the opcode to validate the message
+     */
      private static void decodeReply(String input, String operation) {
         String opcode[] = input.split("#");
         ReplyFromServer.setMessage(opcode[1]);
