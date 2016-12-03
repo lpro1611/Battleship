@@ -1,22 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package interfaces;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- *
- * @author diogo
+ * Container for every different interface in this project.
+ * @author Diogo Recharte
  */
 public class MainFrame extends JFrame{
     static final String FIRST = "First panel";
     static final String SECOND = "Second panel";
     static JPanel mainPanel;
-    
+    /**
+     * Constructor for the class.
+     * <p>
+     * Initialises all the components needed to manage the 
+     * different interfaces.
+     */
     public MainFrame(){
         
         initComponents();
@@ -35,7 +35,11 @@ public class MainFrame extends JFrame{
         
         this.setVisible(true);
     }
-    
+    /**
+     * Creates the frame which will be the basis for all the interfaces.
+     * 
+     * @param args commands line arguments (not used)
+     */
     public static void main(String[] args){
         MainFrame mainFrame = new MainFrame();
     }

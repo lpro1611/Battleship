@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package communicationserver;
 
 import java.util.Properties;
@@ -11,21 +5,27 @@ import java.net.*;
 import java.io.*;
 
 /**
- *This class deal with generating all the Sockets
- *to communicate with multiple clients simultaneously.
+ * Deals with generating all the sockets to communicate with 
+ * multiple clients simultaneously.
+ * 
  * @author Alunos-i221-16
  */
 public class MultiServer {
+    
     /**
-     * Develops mutltiple Threads to, eacho to communicate with a client
+     * Class Constructor
+     */
+    public MultiServer(){}
+    
+    /**
+     * Develops multiple threads, each one communicates with a client.
      * <p>
      * This main method listens to the port of the server. 
-     * After it detects a client it generates a thread to comunicate with the client.
-     * <p>
-     * @param args 
-     * @throws IOException exception thrown in case of erros handly the port
+     * When it detects a client it generates a thread to communicate with him.
+     * 
+     * @param  args         command line arguments (not used)
+     * @throws IOException  if failed to handle socket
      */
-   
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         boolean listening = true;
@@ -39,7 +39,6 @@ public class MultiServer {
             Class.forName("org.postgresql.Driver");
         } catch ( ClassNotFoundException e) {
             System.out.println("Can't found postgres Driver");
-            e.printStackTrace();
         }
         
         try {

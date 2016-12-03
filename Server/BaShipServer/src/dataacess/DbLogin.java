@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dataacess;
 
 import exceptions.DuplicatedNameException;
@@ -14,31 +9,33 @@ import javafx.util.Pair;
 
 
 /**
- * Class that acesses the DB to get, set and update data
- * for login and register actions.
+ * Accesses the DB to get, set and update data for login and
+ * register actions.
  * 
  * @author Diogo Dinis
- * @version 1.0
  * 
  */
 public class DbLogin {
+    
     /**
-     * Creates a new player to play this game.
+     * Class Constructor
+     */
+    public DbLogin(){}
+    
+    /**
+     * Creates a new user.
      * <p>
      * The password should arrive encrypted, because this method 
      * doesn't do any kind of encryption.
-     * <p>
-     * When this method has some type of problems it throws an 
-     * exception.
      * 
-     * @param email E-mail address of the new player.
-     * @param name  Name of the new player.
-     * @param pass  Password of the new player.
-     * @param props Properties for DB connection.
-     * @return      DB identifier for the player.
-     * @throws SQLException Problems interacting with DB.
-     * @throws DuplicatedNameException  The name already exists in DB.
-     * @throws NotFoundException   Cannot find the ID of the player in DB.
+     * @param email                     e-mail address of the new user
+     * @param name                      name of the new user
+     * @param pass                      password of the new user
+     * @param props                     DB's connection properties
+     * @return                          user's DB identifier
+     * @throws SQLException             problems interacting with the DB
+     * @throws DuplicatedNameException  the name already exists in the DB
+     * @throws NotFoundException        cannot find user's ID in the DB
      */
     public int registerPlayer(String email, String name, String pass, Properties props) throws SQLException, DuplicatedNameException, NotFoundException {
         Connection con = DbUtils.openConnection(props);
@@ -63,17 +60,15 @@ public class DbLogin {
     }
     
     /**
-     * Verify if this player exists in the DB.
-     * <p>
-     * When this method has some type of problems it throws an 
-     * exception.
-     * @param name  Name of the player.
-     * @param pass  Passsword of the player.
-     * @param props Properties for the DB connection.
-     * @return      DB identifier of the player.
-     * @throws SQLException Problems interacting with DB
-     * @throws NotFoundException Cannot find the ID of the player in DB.
-     * @throws WrongPasswordException The password used was incorrect.
+     * Verifies if this user exists in the DB.
+     * 
+     * @param name                      name of the user
+     * @param pass                      password of the user
+     * @param props                     DB's connection properties
+     * @return                          user's DB identifier
+     * @throws SQLException             problems interacting with the DB
+     * @throws NotFoundException        cannot find user's ID in the DB
+     * @throws WrongPasswordException   password used was incorrect
      */
     public int verifyPlayer(String name, String pass, Properties props) throws SQLException, NotFoundException, WrongPasswordException {
         Connection con = DbUtils.openConnection(props);
