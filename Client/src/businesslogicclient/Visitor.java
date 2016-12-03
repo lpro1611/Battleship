@@ -6,15 +6,28 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- *
- * @author diogo recharte
+ * Represents a user that isn't yet authenticated or registered.
+ * @author Diogo Recharte
  */
 public class Visitor {
+    
     /**
+     * Class Constructor
+     */
+    public Visitor(){}
+    
+    /**
+     * Logs in the visitor.
+     * <p>
+     * Calls the communication protocol to access the server and check 
+     * if the parameters entered are valid.
+     * <p>
+     * If successful the user will be given the authenticated user privileges. 
      * 
-     * @param username
-     * @param password
-     * @return 
+     * @param username  the user's name
+     * @param password  the user's password
+     * @return          <code>true</code> if successful; 
+     *                  <code>false</code> otherwise.
      */
     public static boolean login(String username, char[] password){
         Protocol.validateLogin(username, encryptPassword(String.valueOf(password)));
@@ -26,13 +39,21 @@ public class Visitor {
         else return false;
     }
     /**
+     * Registers a new user
+     * <p>
+     * Verifies that all parameters are correctly filled. Calls the
+     * communication protocol in order to access the server and 
+     * register the user in the data base.
+     * <p>
+     * If successful the user will be given the authenticated user privileges. 
      * 
-     * @param email
-     * @param username
-     * @param pass
-     * @param confirmPass
-     * @param termsAccepted
-     * @return 
+     * @param email             e-mail address of the user
+     * @param username          name of the user
+     * @param pass              password for the user's login
+     * @param confirmPass       password for the user's login
+     * @param termsAccepted     terms accepted by the user
+     * @return                  message representative of success
+     *                          or the errors that occurred
      */
     public static String register(String email, String username, char[] pass, char[] confirmPass, boolean termsAccepted){
         String password = encryptPassword(String.valueOf(pass));
@@ -59,11 +80,7 @@ public class Visitor {
         
         else return ReplyFromServer.getMessage();
     }
-    /**
-     * 
-     * @param password
-     * @return 
-     */
+
     private static String encryptPassword(String password){
         byte[] bytesOfMessage = null;
         try {
@@ -84,11 +101,7 @@ public class Visitor {
             pass=pass.concat(String.format("%02X", b));
         return pass;
     }
-    /**
-     * 
-     * @param email
-     * @return 
-     */
+
     private static boolean isValidEmailAddress(String email) {
            String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
            java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
