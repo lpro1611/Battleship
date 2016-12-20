@@ -34,8 +34,8 @@ public class GameState {
         this.criticalHits1 = 0;
         this.criticalHits2 = 0;
 
-        for (i = 0; i < 100; i++) {
-            for (j = 0; j < 100; j++) {
+        for (i = 0; i < 10; i++) {
+            for (j = 0; j < 10; j++) {
                 this.Board1[i][j] = 0;
                 this.Board2[i][j] = 0;
             }
@@ -57,6 +57,13 @@ public class GameState {
     public void placeShip(String player, int id, int startx, int starty, int endx, int endy) {
         //no caso de string id é String e eu depois passo a numero
         int placey = starty, placex = startx;
+        int size;
+        
+        if (Player1.equals(player)) {
+            size = (Player1Ships.get(id)).size;
+        } else {
+            size = (Player2Ships.get(id)).size;
+        }
         
         if (endx < startx) { //certifica ordem crescente 
             placex = endx;
@@ -66,17 +73,13 @@ public class GameState {
             placey = endy;
         }
              
-        if ((Player1).equals(player)) {
-            for (int i = 0; i < ((Player1Ships).get(id)).size; i++) {
-                if (starty == endy) {
-                    Board1[placex + i][placey] = id;
-                }
+        for (int i = 0; i < size; i++) {
+            if (starty == endy) {
+                Board1[placex + i][placey] = id;
             }
-         } else {
-            for (int i = 0; i < ((Player2Ships).get(id)).size; i++) {
-                if (starty == endy) {
-                    Board2[placex + i][placey] = id;
-                }
+
+            if (startx == endx) {
+                Board1[placex][placey + i] = id;
             }
         }
     }
