@@ -13,17 +13,17 @@ import java.lang.*;
  *
  */
 public class GameState{
-       static  int gameId;
-       static  String Player1;
-       static  String Player2;
-       static  int[][] Board1;
-       static  int[][] Board2;
-       static  List<Ship> Player1Ships; 
-       static  List<Ship> Player2Ships;
-       static  boolean ready1;
-       static  boolean ready2;
-       static  int criticalHits1;
-       static  int criticalHits2;
+         int gameId;
+         String Player1;
+         String Player2;
+         int[][] Board1;
+         int[][] Board2;
+         List<Ship> Player1Ships; 
+         List<Ship> Player2Ships;
+         boolean ready1;
+         boolean ready2;
+         int criticalHits1;
+         int criticalHits2;
         
        public GameState( int gameId, String Player1, String Player2){
            int i, j;
@@ -55,7 +55,7 @@ public class GameState{
            this.Player2Ships.add(new Ship(5));   
        }
        
-     public static void placeShip(String player, int id,int startx, int starty, int endx, int endy){
+     public void placeShip(String player, int id,int startx, int starty, int endx, int endy){
          //no caso de string id é String e eu depois passo a numero
          int i, placey=starty, placex=startx;
          if(endx<startx)//certifica ordem crecsente 
@@ -100,7 +100,7 @@ public class GameState{
          } 
      }
      
-    public static String PlayerReady(String player) {//Eu sei que o nome do metodo não esta de acordo a regras
+    public String PlayerReady(String player) {//Eu sei que o nome do metodo não esta de acordo a regras
         if((Player1).equals(player)){
             ready1 = true;
             if(ready1 == ready2){
