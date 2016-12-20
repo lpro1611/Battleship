@@ -46,14 +46,14 @@ public class Protocol {
             decodeReply(inputLine, OPCODE1);
             
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: localhost.");
+            System.err.println("Don't know about host gnomo.");
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: bloco-cinza.");
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
         } finally{
             try {
                 cSocket.closeCom();
             } catch (IOException e) {
-                System.err.println("Couldn't get I/O for the connection to: bloco-cinza.");
+                System.err.println("Couldn't get I/O for the connection to gnomo.");
             }
         }
         
@@ -83,14 +83,14 @@ public class Protocol {
             decodeReply(inputLine, OPCODE2);
             
         } catch (UnknownHostException e) {
-            System.err.println("Don't know about host: localhost.");
+            System.err.println("Don't know about host gnomo.");
         } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to: bloco-cinza.");
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
         } finally{
             try {
                 cSocket.closeCom();
             } catch (IOException e) {
-                System.err.println("Couldn't get I/O for the connection to: bloco-cinza.");
+                System.err.println("Couldn't get I/O for the connection to gnomo.");
             }
         }
         
