@@ -28,7 +28,7 @@ public class SocketClient {
     * @throws IOException               if failed to create the streams
     */
     public void openCom() throws UnknownHostException, IOException{
-        bsSocket = new Socket("localhost", 4020);
+        bsSocket = new Socket("gnomo.fe.up.pt", 4020);
         //System.out.println("Connected to server.");
         out = new PrintWriter(bsSocket.getOutputStream(), true);
         in = new BufferedReader(new InputStreamReader(bsSocket.getInputStream()));

@@ -1,7 +1,7 @@
-Server/BaShipServer/dist/*
-Server/BaShipServer/build/*
-Server/BaShipServer/nbproject/private/*
-Client/build/*
-Client/dist/*
-Client/nbproject/private/*
+BaShipServer/dist/*
+BaShipServer/build/*
+BaShipServer/nbproject/private/*
+BaShipClient/dist/*
+BaShipClient/build/*
+BaShipClient/nbproject/private/*
 *.directory
