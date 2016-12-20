@@ -13,17 +13,17 @@ public class Ship {
     int size;
     int hits;
     
-    public Ship( int size){
-        this.size=size;
-        this.hits=0;
+    public Ship(int size) {
+        this.size = size;
+        this.hits = 0;
         
     }    
     
-    public int hit(){
-        if(size==(++hits))
+    public int hit() {
+        if (size == (++hits)) {
             return 1;
-        else 
+        } else {
             return 0;
- 
+        }
     }
 }
