@@ -1,7 +1,10 @@
-Server/BaShipServer/dist/*
-Server/BaShipServer/build/*
-Server/BaShipServer/nbproject/private/*
-Client/build/*
-Client/dist/*
-Client/nbproject/private/*
+BaShipServer/dist/*.jar
+BaShipServer/dist/*.TXT
+BaShipServer/build/*
+BaShipServer/nbproject/private/*
+BaShipServer/nbproject/private/
+BaShipClient/dist/*
+BaShipClient/build/*
+BaShipClient/nbproject/private/*
+BaShipClient/nbproject/private/
 *.directory
