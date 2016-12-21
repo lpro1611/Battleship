@@ -7,18 +7,27 @@ import java.util.Properties;
  *
  * @author diogo
  */
-class DbUtils {
-    public static Connection openConnection(Properties props) throws SQLException {
-        String user = props.getProperty("dbuser");
-        String password = props.getProperty("dbpass");
-        String url = props.getProperty("dburl");
-        
-        return DriverManager.getConnection(url, user, password); 
+// Singletone
+public enum DbUtils {
+    INSTANCE;
+    
+    private static String user;
+    private static String password;
+    private static String url;
+    
+    private DbUtils() {}
+    
+    public void setConnectionParameters(Properties props) {
+        user = props.getProperty("dbuser");
+        password = props.getProperty("dbpass");
+        url = props.getProperty("dburl");
+    }
+    
+    public static Connection openConnection() throws SQLException {
+        return DriverManager.getConnection(url, user, password);
     }
     
     public static void closeConnection(Connection conn) throws SQLException {
         conn.close();
     }
-    
-    
 }

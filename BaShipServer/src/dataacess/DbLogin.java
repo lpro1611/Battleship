@@ -31,14 +31,13 @@ public class DbLogin {
      * @param email                     e-mail address of the new user
      * @param name                      name of the new user
      * @param pass                      password of the new user
-     * @param props                     DB's connection properties
      * @return                          user's DB identifier
      * @throws SQLException             problems interacting with the DB
      * @throws DuplicatedNameException  the name already exists in the DB
      * @throws NotFoundException        cannot find user's ID in the DB
      */
-    public static int registerPlayer(String email, String name, String pass, Properties props) throws SQLException, DuplicatedNameException, NotFoundException {
-        Connection conn = DbUtils.openConnection(props);
+    public static int registerPlayer(String email, String name, String pass) throws SQLException, DuplicatedNameException, NotFoundException {
+        Connection conn = DbUtils.openConnection();
         String insertPlayer = "INSERT INTO users (email, name, pass) VALUES (?, ?, ?)";
         
         try {
@@ -65,14 +64,13 @@ public class DbLogin {
      * 
      * @param name                      user's name
      * @param pass                      user's password
-     * @param props                     DB's connection properties
      * @return                          user's DB identifier
      * @throws SQLException             problems interacting with the DB
      * @throws NotFoundException        cannot find user's ID in the DB
      * @throws WrongPasswordException   password used was incorrect
      */
-    public static int verifyPlayer(String name, String pass, Properties props) throws SQLException, NotFoundException, WrongPasswordException {
-        Connection conn = DbUtils.openConnection(props);
+    public static int verifyPlayer(String name, String pass) throws SQLException, NotFoundException, WrongPasswordException {
+        Connection conn = DbUtils.openConnection();
         
         try { 
             Pair<Integer, String> player = getPlayerByName(name, conn);

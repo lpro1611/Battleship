@@ -1,5 +1,6 @@
 package communicationserver;
 
+import dataacess.DbUtils;
 import java.util.Properties;
 import java.net.*;
 import java.io.*;
@@ -41,6 +42,8 @@ public class MultiServer {
             System.out.println("Can't found postgres Driver");
         }
         
+        DbUtils.INSTANCE.setConnectionParameters(props);
+        
         try {
              serverSocket = new ServerSocket(4020);
         } catch (IOException e) {
@@ -49,7 +52,7 @@ public class MultiServer {
         }
  
         while (listening) {
-            new MultiServerThread(serverSocket.accept(), props).start();
+            new MultiServerThread(serverSocket.accept()).start();
         }
  
         serverSocket.close();

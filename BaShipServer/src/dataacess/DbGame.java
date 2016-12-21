@@ -6,7 +6,6 @@
 package dataacess;
 
 import java.sql.*;
-import java.util.Properties;
 
 /**
  * Accesses the DB to get, set and update game's data.
@@ -14,8 +13,17 @@ import java.util.Properties;
  * @author Diogo Dinis
  */
 public class DbGame {
-    public static void setShipPosition(int idOnGame, int[][] pos, int playerId, int gameId, Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    /**
+     * Saves a ship's position and owner on a game
+     * 
+     * @param idOnGame      ship's id on the game
+     * @param pos           ship's position
+     * @param playerId      user's DB identifier who place the ship
+     * @param gameId        game's DB identifier
+     * @throws SQLException problems interacting with the DB
+     */
+    public static void setShipPosition(int idOnGame, int[][] pos, int playerId, int gameId) throws SQLException {
+        Connection conn = DbUtils.openConnection();
         String insertShip = "INSERT INTO ships (id_on_game, pos, id_player, id_game) VALUES (?, '{{?, ?},{?, ?}}', ?, ?)";
         
         try {
@@ -40,12 +48,11 @@ public class DbGame {
      * @param pos           move's position
      * @param hit           boolean that indicates if it was a ship hit
      * @param playerId      user's DB identifier who played the move
-     * @param gameId        game's DB identifier
-     * @param props         DB's connection properties 
+     * @param gameId        game's DB identifier 
      * @throws SQLException problems interacting with the DB
      */
-    public static void setMovePosition(int[] pos, boolean hit, int playerId, int gameId, Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    public static void setMovePosition(int[] pos, boolean hit, int playerId, int gameId) throws SQLException {
+        Connection conn = DbUtils.openConnection();
         String insertMove = "INSERT INTO moves (pos, hit, id_player, id_game) VALUES ('{?, ?}', ?, ?, ?)";
         
         try {
@@ -67,12 +74,11 @@ public class DbGame {
      * 
      * @param player1Id     user's DB identifier of played one
      * @param player2Id     user's DB identifier of played two
-     * @param props         DB's connection properties
      * @return              game's DB identifider
      * @throws SQLException problems interacting with the DB
      */
-    public static int setGame(int player1Id, int player2Id, Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    public static int setGame(int player1Id, int player2Id) throws SQLException {
+        Connection conn = DbUtils.openConnection();
         String insertGame = "INSERT INT games (id_player_1, id_player_2) VALUES (?, ?)";
         String getIdGame = "SELECT id FROM games WHERE id >= ALL (SELECT id FROM games)";
         
@@ -98,11 +104,10 @@ public class DbGame {
      * 
      * @param winnerId      user's DB identifier of game's winner
      * @param gameId        game's DB identifider
-     * @param props         DB's connection properties
      * @throws SQLException problems interacting with the DB
      */
-    public static void setGameWinner(int winnerId, int gameId, Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    public static void setGameWinner(int winnerId, int gameId) throws SQLException {
+        Connection conn = DbUtils.openConnection();
         String insertWinner = "UPDATE games id_winner = ? WHERE id = ?";
         
         try {
@@ -116,20 +121,20 @@ public class DbGame {
         }
     }
     
-    public static int getShipsPosition(Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    public static int getShipsPosition() throws SQLException {
+        Connection conn = DbUtils.openConnection();
         
         return 0;
     }
     
-    public static int getMovesPosition(Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    public static int getMovesPosition() throws SQLException {
+        Connection conn = DbUtils.openConnection();
         
         return 0;
     }
     
-    public static int getGame(Properties props) throws SQLException {
-        Connection conn = DbUtils.openConnection(props);
+    public static int getGame() throws SQLException {
+        Connection conn = DbUtils.openConnection();
         
         return 0;
     }
