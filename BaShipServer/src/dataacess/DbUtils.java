@@ -16,8 +16,8 @@ class DbUtils {
         return DriverManager.getConnection(url, user, password); 
     }
     
-    public static void closeConnection(Connection con) throws SQLException {
-        con.close();
+    public static void closeConnection(Connection conn) throws SQLException {
+        conn.close();
     }
     
     
