@@ -4,7 +4,6 @@ import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
 import java.sql.*;
-import java.util.Properties;
 import javafx.util.Pair;
 
 
@@ -37,7 +36,7 @@ public class DbLogin {
      * @throws NotFoundException        cannot find user's ID in the DB
      */
     public static int registerPlayer(String email, String name, String pass) throws SQLException, DuplicatedNameException, NotFoundException {
-        Connection conn = DbUtils.openConnection();
+        Connection conn = DbUtils.INSTANCE.openConnection();
         String insertPlayer = "INSERT INTO users (email, name, pass) VALUES (?, ?, ?)";
         
         try {
@@ -55,7 +54,7 @@ public class DbLogin {
             
             return player.getKey();
         } finally {
-            DbUtils.closeConnection(conn);
+            DbUtils.INSTANCE.closeConnection(conn);
         }
     }
     
@@ -70,7 +69,7 @@ public class DbLogin {
      * @throws WrongPasswordException   password used was incorrect
      */
     public static int verifyPlayer(String name, String pass) throws SQLException, NotFoundException, WrongPasswordException {
-        Connection conn = DbUtils.openConnection();
+        Connection conn = DbUtils.INSTANCE.openConnection();
         
         try { 
             Pair<Integer, String> player = getPlayerByName(name, conn);
@@ -80,7 +79,7 @@ public class DbLogin {
             }
             throw new WrongPasswordException();
         } finally {
-            DbUtils.closeConnection(conn);
+            DbUtils.INSTANCE.closeConnection(conn);
         }
     }
     
@@ -89,6 +88,7 @@ public class DbLogin {
         
         try (PreparedStatement prepSt = conn.prepareStatement(selectPlayer)) {
             prepSt.setString(1, name);
+            
             try (ResultSet rs = prepSt.executeQuery()) {
                 if (rs.next()) {
                     return new Pair<Integer, String>(rs.getInt("id"), rs.getString("pass"));
@@ -104,6 +104,7 @@ public class DbLogin {
         
         try (PreparedStatement prepSt = conn.prepareStatement(checkPlayer)) {
             prepSt.setString(1, name);
+            
             try (ResultSet rs = prepSt.executeQuery()) {
                 return rs.next();
             }
