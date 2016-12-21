@@ -15,10 +15,10 @@ public class GameState {
     int gameId;
     String Player1;
     String Player2;
-    int[][] Board1;
-    int[][] Board2;
-    List<Ship> Player1Ships; 
-    List<Ship> Player2Ships;
+    int[][] Board1 = new int[10][10];
+    int[][] Board2 = new int[10][10];
+    List<Ship> Player1Ships = new ArrayList<Ship>(); 
+    List<Ship> Player2Ships = new ArrayList<Ship>();
     boolean ready1;
     boolean ready2;
     int criticalHits1;
@@ -38,6 +38,7 @@ public class GameState {
             for (j = 0; j < 10; j++) {
                 this.Board1[i][j] = 0;
                 this.Board2[i][j] = 0;
+               // System.out.println("Só verificar");
             }
         }
 
