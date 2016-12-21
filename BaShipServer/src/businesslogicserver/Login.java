@@ -31,9 +31,7 @@ public class Login {
      * @throws WrongPasswordException   password used was incorrect
      */
     public static int verify(String name, String pass, Properties props) throws SQLException, NotFoundException, WrongPasswordException {
-        DbLogin dblogin = new DbLogin();
-        
-        return dblogin.verifyPlayer(name, pass, props);
+        return DbLogin.verifyPlayer(name, pass, props);
     }
     
     /**
@@ -52,8 +50,6 @@ public class Login {
      * @throws NotFoundException            cannot find the user's ID
      */
     public static int register(String email, String name, String pass, Properties props) throws SQLException, DuplicatedNameException, NotFoundException {
-        DbLogin dblogin = new DbLogin();
-        
-        return dblogin.registerPlayer(email, name, pass, props);
+        return DbLogin.registerPlayer(email, name, pass, props);
     }
 }
