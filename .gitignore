@@ -1,10 +1,14 @@
 BaShipServer/dist/*.jar
 BaShipServer/dist/*.TXT
+BaShipServer/dist/javadoc/*
+BaShipServer/dist/javadoc/
 BaShipServer/build/*
 BaShipServer/nbproject/private/*
 BaShipServer/nbproject/private/
 BaShipClient/dist/*
 BaShipClient/build/*
+BaShipClient/dist/javadoc/*
+BaShipClient/dist/javadoc/
 BaShipClient/nbproject/private/*
 BaShipClient/nbproject/private/
 *.directory
