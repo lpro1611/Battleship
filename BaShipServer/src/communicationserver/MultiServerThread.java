@@ -2,7 +2,6 @@ package communicationserver;
 
 import java.net.*;
 import java.io.*;
-import java.util.Properties;
 
 /**
  * Communicates with the client
@@ -10,17 +9,14 @@ import java.util.Properties;
  */
 public class MultiServerThread extends Thread {
     private Socket socket = null;
-    private final Properties props;
  /**
   * Class Constructor specifying the socket and the properties
   * 
   * @param socket   socket to communicate with the client
-  * @param props    DB's connection properties
   */
-    public MultiServerThread(Socket socket, Properties props) {
+    public MultiServerThread(Socket socket) {
         super("MultiServerThread");
         this.socket = socket;
-        this.props = props;
     }
     
     
@@ -43,7 +39,7 @@ public class MultiServerThread extends Thread {
             Protocol p = new Protocol();
             
             if((inputLine = in.readLine()) != null) {
-                reply = p.ProtocolDecode(inputLine, props);
+                reply = p.ProtocolDecode(inputLine);
             }
             
             out.print(reply);
