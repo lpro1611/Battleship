@@ -59,13 +59,6 @@ public class GameState {
         //no caso de string id é String e eu depois passo a numero
         int placey = starty, placex = startx;
         int size;
-        
-        if (Player1.equals(player)) {
-            size = (Player1Ships.get(id)).size;
-        } else {
-            size = (Player2Ships.get(id)).size;
-        }
-        
         if (endx < startx) { //certifica ordem crescente 
             placex = endx;
         }
@@ -73,16 +66,35 @@ public class GameState {
         if (endy < starty) {
             placey = endy;
         }
-             
-        for (int i = 0; i < size; i++) {
-            if (starty == endy) {
-                Board1[placex + i][placey] = id;
-            }
+        
+        if (Player1.equals(player)) {
+            size = (Player1Ships.get(id-1)).size;
+            for (int i = 0; i < size; i++) {
+                if (starty == endy) {
+                    Board1[placex + i][placey] = id;
+                }
 
-            if (startx == endx) {
-                Board1[placex][placey + i] = id;
+                if (startx == endx) {
+                    Board1[placex][placey + i] = id;
+                }
+            }
+        } else {
+            size = (Player2Ships.get(id-1)).size;
+            System.out.println(player + size);
+            for (int i = 0; i < size; i++) {
+                if (starty == endy) {
+                    Board2[placex + i][placey] = id;
+                }
+
+                if (startx == endx) {
+                    Board2[placex][placey + i] = id;
+                }
             }
         }
+        
+        
+             
+        
     }
      
     public int attack(String player, int x, int y) {
@@ -93,9 +105,10 @@ public class GameState {
             
             if (hit[0] != 0) {
                 hit[1] = (Player2Ships.get(hit[0] - 1)).hit(); //atualiza barcos
+           
             }
             
-            criticalHits1 += hit[1];
+            criticalHits1 = criticalHits1 + hit[1];
             //Protocol.hit(Player2, int x, int y, hit, "My Board"); mensagem para o outro jogado4
             //Protocol.hit(Player1, int x, int y, hit, "Enemy Board");
             
