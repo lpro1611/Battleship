@@ -5,7 +5,6 @@ import java.util.Properties;
 import java.net.*;
 import java.io.*;
 
-
 /**
  * Deals with generating all the sockets to communicate with 
  * multiple clients simultaneously.
@@ -51,7 +50,7 @@ public class MultiServer {
              System.err.println("Could not listen on port: 4020.");
              System.exit(-1);
         }
-            
+        
         while (listening) {
             new MultiServerThread(serverSocket.accept()).start();
         }

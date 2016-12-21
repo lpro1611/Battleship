@@ -1,9 +1,12 @@
 package dataacess;
 
+
+import dataacess.auxiliarstructs.*;
 import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
 import java.sql.*;
+import java.util.ArrayList;
 import javafx.util.Pair;
 
 

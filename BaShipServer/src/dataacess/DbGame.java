@@ -5,7 +5,9 @@
  */
 package dataacess;
 
+import dataacess.auxiliarstructs.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Accesses the DB to get, set and update game's data.
@@ -133,29 +135,28 @@ public class DbGame {
      * rs.next(): Get next line<p>
      * rs.getInt("id_on_game"): get id_on_game column of current line 
      * 
-     * @param GameId        game's DB identifier
+     * @param gameId        game's DB identifier
      * @return              struct with ship's positions
      * @throws SQLException problems interacting with the DB
      */
-    public static void getShipsPositionByGameId(int GameId) throws SQLException {
+    public static ArrayList<ShipType> getShipsPositionByGameId(int gameId) throws SQLException {
         Connection conn = DbUtils.INSTANCE.openConnection();
         String getShipsPosition = "SELECT id_on_game, x_begin, y_begin, x_end, y_end, id_player FROM ships WHERE id_game = ? ORDER BY id_player ASC, id_on_game ASC";
         
         try (PreparedStatement prepSt = conn.prepareStatement(getShipsPosition)) {
-            prepSt.setInt(1, GameId);
+            prepSt.setInt(1, gameId);
             
             try (ResultSet rs = prepSt.executeQuery()) {
-                if (rs.next()) {
-                    System.out.println(rs.getInt("x_begin"));
-                    System.out.println(rs.getInt("x_end"));
-                    System.out.println(rs.getInt("y_begin"));
-                    System.out.println(rs.getInt("y_end"));
+                ArrayList<ShipType> ShipsList = new ArrayList<>();
+                while (rs.next()) {
+                    ShipsList.add(new ShipType(rs.getInt("id_on_game"), rs.getInt("x_begin"), rs.getInt("y_begin"), rs.getInt("x_end"), rs.getInt("y_end"), rs.getInt("id_player"), gameId));
                 }
+                
+                return ShipsList;
             }
         } finally {
             DbUtils.INSTANCE.closeConnection(conn);
         }
-  
     }
     
     /**
@@ -166,19 +167,24 @@ public class DbGame {
      * rs.next(): Get next line<p>
      * rs.getBoolean("hit"): get hit column of current line
      * 
-     * @param GameId        game's DB identifier
+     * @param gameId        game's DB identifier
      * @return              struct with game's moves
      * @throws SQLException problems interacting with the DB
      */
-    public static void getMovesByGameId(int GameId) throws SQLException {
+    public static ArrayList<MoveType> getMovesByGameId(int gameId) throws SQLException {
         Connection conn = DbUtils.INSTANCE.openConnection();
         String getMoves = "SELECT x, y, hit, id_player FROM moves WHERE id_game = ? ORDER BY move_date ASC";
         
         try (PreparedStatement prepSt = conn.prepareStatement(getMoves)) {
-            prepSt.setInt(1, GameId);
+            prepSt.setInt(1, gameId);
             
             try (ResultSet rs = prepSt.executeQuery()) {
-
+                ArrayList<MoveType> MovesList = new ArrayList<>();
+                while (rs.next()) {
+                    MovesList.add(new MoveType(rs.getInt("x"), rs.getInt("y"), rs.getBoolean("hit"), rs.getInt("id_player"), gameId));
+                }
+                
+                return MovesList;
             }
         } finally {
             DbUtils.INSTANCE.closeConnection(conn);
@@ -188,19 +194,25 @@ public class DbGame {
     /**
      * Get all player's games
      * 
-     * @param PlayerId      user's DB identifier
+     * @param playerId      user's DB identifier
      * @return              struct with player's games
      * @throws SQLException problems interacting with the DB
      */
-    public static void getGamesByPlayerId(int PlayerId) throws SQLException {
+    public static ArrayList<GameType> getGamesByPlayerId(int playerId) throws SQLException {
         Connection conn = DbUtils.INSTANCE.openConnection();
-        String getGames = "SELECT * FROM games WHERE id_player_1 = ? OR id_player_2 = ?";
+        String getGames = "SELECT id, id_player_1, id_player_2, id_winner FROM games WHERE id_player_1 = ? OR id_player_2 = ? ORDER BY date DESC";
         
         try (PreparedStatement prepSt = conn.prepareStatement(getGames)) {
-            prepSt.setInt(1, PlayerId);
-            prepSt.setInt(2, PlayerId);
+            prepSt.setInt(1, playerId);
+            prepSt.setInt(2, playerId);
             
             try (ResultSet rs = prepSt.executeQuery()) {
+                ArrayList<GameType> GamesList = new ArrayList<>();
+                while (rs.next()) {
+                    GamesList.add(new GameType(rs.getInt("id"), rs.getInt("id_player_1"), rs.getInt("id_player_2"), rs.getInt("id_winner")));
+                }
+                
+                return GamesList;
             }
         } finally {
             DbUtils.INSTANCE.closeConnection(conn);
