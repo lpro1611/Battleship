@@ -108,6 +108,7 @@ public class GameState {
      
     public int attack(int player, int x, int y) {
         int[] hit = {0,0};
+        boolean saveHit =false;
         
         if (Player1== player) {
             hit[0] = Board2[x][y];
@@ -120,6 +121,12 @@ public class GameState {
             criticalHits1 = criticalHits1 + hit[1];
             //Protocol.hit(Player2, int x, int y, hit, "My Board"); mensagem para o outro jogado4
             //Protocol.hit(Player1, int x, int y, hit, "Enemy Board");
+            try{
+             DbGame.setMovePosition(x,y,saveHit,player,gameId );
+            }
+            catch(SQLException e){
+            System.out.println("Error savin ship" + e );
+            }
             
             return criticalHits1;   //retorno para o Protocolo se necessario
         } else {
@@ -127,12 +134,18 @@ public class GameState {
             
             if (hit[0] != 0) {
                 hit[1] = (Player1Ships.get(hit[0] - 1)).hit();//atualiza barcos
+                saveHit = true;
             }
             
             //Protocol.hit(Player1, int x, int y, hit, "MyBoard"); mensagem para o outro jogado
             //Protocol.hit(Player2, int x, int y, hit, "Enemy Board");
             criticalHits2 += hit[1];
-            
+            try{
+             DbGame.setMovePosition(x,y,saveHit,player,gameId );
+            }
+            catch(SQLException e){
+            System.out.println("Error savin ship" + e );
+            }
             return criticalHits2;
         } 
     }
