@@ -19,7 +19,6 @@ public class ReceiveMessagaSocket extends Thread {
         this.socket = socket;
     }
     
-    
     /**
      * Communicates with the client.
      * <p>
@@ -42,7 +41,9 @@ public class ReceiveMessagaSocket extends Thread {
                 reply = p.ProtocolDecode(inputLine);
             }
             
-            out.print(reply);
+            if (reply != null) {
+                out.print(reply);
+            }
             
             out.close();
             in.close();

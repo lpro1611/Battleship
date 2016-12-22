@@ -14,6 +14,8 @@ import java.sql.SQLException;
 public class Protocol {
     private final String OPCODE1 = "login";
     private final String OPCODE2 = "register";
+    private final String OPCODE3 = "game";
+    private final String OPCODE4 = "replay";
     
     private String reply;
     
