@@ -34,7 +34,7 @@ public class GameType {
     /**
      * Set game's identifier
      * 
-     * @param gameId Game's DB identifier
+     * @param gameId game's DB identifier
      */
     public void setGameId(int gameId) {
         this.gameId = gameId;

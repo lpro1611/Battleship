@@ -134,13 +134,10 @@ public class DbGame {
     /**
      * Get all ship's positions in a game
      * <p>
-     * This method returns ships order by player (lowest first) and ship's id on game.<p>
-     * To get ships do:<p>
-     * rs.next(): Get next line<p>
-     * rs.getInt("id_on_game"): get id_on_game column of current line 
+     * This method returns ships order by player (lowest first) and ship's id on game.
      * 
      * @param gameId        game's DB identifier
-     * @return              struct with ship's positions
+     * @return              list of classes ShipType, a struct with ship's information
      * @throws SQLException problems interacting with the DB
      */
     public static ArrayList<ShipType> getShipsPositionByGameId(int gameId) throws SQLException {
@@ -166,13 +163,10 @@ public class DbGame {
     /**
      * Get all game's moves
      * <p>
-     * This method returns moves order by time, from first move to last one.<p>
-     * To get moves do: <p>
-     * rs.next(): Get next line<p>
-     * rs.getBoolean("hit"): get hit column of current line
+     * This method returns moves order by time, from first move to last one.
      * 
      * @param gameId        game's DB identifier
-     * @return              struct with game's moves
+     * @return              list of classes MoveType, a struct with game's moves information
      * @throws SQLException problems interacting with the DB
      */
     public static ArrayList<MoveType> getMovesByGameId(int gameId) throws SQLException {
@@ -199,7 +193,7 @@ public class DbGame {
      * Get all player's games
      * 
      * @param playerId      user's DB identifier
-     * @return              struct with player's games
+     * @return              list of classes GameType, a struct with player's games information
      * @throws SQLException problems interacting with the DB
      */
     public static ArrayList<GameType> getGamesByPlayerId(int playerId) throws SQLException {
