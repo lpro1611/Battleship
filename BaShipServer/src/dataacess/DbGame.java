@@ -29,17 +29,17 @@ public class DbGame {
      */
     public static void setShipPosition(int idOnGame, int beginX, int beginY, int endX, int endY, int playerId, int gameId) throws SQLException {
         Connection conn = DbUtils.INSTANCE.openConnection();
-        String insertShip = "INSERT INTO ships (id_on_game, x_begin, y_begin, x_end, y_end, id_player, id_game) VALUES (?, '{{?, ?},{?, ?}}', ?, ?)";
+        String insertShip = "INSERT INTO ships (id_on_game, x_begin, y_begin, x_end, y_end, id_player, id_game) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try {
             try (PreparedStatement prepSt = conn.prepareStatement(insertShip)) {
                 prepSt.setInt(1, idOnGame);
-                prepSt.setInt(3, beginX);
-                prepSt.setInt(4, beginY);
-                prepSt.setInt(5, endX);
-                prepSt.setInt(6, endY);
-                prepSt.setInt(7, playerId);
-                prepSt.setInt(8, gameId);
+                prepSt.setInt(2, beginX);
+                prepSt.setInt(3, beginY);
+                prepSt.setInt(4, endX);
+                prepSt.setInt(5, endY);
+                prepSt.setInt(6, playerId);
+                prepSt.setInt(7, gameId);
                 prepSt.executeUpdate();
             }
         } finally {
@@ -85,7 +85,7 @@ public class DbGame {
      */
     public static int createGame(int player1Id, int player2Id) throws SQLException {
         Connection conn = DbUtils.INSTANCE.openConnection();
-        String insertGame = "INSERT INT games (id_player_1, id_player_2) VALUES (?, ?)";
+        String insertGame = "INSERT INTO games (id_player_1, id_player_2) VALUES (?, ?)";
         String getIdGame = "SELECT id FROM games WHERE id >= ALL (SELECT id FROM games)";
         
         try {
@@ -97,7 +97,11 @@ public class DbGame {
             
             try (PreparedStatement prepSt = conn.prepareStatement(getIdGame)) {
                 try (ResultSet rs = prepSt.executeQuery()) {
-                    return rs.getInt("id");
+                    if (rs.next()) {
+                        return rs.getInt("id");
+                    } else {
+                        return 0;
+                    }
                 }
             }
         } finally {
@@ -114,7 +118,7 @@ public class DbGame {
      */
     public static void setGameWinner(int winnerId, int gameId) throws SQLException {
         Connection conn = DbUtils.INSTANCE.openConnection();
-        String insertWinner = "UPDATE games id_winner = ? WHERE id = ?";
+        String insertWinner = "UPDATE games SET id_winner = ? WHERE id = ?";
         
         try {
             try (PreparedStatement prepSt = conn.prepareStatement(insertWinner)) {
