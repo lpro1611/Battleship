@@ -7,15 +7,15 @@ import java.io.*;
  * Communicates with the client
  * @author Alunos-i221-16
  */
-public class MultiServerThread extends Thread {
+public class ReceiveMessagaSocket extends Thread {
     private Socket socket = null;
  /**
   * Class Constructor specifying the socket and the properties
   * 
   * @param socket   socket to communicate with the client
   */
-    public MultiServerThread(Socket socket) {
-        super("MultiServerThread");
+    public ReceiveMessagaSocket(Socket socket) {
+        super("ReceiveMessageSocket");
         this.socket = socket;
     }
     

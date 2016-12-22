@@ -5,8 +5,6 @@ import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
 import java.sql.SQLException;
-import java.util.Properties;
-
 
 /**
  * Implements the protocol used to communicate between the 
