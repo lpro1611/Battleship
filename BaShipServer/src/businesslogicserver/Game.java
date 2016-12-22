@@ -21,12 +21,12 @@ public class Game {
         id = 0;
     }
 
-    public void createGame(String Player1, String Player2) {
+    public void createGame(int Player1, int Player2) {
         GameList.put(id, new GameState(id,Player1, Player2));
         id++; //ainda tenho de ver melhor maneira de buscar id
     }
 
-    public String attack(int GameID, String player, int x, int y) {
+    public String attack(int GameID, int player, int x, int y) {
         int hits = GameList.get(GameID).attack(player, x, y);
         if (hits == 6) {
             if (player == (GameList.get(GameID).Player1)) {

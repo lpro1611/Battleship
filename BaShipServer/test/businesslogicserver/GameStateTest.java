@@ -43,14 +43,15 @@ public class GameStateTest {
     @Test
     public void testPlaceShip() {
         System.out.println("placeShip");
-        String player = "Afonso";
+        int player1 = 1000;
+        int player2 = 2000;
         int boatid = 1;
         int startx = 1;
         int starty = 2;
         int endx = 1;
         int endy = 3;
-        GameState instance = new GameState(2, "Afonso","Diogo");
-        instance.placeShip("Afonso", boatid, startx, starty, endx, endy);
+        GameState instance = new GameState(2, player1,player2);
+        instance.placeShip(player1, boatid, startx, starty, endx, endy);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
         assertEquals(0,instance.Board1[0][7]);
@@ -63,7 +64,7 @@ public class GameStateTest {
        starty = 2;
        endx = 5;
        endy = 2;
-       instance.placeShip("Diogo", boatid, startx, starty, endx, endy);
+       instance.placeShip(player2, boatid, startx, starty, endx, endy);
        
        assertEquals(0,instance.Board2[0][7]);
        assertEquals(5,instance.Board2[1][2]);
@@ -81,22 +82,24 @@ public class GameStateTest {
     @Test
     public void testAttack() {
         System.out.println("attack");
-        GameState instance =  new GameState(2, "Afonso","Diogo");
-        instance.placeShip("Afonso", 1, 1, 2, 1, 3);
-        instance.placeShip("Afonso", 2, 2, 2, 2, 4);
-        instance.placeShip("Diogo", 5, 1, 2, 5, 2);
-        int result = instance.attack("Afonso", 0, 0);
-        int result2 = instance.attack("Afonso", 1, 2);
-        instance.attack("Afonso", 2, 2);
-        instance.attack("Afonso", 3, 2);
-        instance.attack("Afonso", 4, 2);
-        int result22 = instance.attack("Afonso", 5, 2);
-        int result3 = instance.attack("Diogo", 1, 2);
-        int result33 = instance.attack("Diogo", 1, 3);
-        int result4 = instance.attack("Diogo", 2, 2);
-        int result44 = instance.attack("Diogo", 2, 3);
-        int result444 = instance.attack("Diogo", 2, 5);
-        int result4444 = instance.attack("Diogo", 2, 4);
+        int player1=1000;
+        int player2=2000;
+        GameState instance =  new GameState(2, player1,player2);
+        instance.placeShip(player1, 1, 1, 2, 1, 3);
+        instance.placeShip(player1, 2, 2, 2, 2, 4);
+        instance.placeShip(player2, 5, 1, 2, 5, 2);
+        int result = instance.attack(player1, 0, 0);
+        int result2 = instance.attack(player1, 1, 2);
+        instance.attack(player1, 2, 2);
+        instance.attack(player1, 3, 2);
+        instance.attack(player1, 4, 2);
+        int result22 = instance.attack(player1, 5, 2);
+        int result3 = instance.attack(player2, 1, 2);
+        int result33 = instance.attack(player2, 1, 3);
+        int result4 = instance.attack(player2, 2, 2);
+        int result44 = instance.attack(player2, 2, 3);
+        int result444 = instance.attack(player2, 2, 5);
+        int result4444 = instance.attack(player2, 2, 4);
         assertEquals(0, result);
         assertEquals(0, result2);
         assertEquals(1, result22);
@@ -116,15 +119,16 @@ public class GameStateTest {
     @Test
     public void testPlayerReady() {
         System.out.println("PlayerReady");
-        String player = "Afonso";
-        GameState instance = new GameState(2, "Afonso","Diogo");
+        int player1 = 1000;
+        int player2 = 2000;
+        GameState instance = new GameState(2, player1,player2);
         String expResult = "Wait for other Player";
         String expResult2 = "Begin";
-        String result = instance.PlayerReady(player);
+        String result = instance.PlayerReady(player1);
         assertEquals(expResult, result);
         assertEquals(true, instance.ready1);
         assertEquals(false, instance.ready2);
-        result = instance.PlayerReady("Diogo");
+        result = instance.PlayerReady(player2);
         assertEquals(expResult2, result);
         assertEquals(true, instance.ready1);
         assertEquals(true, instance.ready2);

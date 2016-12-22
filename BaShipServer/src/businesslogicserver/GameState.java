@@ -5,6 +5,8 @@
  */
 package businesslogicserver;
 
+import dataacess.DbGame;
+import java.sql.SQLException;
 import java.util.*;
 /**
  * Eu sei que falta chamar DB
@@ -13,8 +15,8 @@ import java.util.*;
  */
 public class GameState {
     int gameId;
-    String Player1;
-    String Player2;
+    int Player1;
+    int Player2;
     int[][] Board1 = new int[10][10];
     int[][] Board2 = new int[10][10];
     List<Ship> Player1Ships = new ArrayList<Ship>(); 
@@ -24,7 +26,7 @@ public class GameState {
     int criticalHits1;
     int criticalHits2;
 
-    public GameState(int gameId, String Player1, String Player2) {
+    public GameState(int gameId, int Player1, int Player2) {
         int i, j;
         this.gameId = gameId;
         this.Player1 = Player1;
@@ -55,7 +57,7 @@ public class GameState {
         this.Player2Ships.add(new Ship(5));   
     }
        
-    public void placeShip(String player, int id, int startx, int starty, int endx, int endy) {
+    public void placeShip(int player, int id, int startx, int starty, int endx, int endy) {
         //no caso de string id é String e eu depois passo a numero
         int placey = starty, placex = startx;
         int size;
@@ -67,7 +69,7 @@ public class GameState {
             placey = endy;
         }
         
-        if (Player1.equals(player)) {
+        if (Player1==player) {
             size = (Player1Ships.get(id-1)).size;
             for (int i = 0; i < size; i++) {
                 if (starty == endy) {
@@ -80,7 +82,7 @@ public class GameState {
             }
         } else {
             size = (Player2Ships.get(id-1)).size;
-            System.out.println(player + size);
+            
             for (int i = 0; i < size; i++) {
                 if (starty == endy) {
                     Board2[placex + i][placey] = id;
@@ -91,16 +93,23 @@ public class GameState {
                 }
             }
         }
-        
+      
+        try{
+        DbGame.setShipPosition(id,startx,starty,endx,endy, Player1, gameId );
+        }
+        catch(SQLException e){
+            System.out.println("Error savin ship" + e );
+        }
+        //.setShipPosition(id,startx,starty,endx,endy, 1, gameId );
         
              
         
     }
      
-    public int attack(String player, int x, int y) {
+    public int attack(int player, int x, int y) {
         int[] hit = {0,0};
         
-        if (Player1.equals(player)) {
+        if (Player1== player) {
             hit[0] = Board2[x][y];
             
             if (hit[0] != 0) {
@@ -128,8 +137,8 @@ public class GameState {
         } 
     }
      
-    public String PlayerReady(String player) { //Eu sei que o nome do metodo não esta de acordo a regras
-        if (Player1.equals(player)) {
+    public String PlayerReady(int player) { //Eu sei que o nome do metodo não esta de acordo a regras
+        if (Player1==player) {
             ready1 = true;
         } else {
             ready2 = true;
