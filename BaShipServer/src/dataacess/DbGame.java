@@ -132,6 +132,33 @@ public class DbGame {
     }
     
     /**
+     * Get the last game's identifier
+     * <p>
+     * This method was create for help on debuging
+     * 
+     * @return last game's DB identifider
+     * @throws SQLException problems interacting with the DB
+     */
+    public static int getLastGameId() throws SQLException {
+        Connection conn = DbUtils.INSTANCE.openConnection();
+        String getIdGame = "SELECT id FROM games WHERE id >= ALL (SELECT id FROM games)";
+        
+        try {
+            try (PreparedStatement prepSt = conn.prepareStatement(getIdGame)) {
+                try (ResultSet rs = prepSt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt("id");
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        } finally {
+            DbUtils.INSTANCE.closeConnection(conn);
+        }
+    }
+    
+    /**
      * Get all ship's positions in a game
      * <p>
      * This method returns ships order by player (lowest first) and ship's id on game.

@@ -102,7 +102,7 @@ public class MoveType {
      * 
      * @return player's identifier
      */
-    public int getPLayerId() {
+    public int getPlayerId() {
         return playerId;
     }
     
