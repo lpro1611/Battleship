@@ -60,5 +60,5 @@ public class Authenticated {
     public static void setUsername(String username){
         Authenticated.username = username;
     }
-    
+      
 }

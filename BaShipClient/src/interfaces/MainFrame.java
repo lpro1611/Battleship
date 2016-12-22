@@ -8,8 +8,12 @@ import java.awt.*;
  * @author Diogo Recharte
  */
 public class MainFrame extends JFrame{
-    static final String FIRST = "First panel";
-    static final String SECOND = "Second panel";
+    static final String LOGIN = "Login panel";
+    static final String REGISTER = "Register panel";
+    static final String HOME = "Home panel";
+    static final String LOADING = "Loading panel";
+    static final String PLACESHIPS = "Place Ships panel";
+    static final String GAME = "Game panel";
     static JPanel mainPanel;
     /**
      * Constructor for the class.
@@ -22,14 +26,21 @@ public class MainFrame extends JFrame{
         initComponents();
     }
     private void initComponents(){
-        this.setSize(1028, 720);
+        this.setSize(1280, 720);
+        this.setResizable(false);
+        //this.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //this.setUndecorated(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("BaShip");
         
         mainPanel = new JPanel(new CardLayout());
-        mainPanel.add(new LoginGUI(), FIRST);
-        mainPanel.add(new RegisterGUI(), SECOND);
+        mainPanel.add(new LoginGUI(), LOGIN);
+        mainPanel.add(new RegisterGUI(), REGISTER);
+        mainPanel.add(new HomePageGUI(), HOME);
+        mainPanel.add(new LoadingGUI(), LOADING);
+        mainPanel.add(new PlaceShipsGUI(), PLACESHIPS);
+        mainPanel.add(new GameGUI(), GAME);
         this.setContentPane(mainPanel);
         //this.pack(); //poe a janela do tamanho preferido dos paineis
         
