@@ -7,18 +7,17 @@ import java.io.*;
  * Communicates with the client
  * @author Alunos-i221-16
  */
-public class ReceiveMessagaSocket extends Thread {
+public class ReceiveMessageSocket extends Thread {
     private Socket socket = null;
  /**
   * Class Constructor specifying the socket and the properties
   * 
   * @param socket   socket to communicate with the client
   */
-    public ReceiveMessagaSocket(Socket socket) {
+    public ReceiveMessageSocket(Socket socket) {
         super("ReceiveMessageSocket");
         this.socket = socket;
     }
-    
     
     /**
      * Communicates with the client.
@@ -42,7 +41,9 @@ public class ReceiveMessagaSocket extends Thread {
                 reply = p.ProtocolDecode(inputLine);
             }
             
-            out.print(reply);
+            if (reply != null) {
+                out.print(reply);
+            }
             
             out.close();
             in.close();

@@ -52,7 +52,7 @@ public class MultiServer {
         }
         
         while (listening) {
-            new ReceiveMessagaSocket(serverSocket.accept()).start();
+            new ReceiveMessageSocket(serverSocket.accept()).start();
         }
  
         serverSocket.close();
