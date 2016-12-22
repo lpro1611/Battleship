@@ -15,8 +15,7 @@ public class Ship {
     
     public Ship(int size) {
         this.size = size;
-        this.hits = 0;
-        
+        this.hits = 0;    
     }    
     
     public int hit() {

@@ -33,17 +33,16 @@ public class Protocol {
      * the business logic and replies to the client.
      * 
      * @param a         received message
-     * @param props     DB's connection properties
      * @return          message to reply to the client
      */
-    public String ProtocolDecode(String a, Properties props) {
+    public String ProtocolDecode(String a) {
         String opcode[] = a.split("#");
         
         switch (opcode[0]) {
             case OPCODE1:   
                 reply = OPCODE1 + "#";
                 try {
-                    int id = Login.verify(opcode[1], opcode[2], props);
+                    int id = Login.verify(opcode[1], opcode[2]);
                     reply += "ok#" + id;
                 } catch (SQLException e) {
                     reply += "error";
@@ -57,7 +56,7 @@ public class Protocol {
             case OPCODE2: 
                 reply = OPCODE2 + "#";
                 try {
-                    int id = Login.register(opcode[1], opcode[2], opcode[3], props);
+                    int id = Login.register(opcode[1], opcode[2], opcode[3]);
                     reply += "ok#" + id;
                 } catch (SQLException | NotFoundException e) {
                     reply += "error";

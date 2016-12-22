@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 package businesslogicserver;
+
 import java.util.*;
-import java.lang.*;
 
 
 /**
@@ -22,21 +22,21 @@ public class Game {
     }
 
     public void createGame(String Player1, String Player2) {
-        (this.GameList).put(id,new GameState(id,Player1, Player2));
+        GameList.put(id, new GameState(id,Player1, Player2));
         id++; //ainda tenho de ver melhor maneira de buscar id
     }
 
     public String attack(int GameID, String player, int x, int y) {
-        int hits = (this.GameList).get(GameID).attack(player, x, y);
+        int hits = GameList.get(GameID).attack(player, x, y);
         if (hits == 6) {
-            if (player == ((this.GameList).get(GameID).Player1)) {
+            if (player == (GameList.get(GameID).Player1)) {
                 //Protocol.endGame(..) Para ambos jogaores Player 1 victorious
-                (this.GameList).remove(GameID);
+                GameList.remove(GameID);
                 id--;
             }
             else {
                 //Protocol.endGame(..) Para ambos jogaoresPlayer 2 victorious
-                (this.GameList).remove(GameID);
+                GameList.remove(GameID);
                 id--;
             }      
         }
