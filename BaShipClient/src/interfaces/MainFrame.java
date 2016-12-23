@@ -2,6 +2,8 @@ package interfaces;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 /**
  * Container for every different interface in this project.
@@ -43,6 +45,23 @@ public class MainFrame extends JFrame{
         mainPanel.add(new GameGUI(), GAME);
         this.setContentPane(mainPanel);
         //this.pack(); //poe a janela do tamanho preferido dos paineis
+        
+        
+        addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                System.out.println("Opened");
+            }
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                System.out.println("Closed");
+                e.getWindow().dispose();
+            }
+        });
+        
+        
         
         this.setVisible(true);
     }

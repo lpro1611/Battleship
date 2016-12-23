@@ -30,10 +30,11 @@ public class Visitor {
      *                  <code>false</code> otherwise.
      */
     public static boolean login(String username, char[] password){
-        Protocol.validateLogin(username, encryptPassword(String.valueOf(password)));
-        if (ReplyFromServer.getMessage().equals("ok")){
-            Authenticated.setID(ReplyFromServer.getID());
+        int userID = Protocol.validateLogin(username, encryptPassword(String.valueOf(password)));
+        if (userID != -1){
+            Authenticated.setID(userID);
             Authenticated.setUsername(username);
+            System.out.println("id: " + Authenticated.getID());
             return true;
         }
         else return false;
@@ -70,15 +71,23 @@ public class Visitor {
             return "Passwords don't match!";
         
         
-        Protocol.validateRegister(email, username, password); //true or false dependendo da resposta do server
+        int userID = Protocol.validateRegister(email, username, password);
         
-        if (ReplyFromServer.getMessage().equals("ok")){
-            Authenticated.setID(ReplyFromServer.getID());
-            Authenticated.setUsername(username);
-            return "ok";
+        if (userID == -2){
+            return "Username not available";
+        }
+        else if (userID == -1){
+            return "Error accessing server";
         }
         
-        else return ReplyFromServer.getMessage();
+        else if (userID > -1){ 
+            Authenticated.setID(userID);
+            Authenticated.setUsername(username);
+            System.out.println("id: " + Authenticated.getID());
+            return "ok";
+        }
+        else
+            return "Unknown Error";
     }
 
     private static String encryptPassword(String password){

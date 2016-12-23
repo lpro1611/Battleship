@@ -2,6 +2,11 @@ package interfaces;
 
 import businesslogicclient.Authenticated;
 import java.awt.CardLayout;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  *
@@ -110,6 +115,25 @@ public class HomePageGUI extends javax.swing.JPanel {
     private void playnowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playnowButtonActionPerformed
         CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
         cl.show(MainFrame.mainPanel, MainFrame.LOADING);
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.submit(new Runnable(){
+            @Override
+            public void run() {
+                String str=null;
+                BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
+                try {
+                    str=input.readLine();
+                } catch (IOException ex) {
+                }
+                CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                if(str.equals("game"))
+                    cl.show(MainFrame.mainPanel, MainFrame.GAME);
+                else
+                    cl.show(MainFrame.mainPanel, MainFrame.PLACESHIPS);
+            }
+            
+        });
+        executor.shutdown();
     }//GEN-LAST:event_playnowButtonActionPerformed
 
     private void challengeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionPerformed
