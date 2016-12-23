@@ -82,7 +82,7 @@ public class Authenticated {
         Authenticated.serverSocket = socket;
     }
       
-    public static void findGame(){
+    public static void playGame(){
         Protocol.findGame(Authenticated.id);
     }
 }

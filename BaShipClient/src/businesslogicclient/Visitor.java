@@ -32,7 +32,6 @@ public class Visitor {
     public static boolean login(String username, char[] password){
         int userID = Protocol.validateLogin(username, encryptPassword(String.valueOf(password)));
         if (userID > 0){
-            
             Authenticated.setID(userID);
             Authenticated.setUsername(username);
             System.out.println("id: " + Authenticated.getID());
