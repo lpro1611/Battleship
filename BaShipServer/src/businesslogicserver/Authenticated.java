@@ -15,10 +15,10 @@ import java.sql.SQLException;
  * @author diogo
  */
 public class Authenticated {
-    int id;
-    String name;
-    Socket socket;
-    boolean inGame;
+    private final int id;
+    private final String name;
+    private Socket socket;
+    private boolean inGame;
     
     public Authenticated(int id) throws SQLException, NotFoundException {
         this.id = id;
@@ -26,6 +26,30 @@ public class Authenticated {
         inGame = false;
     }
     
-    public void addGame () {}
-    public void removeGame () {}
+    public int getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public boolean getInGame() {
+        return inGame;
+    }
+    
+    public Socket getSocket() {
+        return socket;
+    }
+    
+    public void setInGame(boolean inGame) {
+        this.inGame = inGame;
+    }
+    
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    } 
+    
+    public void addGame() {}
+    public void removeGame() {}
 }

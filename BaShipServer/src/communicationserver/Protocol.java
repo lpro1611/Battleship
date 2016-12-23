@@ -48,7 +48,11 @@ public class Protocol {
                 reply = LOGIN + "#";
                 try {
                     int id = Login.verify(opcode[1], opcode[2]);
-                    reply += "ok#" + id;
+                    if (id == -1) {
+                        reply += "duplicated";
+                    } else {
+                        reply += "ok#" + id;
+                    }
                 } catch (SQLException e) {
                     reply += "error";
                 } catch (WrongPasswordException e) {

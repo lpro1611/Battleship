@@ -2,7 +2,7 @@ package businesslogicserver;
 
 import exceptions.NotFoundException;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.*;
 
 /**
  *  Saves a list with all active users
@@ -11,17 +11,21 @@ import java.util.Map;
  * @author Diogo Dinis
  */
 public class AuthenticatedUsers {
-    public static Map <Integer, Authenticated> authenticatedList;
+    public static Map <Integer, Authenticated> authenticatedList = new HashMap<>();
     
     
     public AuthenticatedUsers () {}
     
-    public static void add (int id) throws SQLException, NotFoundException {
-        authenticatedList.put(id, new Authenticated(id));
+    public static boolean add (int id) throws SQLException, NotFoundException {
         
+        /* // Debugging
+        System.out.println("lista de jogadores ativos");
         for (Map.Entry<Integer, Authenticated> entry : authenticatedList.entrySet()) {
-            System.out.println((entry.getValue()).name);
+        System.out.println((entry.getValue()).getName());
         }
+         */        
+
+        return authenticatedList.putIfAbsent(id, new Authenticated(id)) != null;
     }
     
     public static void remove() {}
