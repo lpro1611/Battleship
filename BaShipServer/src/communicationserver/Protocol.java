@@ -5,6 +5,7 @@ import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
 import java.sql.SQLException;
+import java.net.*;
 
 /**
  * Implements the protocol used to communicate between the 
@@ -12,10 +13,13 @@ import java.sql.SQLException;
  * @author Alunos-i221-16
  */
 public class Protocol {
-    private static final String OPCODE1 = "login";
-    private static final String OPCODE2 = "register";
-    private static final String OPCODE3 = "game";
-    private static final String OPCODE4 = "replay";
+    private static final String LOGIN = "login";
+    private static final String REGISTER = "register";
+    private static final String SOCKET = "socket";
+    private static final String EXIT = "exit";
+    private static final String REPLAY = "replay";
+    private static final String CHALLENGE = "challenge";
+    private static final String GAME = "game";
     
     private static String reply;
     
@@ -35,12 +39,12 @@ public class Protocol {
      * @param a         received message
      * @return          message to reply to the client
      */
-    public static String protocolDecode(String a) {
+    public static String protocolDecode(String a, Socket socket) {
         String opcode[] = a.split("#");
         
         switch (opcode[0]) {
-            case OPCODE1:   
-                reply = OPCODE1 + "#";
+            case LOGIN:   
+                reply = LOGIN + "#";
                 try {
                     int id = Login.verify(opcode[1], opcode[2]);
                     reply += "ok#" + id;
@@ -53,8 +57,8 @@ public class Protocol {
                 }
                 break;
                             
-            case OPCODE2: 
-                reply = OPCODE2 + "#";
+            case REGISTER: 
+                reply = REGISTER + "#";
                 try {
                     int id = Login.register(opcode[1], opcode[2], opcode[3]);
                     reply += "ok#" + id;
@@ -65,8 +69,10 @@ public class Protocol {
                 }
                 break;
                 
-            case OPCODE3:
-            case OPCODE4:
+            case SOCKET:
+                
+                break;
+                
             default: 
                 reply = "error";             
         }
