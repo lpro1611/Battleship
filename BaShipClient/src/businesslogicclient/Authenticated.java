@@ -1,5 +1,7 @@
 package businesslogicclient;
 
+import communicationclient.Protocol;
+
 /**
  * Represents an authenticated user which has a name 
  * and a unique number identifier.
@@ -60,5 +62,8 @@ public class Authenticated {
     public static void setUsername(String username){
         Authenticated.username = username;
     }
-    
+      
+    public static void findGame(){
+        Protocol.findGame(Authenticated.id);
+    }
 }
