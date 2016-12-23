@@ -37,15 +37,16 @@ public class ReceiveMessageSocket extends Thread {
  
             String inputLine, reply = null;
             
-            while (!reply.equals("exit")) {
-                if((inputLine = in.readLine()) != null) {
-                    reply = Protocol.protocolDecode(inputLine, socket);
-                }
-
+            do {
                 if (reply != null) {
                     out.print(reply);
                 }
-            }
+                
+                if((inputLine = in.readLine()) != null) {
+                    reply = Protocol.protocolDecode(inputLine, socket);
+                }
+                
+            } while (!reply.equals("exit"));
             
             out.close();
             in.close();

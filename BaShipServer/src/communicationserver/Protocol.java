@@ -70,7 +70,17 @@ public class Protocol {
                 break;
                 
             case SOCKET:
-                
+                try {
+                    // colocar socket no utilizador autenticado.
+                    // Estava a pensar num método que colcova a socket na
+                    // lista dos autenticados e ficava a ouvir até outro método
+                    // colcoar lá um null, lendo o null retornava a avisar
+                    // e o protocolo ao retornar mandava fechar a socket
+                    //reply = "exit"; 
+                } catch (Exception e) {
+                    // ainda sem erros definidos
+                    reply = SOCKET + "#error";
+                }
                 break;
                 
             default: 
