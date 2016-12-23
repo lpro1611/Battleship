@@ -29,7 +29,10 @@ public class Login {
      * @throws WrongPasswordException   password used was incorrect
      */
     public static int verify(String name, String pass) throws SQLException, NotFoundException, WrongPasswordException {
-        return DbLogin.verifyPlayer(name, pass);
+        int id = DbLogin.verifyPlayer(name, pass);
+        //AuthenticatedUsers.add(id);
+        
+        return id;
     }
     
     /**

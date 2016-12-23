@@ -10,7 +10,8 @@ import java.net.*;
 /**
  * Implements the protocol used to communicate between the 
  * server and the client.
- * @author Alunos-i221-16
+ * 
+ * @author Afonso Ferreira
  */
 public class Protocol {
     private static final String LOGIN = "login";
@@ -71,12 +72,14 @@ public class Protocol {
                 
             case SOCKET:
                 try {
+                    //AuthenticatedUsers.addSocket(opcode[1]);
+                    //reply = "exit"; 
+                    
                     // colocar socket no utilizador autenticado.
                     // Estava a pensar num método que colcova a socket na
                     // lista dos autenticados e ficava a ouvir até outro método
-                    // colcoar lá um null, lendo o null retornava a avisar
+                    // colocar lá um null, lendo o null retornava a avisar
                     // e o protocolo ao retornar mandava fechar a socket
-                    //reply = "exit"; 
                 } catch (Exception e) {
                     // ainda sem erros definidos
                     reply = SOCKET + "#error";

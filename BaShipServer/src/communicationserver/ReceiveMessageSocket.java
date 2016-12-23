@@ -36,18 +36,25 @@ public class ReceiveMessageSocket extends Thread {
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
  
             String inputLine, reply = null;
-            
+            /*
             do {
                 if (reply != null) {
                     out.print(reply);
                 }
-                
+              */  
                 if((inputLine = in.readLine()) != null) {
                     reply = Protocol.protocolDecode(inputLine, socket);
                 }
                 
+                if (reply != null) {
+                    out.print(reply);
+                }
+                
+                /*
+                System.out.println(reply);
+                
             } while (!reply.equals("exit"));
-            
+            */
             out.close();
             in.close();
             socket.close();
