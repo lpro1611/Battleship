@@ -12,5 +12,3 @@ BaShipClient/dist/javadoc/
 BaShipClient/nbproject/private/*
 BaShipClient/nbproject/private/
 *.directory
-/BaShipServer/dist/
-/JUnit/JUnit-Game/nbproject/private/
