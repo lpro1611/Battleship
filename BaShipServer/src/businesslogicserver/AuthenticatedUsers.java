@@ -1,6 +1,8 @@
 package businesslogicserver;
 
+import communicationserver.SendMessageSocket;
 import exceptions.NotFoundException;
+import java.net.Socket;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -17,21 +19,39 @@ public class AuthenticatedUsers {
     public AuthenticatedUsers () {}
     
     public static boolean add (int id) throws SQLException, NotFoundException {
-        
-        /* // Debugging
-        System.out.println("lista de jogadores ativos");
-        for (Map.Entry<Integer, Authenticated> entry : authenticatedList.entrySet()) {
-        System.out.println((entry.getValue()).getName());
-        }
-         */        
-
         return authenticatedList.putIfAbsent(id, new Authenticated(id)) != null;
     }
     
-    public static void remove() {}
+    public static void remove(int userId) {
+        authenticatedList.remove(userId);
+    }
+    
+    public static void addSocket(int userId, Socket socket) {
+        authenticatedList.get(userId).setSocket(socket);
+        
+        new SendMessageSocket("socket#ok", socket).start();
+        
+        // while there logged in user
+        while (authenticatedList.containsKey(userId)) {/* do nothing */}
+    }
+    
+    public static String menuChallenge(int userId) {
+        String list = null;
+        
+        for (Map.Entry<Integer, Authenticated> entry : authenticatedList.entrySet()) {
+            if ((entry.getValue()).getId() != userId) {
+                list += "#";
+                list += (entry.getValue()).getId();
+                list += "#";
+                list += (entry.getValue()).getName();
+            }
+        }        
+        
+        return list;
+    }
+    
     public static void receiveChallenge() {}
     public static void sendChallenge() {}
     public static void replyChallenge() {}
-    public static void menuChallenge() {}
-    public static void addSocket() {}
+    
 }

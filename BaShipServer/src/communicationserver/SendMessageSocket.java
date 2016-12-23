@@ -38,7 +38,7 @@ public class SendMessageSocket extends Thread {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             
             if (message != null) {
-                out.print(message);
+                out.println(message);
             }
             
             out.close();

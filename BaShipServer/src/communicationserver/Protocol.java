@@ -6,6 +6,7 @@ import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
 import java.sql.SQLException;
 import java.net.*;
+import sun.security.util.PropertyExpander;
 
 /**
  * Implements the protocol used to communicate between the 
@@ -37,11 +38,12 @@ public class Protocol {
      * logic functionality to call. It then awaits the response of 
      * the business logic and replies to the client.
      * 
-     * @param a         received message
+     * @param message   received message
+     * @param socket    communication socket
      * @return          message to reply to the client
      */
-    public static String protocolDecode(String a, Socket socket) {
-        String opcode[] = a.split("#");
+    public static String protocolDecode(String message, Socket socket) {
+        String opcode[] = message.split("#");
         
         switch (opcode[0]) {
             case LOGIN:   
@@ -76,19 +78,35 @@ public class Protocol {
                 
             case SOCKET:
                 try {
-                    //AuthenticatedUsers.addSocket(opcode[1]);
-                    //reply = "exit"; 
-                    
-                    // colocar socket no utilizador autenticado.
-                    // Estava a pensar num método que colcova a socket na
-                    // lista dos autenticados e ficava a ouvir até outro método
-                    // colocar lá um null, lendo o null retornava a avisar
-                    // e o protocolo ao retornar mandava fechar a socket
-                } catch (Exception e) {
-                    // ainda sem erros definidos
+                    AuthenticatedUsers.addSocket(Integer.parseInt(opcode[1]), socket);
+                    reply = "exit";
+                } catch (NumberFormatException e) {
                     reply = SOCKET + "#error";
                 }
                 break;
+                
+            case EXIT:
+                try {
+                    AuthenticatedUsers.remove(Integer.parseInt(opcode[1]));
+                    reply = "exit";
+                } catch (NumberFormatException e) {
+                    reply = EXIT + "#error";
+                }
+                
+            case CHALLENGE:
+                reply = CHALLENGE;
+                try {
+                    String list = AuthenticatedUsers.menuChallenge(Integer.parseInt(opcode[1]));
+                    
+                    if (list == null) {
+                        reply += "#error";
+                    } else {
+                        // alreay has the '#'
+                        reply += list;
+                    }
+                } catch (NumberFormatException e) {
+                    reply += "#error";
+                }
                 
             default: 
                 reply = "error";             
