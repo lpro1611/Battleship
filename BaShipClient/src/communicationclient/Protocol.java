@@ -1,5 +1,6 @@
 package communicationclient;
 
+import businesslogicclient.Authenticated;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -15,6 +16,7 @@ import java.util.Properties;
 public class Protocol {
     private static final String LOGIN = "login";
     private static final String REGISTER = "register";
+    private static final String SOCKET = "socket";
     private static final String GAME = "game";
     
     /**
@@ -36,9 +38,9 @@ public class Protocol {
      */
     public static int validateLogin(String username, String password){
         SocketClient cSocket = new SocketClient();
-        String inputLine;
+        String inputLine, inputLine2;
         String[] reply;
-        int userID=-1;
+        int userID = -1;
         try{ 
             cSocket.openCom();
             
@@ -46,6 +48,11 @@ public class Protocol {
             
             inputLine=cSocket.read();
             System.out.println(inputLine);
+            
+            cSocket.write(LOGIN + "#" + username + "#" + password);
+            
+            inputLine2=cSocket.read();
+            System.out.println(inputLine2);
             reply=decodeReply(inputLine, LOGIN);
             if(reply[0].equals("ok"))
                 userID = Integer.parseInt(reply[1]);
@@ -81,7 +88,7 @@ public class Protocol {
         SocketClient cSocket = new SocketClient();
         String inputLine;
         String[] reply;
-        int userID=-1;
+        int userID = -1;
         
         try{ 
             cSocket.openCom();
@@ -109,30 +116,53 @@ public class Protocol {
         return userID;
         
     }
-    public static void findGame(int userID){
-        SocketClient cSocket = new SocketClient();
-        String inputLine;
+        public void createComs(){
+        SocketClient clientSocket = new SocketClient();
+        SocketClient serverSocket = new SocketClient();
+        boolean clientFlag = false;
+        boolean serverFlag = false;
         
         try{ 
-            cSocket.openCom();
+            clientSocket.openCom();
+            clientFlag=true;
+        } catch (UnknownHostException e) {
+            System.err.println("Don't know about host gnomo.");
             
-            cSocket.write(GAME + "#" + "create" + "#" + userID);
-            
-            inputLine=cSocket.read();
-            
-            decodeReply(inputLine, GAME);
-            
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+        try{
+            serverSocket.openCom();
+            serverSocket.write(SOCKET + "#" + Authenticated.getID());
+            serverFlag=true;
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host gnomo.");
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
-        } finally{
-            try {
-                cSocket.closeCom();
-            } catch (IOException e) {
-                System.err.println("Couldn't get I/O for the connection to gnomo.");
-            }
         }
+        if(clientFlag && serverFlag){
+            Authenticated.setClientSocket(clientSocket);
+            Authenticated.setServerSocket(serverSocket);
+        }
+        else{
+            System.exit(1);
+        }
+    }
+        
+    public static void findGame(int userID){
+        
+        String inputLine = null;
+        
+        Authenticated.getClientSocket().write(GAME + "#" + "create" + "#" + userID);
+
+        try {
+            inputLine=Authenticated.getClientSocket().read();
+        } catch (IOException ex) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+
+        decodeReply(inputLine, GAME);
+            
         
     }
     /**

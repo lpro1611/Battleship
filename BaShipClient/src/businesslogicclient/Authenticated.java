@@ -1,6 +1,9 @@
 package businesslogicclient;
 
 import communicationclient.Protocol;
+import communicationclient.SocketClient;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 /**
  * Represents an authenticated user which has a name 
@@ -9,7 +12,9 @@ import communicationclient.Protocol;
  */
 public class Authenticated {
     private static int id;
-    private static String username = "";
+    private static String username;
+    private static SocketClient clientSocket;
+    private static SocketClient serverSocket;
     
     /**
      * Class constructor specifying id number and username of
@@ -45,6 +50,13 @@ public class Authenticated {
         return username;
     }
     
+    public static SocketClient getClientSocket(){
+        return clientSocket;
+    }
+    public static SocketClient getServerSocket(){
+        return serverSocket;
+    }
+    
     /**
      * Sets the authenticated user's id number.
      *
@@ -61,6 +73,13 @@ public class Authenticated {
      */
     public static void setUsername(String username){
         Authenticated.username = username;
+    }
+    
+    public static void setClientSocket(SocketClient socket){
+        Authenticated.clientSocket = socket;
+    }
+     public static void setServerSocket(SocketClient socket){
+        Authenticated.serverSocket = socket;
     }
       
     public static void findGame(){
