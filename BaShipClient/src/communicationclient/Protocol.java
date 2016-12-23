@@ -1,6 +1,7 @@
 package communicationclient;
 
 import businesslogicclient.Authenticated;
+import businesslogicclient.Game;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.sql.SQLException;
@@ -14,10 +15,12 @@ import java.util.Properties;
  * @author Diogo Recharte
  */
 public class Protocol {
+    private static final String TOKEN = "#";
     private static final String LOGIN = "login";
     private static final String REGISTER = "register";
     private static final String SOCKET = "socket";
     private static final String GAME = "game";
+    private static final String CREATE = "create";
     
     /**
      * Class Constructor
@@ -38,21 +41,18 @@ public class Protocol {
      */
     public static int validateLogin(String username, String password){
         SocketClient cSocket = new SocketClient();
-        String inputLine, inputLine2;
+        String inputLine;
         String[] reply;
         int userID = -1;
         try{ 
             cSocket.openCom();
             
-            cSocket.write(LOGIN + "#" + username + "#" + password);
+            cSocket.write(LOGIN + TOKEN + username + TOKEN + password);
             
             inputLine=cSocket.read();
             System.out.println(inputLine);
             
-            cSocket.write(LOGIN + "#" + username + "#" + password);
             
-            inputLine2=cSocket.read();
-            System.out.println(inputLine2);
             reply=decodeReply(inputLine, LOGIN);
             if(reply[0].equals("ok"))
                 userID = Integer.parseInt(reply[1]);
@@ -92,7 +92,7 @@ public class Protocol {
         
         try{ 
             cSocket.openCom();
-            cSocket.write(REGISTER + "#" + email + "#" +  username + "#" + password);
+            cSocket.write(REGISTER + TOKEN + email + TOKEN +  username + TOKEN + password);
             inputLine=cSocket.read();
             System.out.println("reg: " + inputLine);
             reply=decodeReply(inputLine, REGISTER);
@@ -116,7 +116,9 @@ public class Protocol {
         return userID;
         
     }
-        public void createComs(){
+    
+    
+    public void createComs(){
         SocketClient clientSocket = new SocketClient();
         SocketClient serverSocket = new SocketClient();
         boolean clientFlag = false;
@@ -133,7 +135,7 @@ public class Protocol {
         }
         try{
             serverSocket.openCom();
-            serverSocket.write(SOCKET + "#" + Authenticated.getID());
+            serverSocket.write(SOCKET + TOKEN + Authenticated.getID());
             serverFlag=true;
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host gnomo.");
@@ -145,25 +147,41 @@ public class Protocol {
             Authenticated.setServerSocket(serverSocket);
         }
         else{
+            System.err.println("Couldn't connect to host gnomo.");
             System.exit(1);
+        }
+    }
+    
+    public void endComs(){
+        try {
+            Authenticated.getClientSocket().closeCom();
+            Authenticated.getServerSocket().closeCom();
+        } catch (IOException e) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
     }
         
     public static void findGame(int userID){
         
         String inputLine = null;
+        String[] reply;
+        Game game;
         
-        Authenticated.getClientSocket().write(GAME + "#" + "create" + "#" + userID);
+        Authenticated.getClientSocket().write(GAME + TOKEN + CREATE + TOKEN + userID);
 
         try {
-            inputLine=Authenticated.getClientSocket().read();
+            inputLine = Authenticated.getClientSocket().read();
+            reply = decodeReply(inputLine, GAME);
+            if(reply[0].equals(CREATE)){
+                if(reply[1].equals("ok")){
+                    Game.reset();
+                    Game.setID(Integer.parseInt(reply[2]));
+                    Game.setOpponent(reply[3]);
+                }
+            }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
-
-        decodeReply(inputLine, GAME);
-            
-        
     }
     /**
      * Interprets the messages received from the server.
@@ -176,7 +194,7 @@ public class Protocol {
      * @param operation     opcode to validate the message
      */
      private static String[] decodeReply(String input, String operation){
-        String opcode[] = input.split("#");
+        String opcode[] = input.split(TOKEN);
         if (opcode[0].equals(operation)){
             return Arrays.copyOfRange(opcode, 1, opcode.length);
         }
