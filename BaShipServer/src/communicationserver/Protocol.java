@@ -12,12 +12,12 @@ import java.sql.SQLException;
  * @author Alunos-i221-16
  */
 public class Protocol {
-    private final String OPCODE1 = "login";
-    private final String OPCODE2 = "register";
-    private final String OPCODE3 = "game";
-    private final String OPCODE4 = "replay";
+    private static final String OPCODE1 = "login";
+    private static final String OPCODE2 = "register";
+    private static final String OPCODE3 = "game";
+    private static final String OPCODE4 = "replay";
     
-    private String reply;
+    private static String reply;
     
     /**
      * Class Constructor
@@ -35,7 +35,7 @@ public class Protocol {
      * @param a         received message
      * @return          message to reply to the client
      */
-    public String ProtocolDecode(String a) {
+    public static String protocolDecode(String a) {
         String opcode[] = a.split("#");
         
         switch (opcode[0]) {
