@@ -26,7 +26,7 @@ public class Game {
         try{
             DbGame.createGame(player1Id, player2Id);
         } catch(SQLException e) {
-            System.out.println("Error savin ship" + e);
+            System.out.println("Error saving ship" + e);
         }
         
         id++; //ainda tenho de ver melhor maneira de buscar id
@@ -41,7 +41,7 @@ public class Game {
                 try {
                     DbGame.setGameWinner(playerId, gameId);
                 } catch (SQLException e) {
-                    System.out.println("Error savin ship" + e );
+                    System.out.println("Error saving ship" + e );
                 }
                 
                 GameList.remove(gameId);
@@ -51,7 +51,7 @@ public class Game {
                 try {
                     DbGame.setGameWinner(playerId, gameId);
                 } catch(SQLException e) {
-                    System.out.println("Error savin ship" + e );
+                    System.out.println("Error saving ship" + e );
                 }
                 
                 GameList.remove(gameId);

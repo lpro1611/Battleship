@@ -14,6 +14,7 @@ import java.util.*;
  */
 public class AuthenticatedUsers {
     public static Map <Integer, Authenticated> authenticatedList = new HashMap<>();
+    public static Map <Integer, Challenge> ChallengeList = new HashMap<>();
     
     
     public AuthenticatedUsers () {}
@@ -31,7 +32,7 @@ public class AuthenticatedUsers {
         
         new SendMessageSocket("socket#ok", socket).start();
         
-        // while there logged in user
+        // while user is logged in
         while (authenticatedList.containsKey(userId)) {/* do nothing */}
     }
     
@@ -50,8 +51,25 @@ public class AuthenticatedUsers {
         return list;
     }
     
+    public static String setChallenge(int playerId1, int playerId2) {
+        //o playerId1 pode funcionar como chave pois um utilizador apenas pode fazer um challenge de cada vez
+        //não esqucer re retirar esta entrada da lista depois do challenge se resolvido
+        ChallengeList.putIfAbsent(playerId1, new Challenge(playerId1, playerId2));
+        
+        while (ChallengeList.get(playerId1).getState().equals("wait")) {/* do nothing */}
+        
+        // se demorou muito tempo sem resposta envia timeout
+        //return "timeout";
+        
+        if (ChallengeList.get(playerId1).getState().equals("accept")) {
+            //começar jogo
+            
+        }
+        
+        return ChallengeList.get(playerId1).getState();
+    }
+    
     public static void receiveChallenge() {}
-    public static void sendChallenge() {}
     public static void replyChallenge() {}
     
 }

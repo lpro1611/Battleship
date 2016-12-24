@@ -19,8 +19,9 @@ public class Protocol {
     private static final String REGISTER = "register";
     private static final String SOCKET = "socket";
     private static final String EXIT = "exit";
-    private static final String REPLAY = "replay";
     private static final String CHALLENGE = "challenge";
+    private static final String INVITE = "invite";
+    private static final String REPLAY = "replay";
     private static final String GAME = "game";
     
     private static String reply;
@@ -106,6 +107,15 @@ public class Protocol {
                     }
                 } catch (NumberFormatException e) {
                     reply += "#error";
+                }
+                
+            case INVITE:
+                reply = INVITE + "#";
+                try {
+                    String inviteAnswer = AuthenticatedUsers.setChallenge(Integer.parseInt(opcode[1]), Integer.parseInt(opcode[2]));
+                    reply += inviteAnswer;
+                } catch (Exception e) {
+                    reply += "error";
                 }
                 
             default: 
