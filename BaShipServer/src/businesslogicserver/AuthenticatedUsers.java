@@ -53,8 +53,9 @@ public class AuthenticatedUsers {
     
     public static String setChallenge(int playerId1, int playerId2) {
         //o playerId1 pode funcionar como chave pois um utilizador apenas pode fazer um challenge de cada vez
-        //não esqucer re retirar esta entrada da lista depois do challenge se resolvido
+        //não esquecer de retirar esta entrada da lista depois do challenge se resolvido
         ChallengeList.putIfAbsent(playerId1, new Challenge(playerId1, playerId2));
+        
         
         while (ChallengeList.get(playerId1).getState().equals("wait")) {/* do nothing */}
         

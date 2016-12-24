@@ -41,7 +41,6 @@ public class SendMessageSocket extends Thread {
                 out.println(message);
             }
             
-            out.close();
             // o socket não é fechado aqui mas em ReceiveMessageSocket
  
         } catch (IOException e) {

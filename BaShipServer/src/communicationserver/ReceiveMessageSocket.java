@@ -43,10 +43,10 @@ public class ReceiveMessageSocket extends Thread {
                     reply = Protocol.protocolDecode(inputLine, socket);
                     
                     if (reply != null) {
+                        out.println(reply);
+                        
                         if (reply.equals("exit")) {
                             break;
-                        } else {
-                            out.println(reply);
                         }
                     }
                 }
