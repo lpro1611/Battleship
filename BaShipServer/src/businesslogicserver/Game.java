@@ -5,6 +5,8 @@
  */
 package businesslogicserver;
 
+import dataacess.DbGame;
+import java.sql.SQLException;
 import java.util.*;
 
 
@@ -13,30 +15,46 @@ import java.util.*;
  * @author CPU TOSH
  */
 public class Game {
-    public static Map <Integer, GameState> GameList;
-    public static int id;
+    public static Map <Integer, GameState> GameList = new HashMap<>();
+    private static int id = 0;
     
-    public Game() {
-        //nada esta sempre a correr
-        id = 0;
-    }
+    public Game() {}
 
-    public void createGame(String Player1, String Player2) {
-        GameList.put(id, new GameState(id,Player1, Player2));
+    public static void createGame(int player1Id, int player2Id) {
+        GameList.put(id, new GameState(id, player1Id, player2Id));
+        
+        try{
+            DbGame.createGame(player1Id, player2Id);
+        } catch(SQLException e) {
+            System.out.println("Error savin ship" + e);
+        }
+        
         id++; //ainda tenho de ver melhor maneira de buscar id
     }
 
-    public String attack(int GameID, String player, int x, int y) {
-        int hits = GameList.get(GameID).attack(player, x, y);
+    public static String attack(int gameId, int playerId, int x, int y) {
+        int hits = GameList.get(gameId).attack(playerId, x, y);
+        
         if (hits == 6) {
-            if (player == (GameList.get(GameID).Player1)) {
+            if (playerId == (GameList.get(gameId).getPlayer1Id())) {
                 //Protocol.endGame(..) Para ambos jogaores Player 1 victorious
-                GameList.remove(GameID);
+                try {
+                    DbGame.setGameWinner(playerId, gameId);
+                } catch (SQLException e) {
+                    System.out.println("Error savin ship" + e );
+                }
+                
+                GameList.remove(gameId);
                 id--;
-            }
-            else {
+            } else {
                 //Protocol.endGame(..) Para ambos jogaoresPlayer 2 victorious
-                GameList.remove(GameID);
+                try {
+                    DbGame.setGameWinner(playerId, gameId);
+                } catch(SQLException e) {
+                    System.out.println("Error savin ship" + e );
+                }
+                
+                GameList.remove(gameId);
                 id--;
             }      
         }
