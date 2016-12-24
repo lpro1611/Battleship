@@ -67,7 +67,7 @@ public class BoardGUI extends JPanel{
                 Shot.mark(row, col);
             }
 
-            board.placeShip(row, col, size, horizontalOrientation);
+            board.placeTemporaryShip(row, col, size, horizontalOrientation);
             if (horizontalOrientation){
                 for (int i=col; i<col+size; i++){
                     if (i==10)
@@ -173,10 +173,27 @@ public class BoardGUI extends JPanel{
     public void toggleHorizontalOrientation(){
         this.horizontalOrientation = (!this.horizontalOrientation);
     }
+    
+    public void setBoard(Board board){
+        this.board = board;
+    }
+    
+    public void updateBoard(){
+        for(int i=0; i<10; i++){
+            for(int j=0;j<10;j++){
+                if (board.getState(i, j)==1){
+                    cell[i][j].setBackground(new java.awt.Color(153, 153, 153));
+                }
+            }
+        }
+    }
     public void reset(){
         board.reset();
         for(int row = 0; row<10; row++)
             for(int col = 0; col<10; col++)
                 cell[row][col].setBackground(new java.awt.Color(220, 220, 225));
+    }
+    public Board getBoard(){
+        return board;
     }
 }

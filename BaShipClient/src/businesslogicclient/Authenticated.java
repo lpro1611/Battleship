@@ -81,8 +81,14 @@ public class Authenticated {
      public static void setServerSocket(SocketClient socket){
         Authenticated.serverSocket = socket;
     }
-      
-    public static void playGame(){
-        Protocol.findGame(Authenticated.id);
+     
+    public static void logout(){
+        Protocol.endComs();
+        Authenticated.setID(0);
+        Authenticated.setUsername(null);
+    }
+    
+    public static boolean playGame(){
+        return Protocol.findGame(Authenticated.id);
     }
 }

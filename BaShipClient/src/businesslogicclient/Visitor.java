@@ -34,7 +34,7 @@ public class Visitor {
         if (userID > 0){
             Authenticated.setID(userID);
             Authenticated.setUsername(username);
-            System.out.println("id: " + Authenticated.getID());
+            Protocol.startComs();
             return true;
         }
         else return false;

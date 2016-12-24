@@ -1,5 +1,14 @@
 package interfaces;
 
+import businesslogicclient.Game;
+import java.awt.CardLayout;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author diogo
@@ -305,7 +314,38 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        // TODO add your handling code here:
+        if(!board1.getBoard().placeAllShips()){
+            board1.reset();
+            carrierButton.setEnabled(true);
+            battleshipButton.setEnabled(true);
+            cruiserButton.setEnabled(true);
+            submarineButton.setEnabled(true);
+            destroyerButton.setEnabled(true);
+            playButton.setEnabled(false);
+            JOptionPane.showMessageDialog(PlaceShipsGUI.this, "Placing Ships Failed", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+            cl.show(MainFrame.mainPanel, MainFrame.LOADING);
+            ExecutorService executor = Executors.newCachedThreadPool();
+            executor.submit(new Runnable(){
+                @Override
+                public void run() {
+                    if(Game.begin()){
+                        Game.setBoard(board1.getBoard());
+                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                        cl.show(MainFrame.mainPanel, MainFrame.GAME);
+                    }
+                    else{
+                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                        JOptionPane.showMessageDialog(PlaceShipsGUI.this, "Couldn't start game", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            
+            });
+            executor.shutdown();
+        }
     }//GEN-LAST:event_playButtonActionPerformed
 
     private void carrierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carrierButtonActionPerformed
