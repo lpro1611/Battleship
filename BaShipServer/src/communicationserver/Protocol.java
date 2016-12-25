@@ -6,7 +6,6 @@ import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
 import java.sql.SQLException;
 import java.net.*;
-import sun.security.util.PropertyExpander;
 
 /**
  * Implements the protocol used to communicate between the 

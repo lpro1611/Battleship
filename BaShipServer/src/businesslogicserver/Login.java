@@ -1,5 +1,6 @@
 package businesslogicserver;
 
+import communicationserver.SendMessageSocket;
 import dataacess.*;
 import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
@@ -38,6 +39,8 @@ public class Login {
         if (duplicatedLogin) {
             return -1;
         }
+        
+        //new SendMessageSocket("ola", AuthenticatedUsers.authenticatedList.get(id).getSocket()).start();
         
         return id;
     }

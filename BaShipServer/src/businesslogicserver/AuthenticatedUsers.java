@@ -37,37 +37,41 @@ public class AuthenticatedUsers {
     }
     
     public static String menuChallenge(int userId) {
-        String list = null;
+        String usersString = null;
         
         for (Map.Entry<Integer, Authenticated> entry : authenticatedList.entrySet()) {
             if ((entry.getValue()).getId() != userId) {
-                list += "#";
-                list += (entry.getValue()).getId();
-                list += "#";
-                list += (entry.getValue()).getName();
+                usersString += "#";
+                usersString += (entry.getValue()).getId();
+                usersString += "#";
+                usersString += (entry.getValue()).getName();
             }
         }        
         
-        return list;
+        return usersString;
     }
     
-    public static String setChallenge(int playerId1, int playerId2) {
+    public static String setChallenge(int player1Id, int player2Id) {
         //o playerId1 pode funcionar como chave pois um utilizador apenas pode fazer um challenge de cada vez
         //não esquecer de retirar esta entrada da lista depois do challenge se resolvido
-        ChallengeList.putIfAbsent(playerId1, new Challenge(playerId1, playerId2));
+        ChallengeList.putIfAbsent(player1Id, new Challenge(player1Id, player2Id));
+        // ver se o jogador está  jogar ou não
+        String message = "invite#" + player1Id + "#" + authenticatedList.get(player1Id).getName();
+        
+        //new SendMessageSocket.(message , authenticatedList.get(player2Id).getSocket()).start();
         
         
-        while (ChallengeList.get(playerId1).getState().equals("wait")) {/* do nothing */}
+        while (ChallengeList.get(player1Id).getState().equals("wait")) {/* do nothing */}
         
         // se demorou muito tempo sem resposta envia timeout
         //return "timeout";
         
-        if (ChallengeList.get(playerId1).getState().equals("accept")) {
+        if (ChallengeList.get(player1Id).getState().equals("accept")) {
             //começar jogo
             
         }
         
-        return ChallengeList.get(playerId1).getState();
+        return ChallengeList.get(player1Id).getState();
     }
     
     public static void receiveChallenge() {}
