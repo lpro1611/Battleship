@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,8 +34,9 @@ public class HomePageGUI extends javax.swing.JPanel {
         bashipLabel = new javax.swing.JLabel();
         adsPanel = new javax.swing.JPanel();
         adsLabel = new javax.swing.JLabel();
-        playnowButton = new javax.swing.JButton();
+        playNowButton = new javax.swing.JButton();
         challengeButton = new javax.swing.JButton();
+        settingsButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(220, 220, 225));
 
@@ -63,12 +65,12 @@ public class HomePageGUI extends javax.swing.JPanel {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        playnowButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        playnowButton.setText("Play Now");
-        playnowButton.setOpaque(false);
-        playnowButton.addActionListener(new java.awt.event.ActionListener() {
+        playNowButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        playNowButton.setText("Play Now");
+        playNowButton.setOpaque(false);
+        playNowButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                playnowButtonActionPerformed(evt);
+                playNowButtonActionPerformed(evt);
             }
         });
 
@@ -80,65 +82,81 @@ public class HomePageGUI extends javax.swing.JPanel {
             }
         });
 
+        settingsButton.setBackground(new java.awt.Color(220, 220, 225));
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/settings.png"))); // NOI18N
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
-                        .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(483, 483, 483)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(bashipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(playnowButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(190, 190, 190)
+                .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(190, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(483, 483, 483)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bashipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(playNowButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bashipLabel)
-                .addGap(99, 99, 99)
-                .addComponent(playnowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(bashipLabel)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(settingsButton)))
+                .addGap(123, 123, 123)
+                .addComponent(playNowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(83, 83, 83)
                 .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
                 .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void playnowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playnowButtonActionPerformed
+    private void playNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNowButtonActionPerformed
         CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
         cl.show(MainFrame.mainPanel, MainFrame.LOADING);
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(new Runnable(){
             @Override
             public void run() {
-                String str=null;
-                BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-                try {
-                    str=input.readLine();
-                } catch (IOException ex) {
-                }
-                CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                if(str.equals("game"))
-                    cl.show(MainFrame.mainPanel, MainFrame.GAME);
-                else
+                if(Authenticated.playGame()){
+                    CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
                     cl.show(MainFrame.mainPanel, MainFrame.PLACESHIPS);
+                }
+                else{
+                    CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                    cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                    JOptionPane.showMessageDialog(HomePageGUI.this, "Couldn't find game", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
             
         });
         executor.shutdown();
-    }//GEN-LAST:event_playnowButtonActionPerformed
+    }//GEN-LAST:event_playNowButtonActionPerformed
 
     private void challengeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_challengeButtonActionPerformed
+
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+        cl.show(MainFrame.mainPanel, MainFrame.SETTINGS);
+    }//GEN-LAST:event_settingsButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -146,6 +164,7 @@ public class HomePageGUI extends javax.swing.JPanel {
     private javax.swing.JPanel adsPanel;
     private javax.swing.JLabel bashipLabel;
     private javax.swing.JButton challengeButton;
-    private javax.swing.JButton playnowButton;
+    private javax.swing.JButton playNowButton;
+    private javax.swing.JButton settingsButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,8 @@
 package businesslogicclient;
 
+import communicationclient.Protocol;
+import java.util.ArrayList;
+
 /**
  *
  * @author diogo
@@ -8,10 +11,12 @@ public class Board {
     
     private final int[][]cell;
     private int numCellsFilled;
+    private final ArrayList<BoatPlacement> boatsPlacement;
     
     public Board(){
         cell = new int[10][10];
         numCellsFilled = 0;
+        boatsPlacement = new ArrayList<>();
     }
     
     public boolean isValidPosition(int row, int col, int size, boolean horizontalOrientation){
@@ -36,7 +41,7 @@ public class Board {
         return true;
     }
     
-    public void placeShip(int row, int col, int size, boolean horizontalOrientation){
+    public void placeTemporaryShip(int row, int col, int size, boolean horizontalOrientation){
         if (horizontalOrientation) {
             for (int i=col; i<col+size; i++){
                 cell[row][i]=1;
@@ -47,6 +52,19 @@ public class Board {
                 cell[i][col]=1;
         }
         numCellsFilled += size;
+        boatsPlacement.add(new BoatPlacement(row, col, size, horizontalOrientation));
+    }
+    
+    public boolean placeAllShips(){
+       if(boatsPlacement.size()==5){
+           for(BoatPlacement boat : boatsPlacement){
+               if(!Protocol.placeShip(Game.getID(), Authenticated.getID(), boat.getRowStart(), boat.getColStart(), boat.getRowEnd(), boat.getColEnd()))
+                   return false;
+           }
+           return true;
+       }
+       else
+           return false;
     }
     
     public int getState(int row, int col){
@@ -82,6 +100,45 @@ public class Board {
             for(int j=0; j<10;j++)
                 cell[i][j]=0;
         numCellsFilled = 0;
+        boatsPlacement.removeAll(boatsPlacement);
+    }
+    
+    
+    private class BoatPlacement{
+        private final int rowStart; 
+        private final int colStart;
+        private final int rowEnd; 
+        private final int colEnd;
+        
+        public BoatPlacement(int row, int col, int size, boolean horizontalOrientation){
+            rowStart = row;
+            colStart = col;
+            if (horizontalOrientation){
+                rowEnd = row;
+                colEnd = col + size -1;
+            }
+            else {
+                rowEnd = row + size -1;
+                colEnd = col;
+            }
+        }
+        
+        public int getRowStart(){
+            return rowStart;
+        }
+        
+        public int getColStart(){
+            return colStart;
+        }
+        
+        public int getRowEnd(){
+            return rowEnd;
+        }
+        
+        public int getColEnd(){
+            return colEnd;
+        }
+        
     }
     
 }

@@ -45,7 +45,7 @@ public class LoadingGUI extends javax.swing.JPanel {
         bashipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         bashipLabel.setText("Loading...");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/ajax-loader.gif"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/loadbar.gif"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
