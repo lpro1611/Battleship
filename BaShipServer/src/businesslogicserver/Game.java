@@ -20,7 +20,7 @@ public class Game {
     
     public Game() {}
 
-    public static void createGame(int player1Id, int player2Id) {
+    public static int createGame(int player1Id, int player2Id) {
         GameList.put(id, new GameState(id, player1Id, player2Id));
         
         try{
@@ -30,6 +30,8 @@ public class Game {
         }
         
         id++; //ainda tenho de ver melhor maneira de buscar id
+        
+        return id - 1;
     }
 
     public static String attack(int gameId, int playerId, int x, int y) {
