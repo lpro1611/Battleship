@@ -18,12 +18,12 @@ public class Authenticated {
     private final int id;
     private final String name;
     private Socket socket;
-    private boolean inGame;
+    private int currentGameId;
     
     public Authenticated(int id) throws SQLException, NotFoundException {
         this.id = id;
         name = DbUser.getUserNameById(id);
-        inGame = false;
+        currentGameId = -1;
     }
     
     public int getId() {
@@ -34,16 +34,22 @@ public class Authenticated {
         return name;
     }
     
-    public boolean getInGame() {
-        return inGame;
+    public int getCurrentGameId() {
+        return currentGameId;
     }
     
     public Socket getSocket() {
         return socket;
     }
     
-    public void setInGame(boolean inGame) {
-        this.inGame = inGame;
+    public void setCurrentGameId(int currentGameId) {
+        if (currentGameId > -1) {
+            this.currentGameId = currentGameId;
+        }
+    }
+    
+    public void clearCurrentGameId() {
+        currentGameId = -1;
     }
     
     public void setSocket(Socket socket) {
