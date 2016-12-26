@@ -15,6 +15,8 @@ import java.util.*;
 public class AuthenticatedUsers {
     public static Map <Integer, Authenticated> authenticatedList = new HashMap<>();
     public static Map <Integer, Challenge> ChallengeList = new HashMap<>();
+    public static MatchMakerThread matchmakerthread;
+    public static Integer lastPlayerRequest;
     
     
     public AuthenticatedUsers () {}
@@ -69,7 +71,14 @@ public class AuthenticatedUsers {
         
         return ChallengeList.get(playerId1).getState();
     }
-    
+    public static void playNow(Integer PlayerID){
+        if(matchmakerthread.isAlive()==false){
+            matchmakerthread.run();
+        }
+        
+        matchmakerthread.Players.add(PlayerID);
+        return; 
+    }
     public static void receiveChallenge() {}
     public static void replyChallenge() {}
     
