@@ -24,7 +24,16 @@ public class AuthenticatedUsers {
     }
     
     public static void remove(int userId) {
+        long timeoutTime = 10 * 1000; //10 segundos
+        
         authenticatedList.remove(userId);
+        long startTime = System.currentTimeMillis();
+        while (true) {
+            /* do nothing */
+            if (System.currentTimeMillis() >= (startTime + timeoutTime)) {
+                break;
+            }
+        } 
     }
     
     public static void addSocket(int userId, Socket socket) {
@@ -34,6 +43,7 @@ public class AuthenticatedUsers {
         
         // while user is logged in
         while (authenticatedList.containsKey(userId)) {/* do nothing */}
+        new SendMessageSocket("exit#ok", socket).start();
     }
     
     public static String menuChallenge(int userId) {

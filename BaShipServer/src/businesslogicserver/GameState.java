@@ -164,9 +164,9 @@ public class GameState {
         
         if (ready1 && ready2) {
             //Protocol.beginGame(Player2)
-            return "Begin";
+            return "start";
         } else {
-            return "Wait for other Player";
+            return "wait";
         }
     }
 }

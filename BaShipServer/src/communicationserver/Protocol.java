@@ -92,6 +92,7 @@ public class Protocol {
                 } catch (NumberFormatException e) {
                     reply = EXIT + "#error";
                 }
+                break;
                 
             case CHALLENGE:
                 reply = CHALLENGE;
@@ -107,15 +108,25 @@ public class Protocol {
                 } catch (NumberFormatException e) {
                     reply += "#error";
                 }
+                break;
                 
             case INVITE:
                 reply = INVITE + "#";
                 try {
-                    String inviteAnswer = inviteDecode(opcode);
-                    reply += inviteAnswer;
+                    reply += inviteDecode(opcode);
                 } catch (Exception e) {
                     reply += "error";
                 }
+                break;
+                
+            case GAME:
+                reply = GAME + "#";
+                try {
+                    reply += gameDecode(opcode);
+                } catch (Exception e) {
+                    reply += "error";
+                }
+                break;
                 
             default: 
                 reply = "error";             
@@ -134,5 +145,77 @@ public class Protocol {
         }
         
         return inviteAnswer;
+    }
+    
+    private static String gameDecode(String[] opcode) {
+        final String BEGIN = "begin";
+        final String END = "end";
+        final String QUIT = "quit";
+        final String CHAT = "chat";
+        final String PLACE = "place";
+        final String ATTACK = "attack";
+        
+        String answer = "error";
+        
+        switch (opcode[1]) {
+            case BEGIN:
+                answer = BEGIN + "#";
+                try {
+                    answer += Game.playerReady(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]));
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            case END:
+                answer = END + "#";
+                try {
+                    
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            case QUIT:
+                answer = QUIT + "#";
+                try {
+                    
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            case CHAT:
+                answer = CHAT + "#";
+                try {
+                    
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            case PLACE:
+                answer = PLACE + "#";
+                try {
+                    answer += Game.placeShips(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), Integer.parseInt(opcode[4]), Integer.parseInt(opcode[5]), Integer.parseInt(opcode[6]), Integer.parseInt(opcode[7]), Integer.parseInt(opcode[8]));
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            case ATTACK:
+                answer = ATTACK + "#";
+                try {
+                    
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            default:
+                //do nothing
+        }
+        
+        return answer;
     }
 }

@@ -34,6 +34,20 @@ public class Game {
         return id - 1;
     }
 
+    public static String playerReady(int gameId, int playerId) {
+        while (GameList.get(gameId).playerReady(playerId).equals("wait")) {
+            /*do nothing*/
+        }
+        
+        return "start";
+    }
+    
+    public static String placeShips(int gameId, int playerId, int id, int startX, int startY, int endX, int endY) {
+        GameList.get(gameId).placeShip(playerId, id, startX, startY, endX, endY);
+        
+        return "ok";
+    }
+    
     public static String attack(int gameId, int playerId, int x, int y) {
         int hits = GameList.get(gameId).attack(playerId, x, y);
         
