@@ -77,10 +77,10 @@ public class AuthenticatedUsers {
         ChallengeList.remove(player1Id);
         
         if (reply.equals("accept")) {
-            int gameId = Game.createGame(player1Id, player2Id); //isto devia de retornar o id do jogo
+            int gameId = Game.createGame(player1Id, player2Id);
             authenticatedList.get(player1Id).setCurrentGameId(gameId);
             authenticatedList.get(player2Id).setCurrentGameId(gameId);
-            reply += gameId;
+            reply += "#" + gameId;
         }
         
         return reply;

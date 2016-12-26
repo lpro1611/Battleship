@@ -43,7 +43,7 @@ public class Protocol {
      * @return          message to reply to the client
      */
     public static String protocolDecode(String message, Socket socket) {
-        String opcode[] = message.split("#");
+        String[] opcode = message.split("#");
         
         switch (opcode[0]) {
             case LOGIN:   
@@ -111,7 +111,7 @@ public class Protocol {
             case INVITE:
                 reply = INVITE + "#";
                 try {
-                    String inviteAnswer = AuthenticatedUsers.setChallenge(Integer.parseInt(opcode[1]), Integer.parseInt(opcode[2]));
+                    String inviteAnswer = inviteDecode(opcode);
                     reply += inviteAnswer;
                 } catch (Exception e) {
                     reply += "error";
@@ -122,5 +122,17 @@ public class Protocol {
         }
         
     return reply;    
+    }
+    
+    private static String inviteDecode(String[] opcode) {
+        String inviteAnswer;
+        
+        if (!opcode[1].equals("reply")) {
+            inviteAnswer = AuthenticatedUsers.setChallenge(Integer.parseInt(opcode[1]), Integer.parseInt(opcode[2]));
+        } else {
+            inviteAnswer = AuthenticatedUsers.replyChallenge(Integer.parseInt(opcode[3]), opcode[4]);
+        }
+        
+        return inviteAnswer;
     }
 }
