@@ -27,12 +27,21 @@ public class Shot {
         Shot.criticalHit = criticalHit;
     }
     
-    public static void setBoadName(String boatName){
+    public static void setBoatName(String boatName){
         Shot.boatName = boatName;
     }
     
     public static boolean fire(){
+        Shot.marked = false;
         if(Protocol.fireShot(Game.getID(), Authenticated.getID(), row, col)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public static boolean receive(){
+        if(Protocol.receiveShot()){
             Shot.marked = false;
             return true;
         }

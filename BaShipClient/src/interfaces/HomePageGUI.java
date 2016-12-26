@@ -150,7 +150,8 @@ public class HomePageGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_playNowButtonActionPerformed
 
     private void challengeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionPerformed
-        // TODO add your handling code here:
+        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+        cl.show(MainFrame.mainPanel, MainFrame.CHALLENGE);
     }//GEN-LAST:event_challengeButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed

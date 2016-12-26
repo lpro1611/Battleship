@@ -2,8 +2,9 @@ package businesslogicclient;
 
 import communicationclient.Protocol;
 import communicationclient.SocketClient;
-import java.io.IOException;
-import java.net.UnknownHostException;
+import interfaces.InvitePopup;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Represents an authenticated user which has a name 
@@ -90,5 +91,37 @@ public class Authenticated {
     
     public static boolean playGame(){
         return Protocol.findGame(Authenticated.id);
+    }
+
+    public static String challengeUser(String username){
+        return Protocol.challengeUser(id, Challenge.getID(username), username);
+    }
+    
+    public static boolean acceptedChallenge (String username){
+        if(!Game.isRunning()){
+            
+            JFrame inviteFrame = new JFrame("Invite");
+            JPanel invitePanel = new InvitePopup();
+            inviteFrame.setSize(400, 130);
+            inviteFrame.setResizable(false);
+            inviteFrame.setLocationRelativeTo(null);
+            inviteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            
+            inviteFrame.add(invitePanel);
+            
+            inviteFrame.setVisible(true);
+            
+            
+            while(invitePanel.isVisible()){
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    System.err.println("Thread interrupted");
+                }
+            }
+            
+        }     
+        
+        return Challenge.wasAccepted();
     }
 }
