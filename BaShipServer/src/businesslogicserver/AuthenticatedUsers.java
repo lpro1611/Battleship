@@ -43,7 +43,7 @@ public class AuthenticatedUsers {
         
         // while user is logged in
         while (authenticatedList.containsKey(userId)) {/* do nothing */}
-        new SendMessageSocket("exit#ok", socket).start();
+        new SendMessageSocket("exit", socket).start();
     }
     
     public static String menuChallenge(int userId) {

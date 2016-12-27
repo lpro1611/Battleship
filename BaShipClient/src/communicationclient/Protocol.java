@@ -178,12 +178,9 @@ public class Protocol {
                         }
                         System.out.println("closing server socket");
                         try {
-                            Thread.sleep(1000);
                             Authenticated.getServerSocket().closeCom();
                         } catch (IOException ex) {
                             System.err.println("Couldn't get I/O for the connection to gnomo.");
-                        } catch (InterruptedException ex){
-                            System.err.println("Thread interrupted.");
                         }
                         Authenticated.setServerSocket(null);
                         System.out.println("server socket closed");
