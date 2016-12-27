@@ -169,4 +169,18 @@ public class GameState {
             return "Wait for other Player";
         }
     }
+    
+    public int getPosition(int x, int y, int player){
+        if(player == player1Id)
+        return board1 [x][y];
+        else
+        return board2 [x] [y];    
+    }
+    
+    public boolean getPlayerState(int player){
+        if(player == player1Id)
+        return ready1;
+        else
+        return ready2;    
+    }
 }
