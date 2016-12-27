@@ -7,6 +7,7 @@ package businesslogicserver;
 
 import dataacess.DbUser;
 import exceptions.NotFoundException;
+import java.io.PrintWriter;
 import java.net.*;
 import java.sql.SQLException;
 
@@ -17,7 +18,7 @@ import java.sql.SQLException;
 public class Authenticated {
     private final int id;
     private final String name;
-    private Socket socket;
+    private PrintWriter out;
     private int currentGameId;
     
     public Authenticated(int id) throws SQLException, NotFoundException {
@@ -38,8 +39,8 @@ public class Authenticated {
         return currentGameId;
     }
     
-    public Socket getSocket() {
-        return socket;
+    public PrintWriter getSocket() {
+        return out;
     }
     
     public void setCurrentGameId(int currentGameId) {
@@ -52,8 +53,8 @@ public class Authenticated {
         currentGameId = -1;
     }
     
-    public void setSocket(Socket socket) {
-        this.socket = socket;
+    public void setSocket(PrintWriter out) {
+        this.out = out;
     } 
     
     public void addGame() {}

@@ -8,6 +8,7 @@ package businesslogicserver;
 import dataacess.DbGame;
 import java.sql.SQLException;
 import java.util.*;
+
 /**
  * Eu sei que falta chamar DB
  * @author CPU TOSH
@@ -112,14 +113,13 @@ public class GameState {
      
     public int attack(int player, int x, int y) {
         int[] hit = {0,0};
-        boolean saveHit =false;
+        boolean saveHit = false;
         
         if (player1Id == player) {
             hit[0] = board2[x][y];
             
             if (hit[0] != 0) {
                 hit[1] = (player2Ships.get(hit[0] - 1)).hit(); //atualiza barcos
-           
             }
             
             criticalHits1 = criticalHits1 + hit[1];

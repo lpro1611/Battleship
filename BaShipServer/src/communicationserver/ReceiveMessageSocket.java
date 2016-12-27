@@ -40,7 +40,7 @@ public class ReceiveMessageSocket extends Thread {
             
             do {
                 if((inputLine = in.readLine()) != null) {
-                    reply = Protocol.protocolDecode(inputLine, socket);
+                    reply = Protocol.protocolDecode(inputLine, out);
                     
                     if (reply != null) {
                         out.println(reply);

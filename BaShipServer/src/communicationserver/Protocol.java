@@ -4,6 +4,7 @@ import businesslogicserver.*;
 import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
 import exceptions.WrongPasswordException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.net.*;
 
@@ -39,10 +40,10 @@ public class Protocol {
      * the business logic and replies to the client.
      * 
      * @param message   received message
-     * @param socket    communication socket
+     * @param out
      * @return          message to reply to the client
      */
-    public static String protocolDecode(String message, Socket socket) {
+    public static String protocolDecode(String message, PrintWriter out) {
         String[] opcode = message.split("#");
         
         switch (opcode[0]) {
@@ -78,7 +79,7 @@ public class Protocol {
                 
             case SOCKET:
                 try {
-                    AuthenticatedUsers.addSocket(Integer.parseInt(opcode[1]), socket);
+                    AuthenticatedUsers.addSocket(Integer.parseInt(opcode[1]), out);
                     reply = "exit";
                 } catch (NumberFormatException e) {
                     reply = SOCKET + "#error";
@@ -206,7 +207,7 @@ public class Protocol {
             case ATTACK:
                 answer = ATTACK + "#";
                 try {
-                    
+                    answer += Game.attack(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), Integer.parseInt(opcode[4]), Integer.parseInt(opcode[5]));
                 } catch (Exception e) {
                     answer = "error";
                 }

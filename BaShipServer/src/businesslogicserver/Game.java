@@ -74,7 +74,7 @@ public class Game {
                 id--;
             }      
         }
-        return "ok"; //se necessario
+        return "ok";
     }
 }
     

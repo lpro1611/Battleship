@@ -2,6 +2,7 @@ package businesslogicserver;
 
 import communicationserver.SendMessageSocket;
 import exceptions.NotFoundException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.util.*;
@@ -36,14 +37,14 @@ public class AuthenticatedUsers {
         } 
     }
     
-    public static void addSocket(int userId, Socket socket) {
-        authenticatedList.get(userId).setSocket(socket);
+    public static void addSocket(int userId, PrintWriter out) {
+        authenticatedList.get(userId).setSocket(out);
         
-        new SendMessageSocket("socket#ok", socket).start();
+        new SendMessageSocket("socket#ok", out).start();
         
         // while user is logged in
         while (authenticatedList.containsKey(userId)) {/* do nothing */}
-        new SendMessageSocket("exit", socket).start();
+        new SendMessageSocket("exit", out).start();
     }
     
     public static String menuChallenge(int userId) {
