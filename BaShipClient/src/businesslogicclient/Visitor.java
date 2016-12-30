@@ -34,7 +34,7 @@ public class Visitor {
         if (userID > 0){
             Authenticated.setID(userID);
             Authenticated.setUsername(username);
-            Protocol.startComs();
+            Protocol.startServerComs();
             return true;
         }
         else return false;
@@ -83,7 +83,7 @@ public class Visitor {
         else if (userID > 0){ 
             Authenticated.setID(userID);
             Authenticated.setUsername(username);
-            System.out.println("id: " + Authenticated.getID());
+            Protocol.startServerComs();
             return "ok";
         }
         else

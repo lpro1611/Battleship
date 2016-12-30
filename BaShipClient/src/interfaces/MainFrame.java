@@ -26,6 +26,7 @@ public class MainFrame extends JFrame{
     static final String LOADING = "Loading panel";
     static final String PLACESHIPS = "Place Ships panel";
     static final String GAME = "Game panel";
+    static final String CHALLENGE = "Challenge panel";
     static JPanel mainPanel;
     /**
      * Constructor for the class.
@@ -54,6 +55,7 @@ public class MainFrame extends JFrame{
         mainPanel.add(new LoadingGUI(), LOADING);
         mainPanel.add(new PlaceShipsGUI(), PLACESHIPS);
         mainPanel.add(new GameGUI(), GAME);
+        mainPanel.add(new ChallengeGUI(), CHALLENGE);
         this.setContentPane(mainPanel);
         //this.pack(); //poe a janela do tamanho preferido dos paineis
         

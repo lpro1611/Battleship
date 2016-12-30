@@ -9,18 +9,18 @@ import java.io.*;
  * @author Diog Dinis
  */
 public class SendMessageSocket extends Thread {
-    private final Socket socket;
+    private final PrintWriter out;
     private final String message;
     
     /**
      * Class Constructor specifying the socket and the properties
      * 
      * @param message   message to send to the client
-     * @param socket    socket to communicate with the client
+     * @param out
      */
-    public SendMessageSocket(String message, Socket socket) {
+    public SendMessageSocket(String message, PrintWriter out) {
         super("SendMessageSocket");
-        this.socket = socket;
+        this.out = out;
         this.message = message;
     }
     
@@ -34,17 +34,10 @@ public class SendMessageSocket extends Thread {
      */
     @Override
     public void run() {
-        try {
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            
             if (message != null) {
                 out.println(message);
             }
             
             // o socket não é fechado aqui mas em ReceiveMessageSocket
- 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

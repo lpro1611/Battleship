@@ -156,15 +156,17 @@
                                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="battleshipButton" pref="81" max="32767" attributes="0"/>
-                              <Component id="submarineButton" max="32767" attributes="0"/>
-                              <Component id="cruiserButton" max="32767" attributes="0"/>
-                              <Component id="destroyerButton" max="32767" attributes="0"/>
-                              <Component id="carrierButton" alignment="0" max="32767" attributes="0"/>
+                          <EmptySpace min="29" pref="29" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="carrierButton" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="submarineButton" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="battleshipButton" alignment="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="cruiserButton" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="destroyerButton" alignment="1" min="-2" pref="94" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel7" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -207,7 +209,7 @@
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel6" pref="33" max="32767" attributes="0"/>
+                              <Component id="jLabel6" max="32767" attributes="0"/>
                               <Component id="destroyerButton" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -234,7 +236,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="    Class      |      Ship      |       Size"/>
+            <Property name="text" type="java.lang.String" value="    Class      |      Ship      |     Size"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
@@ -318,26 +320,66 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="carrierButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e1" green="dc" red="dc" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resources/images/carrier.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="carrierButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="battleshipButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e1" green="dc" red="dc" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resources/images/battleship.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="battleshipButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="cruiserButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e1" green="dc" red="dc" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resources/images/cruiser.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cruiserButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="submarineButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e1" green="dc" red="dc" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resources/images/submarine.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submarineButtonActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="destroyerButton">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="e1" green="dc" red="dc" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/resources/images/destroyer.png"/>
+            </Property>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="destroyerButtonActionPerformed"/>
           </Events>

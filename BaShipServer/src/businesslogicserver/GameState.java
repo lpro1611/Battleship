@@ -8,6 +8,7 @@ package businesslogicserver;
 import dataacess.DbGame;
 import java.sql.SQLException;
 import java.util.*;
+
 /**
  *This class handles and saves the state of current game
  * 
@@ -162,14 +163,13 @@ public class GameState {
      */
     public int attack(int player, int x, int y) {
         int[] hit = {0,0};
-        boolean saveHit =false;
+        boolean saveHit = false;
         
         if (player1Id == player) {
             hit[0] = board2[x][y];
             
             if (hit[0] != 0) {
                 hit[1] = (player2Ships.get(hit[0] - 1)).hit(); //atualiza barcos
-           
             }
             
             criticalHits1 = criticalHits1 + hit[1];
@@ -220,9 +220,9 @@ public class GameState {
         
         if (ready1 && ready2) {
             //Protocol.beginGame(Player2)
-            return "Begin";
+            return "start";
         } else {
-            return "Wait for other Player";
+            return "wait";
         }
     }
     /**

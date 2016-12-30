@@ -1,12 +1,14 @@
 package interfaces;
 
 import businesslogicclient.Authenticated;
+import businesslogicclient.Game;
 import java.awt.CardLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -37,6 +39,11 @@ public class SettingsGUI extends javax.swing.JPanel {
         homeButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(220, 220, 225));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         bashipLabel.setBackground(new java.awt.Color(220, 220, 225));
         bashipLabel.setFont(new java.awt.Font("Tahoma", 0, 90)); // NOI18N
@@ -118,16 +125,45 @@ public class SettingsGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lougoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lougoutButtonActionPerformed
-        if (Authenticated.getID()>=0)
-            Authenticated.logout();
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.LOGIN);
+        if (Game.isRunning()){
+            if (Game.concede()){
+                JOptionPane.showMessageDialog(SettingsGUI.this, "You Lost", "Game Over", JOptionPane.CANCEL_OPTION);
+                CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                cl.show(MainFrame.mainPanel, MainFrame.HOME);
+            }
+            else{
+                JOptionPane.showMessageDialog(SettingsGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else{
+            if (Authenticated.getID()>=0)
+                Authenticated.logout();
+            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+            cl.show(MainFrame.mainPanel, MainFrame.LOGIN);
+        }
     }//GEN-LAST:event_lougoutButtonActionPerformed
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+        if (Game.isRunning()){
+            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+            cl.show(MainFrame.mainPanel, MainFrame.GAME);
+        }
+        else{
+            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+            cl.show(MainFrame.mainPanel, MainFrame.HOME);
+        }
     }//GEN-LAST:event_homeButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        if (Game.isRunning()){
+            lougoutButton.setText("Concede Game");
+            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/back.png")));
+        }
+        else{
+            lougoutButton.setText("Logout");
+            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/home.png")));
+        }
+    }//GEN-LAST:event_formComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

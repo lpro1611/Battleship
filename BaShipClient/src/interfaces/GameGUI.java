@@ -3,6 +3,8 @@ package interfaces;
 import businesslogicclient.Game;
 import businesslogicclient.Shot;
 import java.awt.CardLayout;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
 /**
  *
@@ -41,6 +43,7 @@ public class GameGUI extends javax.swing.JPanel {
         youLabel = new javax.swing.JLabel();
         opponentLabel = new javax.swing.JLabel();
         turnLabel = new javax.swing.JLabel();
+        settingsButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(220, 220, 225));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -146,8 +149,21 @@ public class GameGUI extends javax.swing.JPanel {
 
         opponentLabel.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         opponentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        opponentLabel.setText("asd");
 
         turnLabel.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        turnLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        turnLabel.setMaximumSize(new java.awt.Dimension(485, 58));
+        turnLabel.setMinimumSize(new java.awt.Dimension(485, 58));
+        turnLabel.setPreferredSize(new java.awt.Dimension(485, 58));
+
+        settingsButton.setBackground(new java.awt.Color(220, 220, 225));
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/settings.png"))); // NOI18N
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -175,18 +191,24 @@ public class GameGUI extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(board2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(opponentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(34, 34, 34)
-                        .addComponent(attackButton)
-                        .addGap(54, 54, 54))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(attackButton)
+                                .addGap(54, 54, 54))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
                                 .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(200, 200, 200)
-                                .addComponent(turnLabel)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(68, 68, 68)
+                                .addComponent(turnLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -198,8 +220,13 @@ public class GameGUI extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(board1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(opponentLabel)
-                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(opponentLabel)
+                                .addGap(18, 18, 18))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(settingsButton)
+                                .addGap(27, 27, 27)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(board2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -209,8 +236,8 @@ public class GameGUI extends javax.swing.JPanel {
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(turnLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addComponent(turnLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(58, 58, 58))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -220,31 +247,47 @@ public class GameGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void attackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attackButtonActionPerformed
-        if(Shot.fire()){
-            board2.showShot();
-            //mudar o turno
-            //esperar pelo adversario para atualizar o board1
-        }
-        else{
-            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-            cl.show(MainFrame.mainPanel, MainFrame.HOME);
-            JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        attackButton.setEnabled(false);
+        Game.setMyTurn(false);
+        ExecutorService executor = Executors.newCachedThreadPool();
+        executor.submit(new Runnable(){
+            @Override
+            public void run() {
+                if(Shot.fire()){
+                    board2.showShot();
+                    turnLabel.setText("Your Opponent's Turn");
+                    if(Shot.receive()){
+                        board1.showShot();
+                        Game.setMyTurn(true);
+                        turnLabel.setText("Your Turn");
+                        board2.setActionSize(1);
+                    }
+                    else{
+                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                        JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else{
+                    CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                    cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                    JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        });
+        executor.shutdown();
+
+        
     }//GEN-LAST:event_attackButtonActionPerformed
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        if (Game.isMyTurn()){           //change the turns to other method
-            if(Shot.isMarked()){
-                board2.setActionSize(0);
-                attackButton.setEnabled(true);
-            }
-            else{
-                board2.setActionSize(1);
-                attackButton.setEnabled(false);
-            }
-        }
-        else{
+        if(Shot.isMarked()){
             board2.setActionSize(0);
+            attackButton.setEnabled(true);
+        }
+        else if(Game.isMyTurn()){
+            board2.setActionSize(1);
             attackButton.setEnabled(false);
         }
     }//GEN-LAST:event_formMouseMoved
@@ -274,9 +317,32 @@ public class GameGUI extends javax.swing.JPanel {
             turnLabel.setText("Your Opponent's Turn");
             board2.setActionSize(0);
             attackButton.setEnabled(false);
-            //wait for the opponents move
+            ExecutorService executor = Executors.newCachedThreadPool();
+            executor.submit(new Runnable(){
+                @Override
+                public void run() {
+                    if(Shot.receive()){
+                        board1.showShot();
+                        Game.setMyTurn(true);
+                        turnLabel.setText("Your Turn");
+                        board2.setActionSize(1);
+                    }
+                    else{
+                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                        JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+
+            });
+            executor.shutdown();
         }
     }//GEN-LAST:event_formComponentShown
+
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+        cl.show(MainFrame.mainPanel, MainFrame.SETTINGS);
+    }//GEN-LAST:event_settingsButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -291,6 +357,7 @@ public class GameGUI extends javax.swing.JPanel {
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel opponentLabel;
+    private javax.swing.JButton settingsButton;
     private javax.swing.JLabel turnLabel;
     private javax.swing.JLabel youLabel;
     // End of variables declaration//GEN-END:variables

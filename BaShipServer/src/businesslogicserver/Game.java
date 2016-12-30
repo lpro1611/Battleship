@@ -39,7 +39,7 @@ public class Game {
      * @param player1Id id number from player 1
      * @param player2Id id number from player 2
      */
-    public static void createGame(int player1Id, int player2Id) {
+    public static int createGame(int player1Id, int player2Id) {
         Random idGenerator = new Random();
         int id = idGenerator.nextInt();
         
@@ -52,8 +52,24 @@ public class Game {
         } catch(SQLException e) {
             System.out.println("Error saving ship" + e);
         }
+        
+        return id;
+    }
+
+    public static String playerReady(int gameId, int playerId) {
+        while (GameList.get(gameId).playerReady(playerId).equals("wait")) {
+            /*do nothing*/
+        }
+        
+        return "start";
     }
     
+    public static String placeShips(int gameId, int playerId, int id, int startX, int startY, int endX, int endY) {
+        GameList.get(gameId).placeShip(playerId, id, startX, startY, endX, endY);
+        
+        return "ok";
+    }     
+   
     /**
      * This method handles an attack by a player and its consequences
      * <p>
@@ -94,10 +110,9 @@ public class Game {
                 }
                 
                 GameList.remove(gameId);
-               
             }      
         }
-        return "ok"; //se necessario
+        return "ok";
     }
 }
     
