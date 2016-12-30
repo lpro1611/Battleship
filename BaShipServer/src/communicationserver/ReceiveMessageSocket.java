@@ -33,30 +33,28 @@ public class ReceiveMessageSocket extends Thread {
     @Override
     public void run() {
         try {
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            
-            String inputLine, reply = null;
-            
-            do {
-                if((inputLine = in.readLine()) != null) {
-                    reply = Protocol.protocolDecode(inputLine, socket);
-                    
-                    if (reply != null) {
-                        out.println(reply);
+            BufferedReader in;
+            try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true)) {
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                String inputLine, reply = null;
+                do {
+                    if((inputLine = in.readLine()) != null) {
+                        reply = Protocol.protocolDecode(inputLine, out);
                         
-                        if (reply.equals("exit")) {
-                            break;
+                        if (reply != null) {
+                            out.println(reply);
+                            
+                            if (reply.equals("exit")) {
+                                break;
+                            }
                         }
                     }
-                }
-                
-            } while (listening);
+                    
+                } while (listening);
+            }
             
-            out.close();
             in.close();
             socket.close();
-            
  
         } catch (IOException e) {
             e.printStackTrace();

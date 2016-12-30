@@ -59,30 +59,32 @@ public class BoardGUI extends JPanel{
         
         
     }
-    private void cellActionPerformed(java.awt.event.ActionEvent evt) {     
-        int row = (int)((JButton)evt.getSource()).getClientProperty( "row" );
-        int col = (int)((JButton)evt.getSource()).getClientProperty( "col" );
-        if (board.isValidPosition(row, col, size, horizontalOrientation)){
-            if (size ==1){
-                Shot.mark(row, col);
-            }
+    private void cellActionPerformed(java.awt.event.ActionEvent evt) {
+        if (size > 0){
+            int row = (int)((JButton)evt.getSource()).getClientProperty( "row" );
+            int col = (int)((JButton)evt.getSource()).getClientProperty( "col" );
+            if (board.isValidPosition(row, col, size, horizontalOrientation)){
+                if (size ==1){
+                    Shot.mark(row, col);
+                }
 
-            board.placeTemporaryShip(row, col, size, horizontalOrientation);
-            if (horizontalOrientation){
-                for (int i=col; i<col+size; i++){
-                    if (i==10)
-                        break;
-                    cell[row][i].setBackground(new java.awt.Color(153,153,153));
+                board.placeTemporaryShip(row, col, size, horizontalOrientation);
+                if (horizontalOrientation){
+                    for (int i=col; i<col+size; i++){
+                        if (i==10)
+                            break;
+                        cell[row][i].setBackground(new java.awt.Color(153,153,153));
+                    }
                 }
-            }
-            else{
-                for (int i=row; i<row+size; i++){
-                    if (i==10)
-                        break;
-                    cell[i][col].setBackground(new java.awt.Color(153,153,153));
+                else{
+                    for (int i=row; i<row+size; i++){
+                        if (i==10)
+                            break;
+                        cell[i][col].setBackground(new java.awt.Color(153,153,153));
+                    }
                 }
+                size=0;
             }
-            size=0;
         }
     }
     private void cellMouseEntered(java.awt.event.MouseEvent evt) {

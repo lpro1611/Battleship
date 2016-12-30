@@ -34,6 +34,7 @@ public class Game {
         return Game.myTurn;
     }
     
+    
     public static void setID(int id){
         Game.id = id;
     }
@@ -56,6 +57,23 @@ public class Game {
     
     public static boolean begin(){
         return Protocol.beginGame(Game.id, Authenticated.getID());
+    }
+    
+    public static boolean isRunning(){
+        if (Game.id == 0)
+            return false;
+        else
+            return true;
+    }
+    
+    public static boolean concede(){
+        if(Protocol.concedeGame(Game.id, Authenticated.getID())){
+            Game.reset();
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     
     public static void reset(){

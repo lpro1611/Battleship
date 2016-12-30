@@ -8,6 +8,8 @@ import java.net.UnknownHostException;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -26,6 +28,9 @@ public class Protocol {
     private static final String ATTACK = "attack";
     private static final String CREATE = "create";
     private static final String PLACE = "place";
+    private static final String QUIT = "quit";
+    private static final String CHALLENGE = "challenge";
+    private static final String INVITE = "invite";
     
     /**
      * Class Constructor
@@ -45,30 +50,36 @@ public class Protocol {
      * @param password  password attempting to log in
      */
     public static int validateLogin(String username, String password){
-        SocketClient cSocket = new SocketClient();
+        SocketClient clientSocket = new SocketClient();
         String inputLine;
         String[] reply;
+        boolean flag = true;
         int userID = -1;
         try{ 
-            cSocket.openCom();
+            clientSocket.openCom();
             
-            cSocket.write(LOGIN + TOKEN + username + TOKEN + password);
+            clientSocket.write(LOGIN + TOKEN + username + TOKEN + password);
             
-            inputLine=cSocket.read();
+            inputLine=clientSocket.read();
             
             reply=decodeReply(inputLine, LOGIN);
-            if(reply[0].equals("ok"))
+            if(reply[0].equals("ok")){
                 userID = Integer.parseInt(reply[1]);
+                Authenticated.setClientSocket(clientSocket);
+                flag = false;                
+            }
             
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host gnomo.");
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         } finally{
-            try {
-                cSocket.closeCom();
-            } catch (IOException e) {
-                System.err.println("Couldn't get I/O for the connection to gnomo.");
+            if (flag){
+                try {
+                    clientSocket.closeCom();
+                } catch (IOException e) {
+                    System.err.println("Couldn't get I/O for the connection to gnomo.");
+                }
             }
         }
         return userID;
@@ -88,21 +99,25 @@ public class Protocol {
     * @param password   password to register
     */
     public static int validateRegister(String email, String username, String password){
-        SocketClient cSocket = new SocketClient();
+        SocketClient clientSocket = new SocketClient();
         String inputLine;
         String[] reply;
+        boolean flag = true;
         int userID = -1;
         
         try{ 
-            cSocket.openCom();
+            clientSocket.openCom();
             
-            cSocket.write(REGISTER + TOKEN + email + TOKEN +  username + TOKEN + password);
+            clientSocket.write(REGISTER + TOKEN + email + TOKEN +  username + TOKEN + password);
             
-            inputLine=cSocket.read();
+            inputLine=clientSocket.read();
             
             reply=decodeReply(inputLine, REGISTER);
-            if(reply[0].equals("ok"))
+            if(reply[0].equals("ok")){
                 userID = Integer.parseInt(reply[1]);
+                Authenticated.setClientSocket(clientSocket);
+                flag = false;  
+            }
             else if (reply[0].equals("duplicated"))
                 userID = -2;
             
@@ -111,10 +126,12 @@ public class Protocol {
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         } finally{
-            try {
-                cSocket.closeCom();
-            } catch (IOException e) {
-                System.err.println("Couldn't get I/O for the connection to gnomo.");
+            if (flag){
+                try {
+                    clientSocket.closeCom();
+                } catch (IOException e) {
+                    System.err.println("Couldn't get I/O for the connection to gnomo.");
+                }
             }
         }
         
@@ -122,63 +139,84 @@ public class Protocol {
         
     }
     
-    public static void startComs(){
-        SocketClient clientSocket = new SocketClient();
+    public static void startServerComs(){
         SocketClient serverSocket = new SocketClient();
-        boolean clientFlag = false;
-        boolean serverFlag = false;
         String inputLine;
         String[] reply;
         
-        try{ 
-            clientSocket.openCom();
-            clientFlag=true;
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host gnomo.");
-            
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to gnomo.");
-        }
         try{
             serverSocket.openCom();
-            serverSocket.write(SOCKET + TOKEN + Authenticated.getID());
-            inputLine=serverSocket.read();
             
-            reply=decodeReply(inputLine, SOCKET);
-            if(reply[0].equals("ok"))
-                serverFlag=true;
+            serverSocket.write(SOCKET + TOKEN + Authenticated.getID());
+            inputLine = serverSocket.read();
+            
+            reply = decodeReply(inputLine, SOCKET);
+            if(reply[0].equals("ok")){
+                Authenticated.setServerSocket(serverSocket);
+                ExecutorService executor = Executors.newCachedThreadPool();
+                executor.submit(new Runnable(){
+                    @Override
+                    public void run() {
+                        String inputLineInThread;
+                        String replyInThread;
+                        //System.out.println("server socket running");
+                        while(true){
+                            try{
+                                if((inputLineInThread = Authenticated.getServerSocket().read()) != null) {
+                                    System.out.println(inputLineInThread);
+                                    replyInThread = Protocol.decodeServerRequests(inputLineInThread);
+
+                                    if (replyInThread != null) {
+                                        if (replyInThread.equals("exit")) {
+                                            break;
+                                        }
+                                        Authenticated.getServerSocket().write(replyInThread);
+                                    }
+                                }
+                            } catch (IOException e) {
+                                System.err.println("Couldn't get I/O for the connection to gnomo.");
+                            }
+                        }
+                        //System.out.println("closing server socket");
+                        try {
+                            Authenticated.getServerSocket().closeCom();
+                        } catch (IOException ex) {
+                            System.err.println("Couldn't get I/O for the connection to gnomo.");
+                        }
+                        Authenticated.setServerSocket(null);
+                        //System.out.println("server socket closed");
+                        
+                    }
+
+                });
+                executor.shutdown();
+                
+            }
+            
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host gnomo.");
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
-        }
-        if(clientFlag && serverFlag){
-            Authenticated.setClientSocket(clientSocket);
-            Authenticated.setServerSocket(serverSocket);
-        }
-        else{
-            System.err.println("Couldn't connect to host gnomo.");
-            System.exit(1);
         }
     }
     
     public static void endComs(){
+        String inputLine;
+        
         try {
             Authenticated.getClientSocket().write(EXIT + TOKEN + Authenticated.getID());
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException ex) {
-                System.err.println("Thread interrupted");
-            } finally{
-            Authenticated.getClientSocket().closeCom();
-            Authenticated.getServerSocket().closeCom();
+            inputLine=Authenticated.getClientSocket().read();
+            if(inputLine.equals(EXIT)){
+                //System.out.println("closing client socket");
+                Authenticated.getClientSocket().closeCom();
+                //System.out.println("client socket closed");
             }
+            
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         finally{
             Authenticated.setClientSocket(null);
-            Authenticated.setServerSocket(null);
         }
     }
         
@@ -186,7 +224,6 @@ public class Protocol {
         
         String inputLine = null;
         String[] reply;
-        Game game;
         
         /*Authenticated.getClientSocket().write(GAME + TOKEN + CREATE + TOKEN + userID);
 
@@ -315,7 +352,142 @@ public class Protocol {
         }
         Shot.setHit(true);
         Shot.setCriticalHit(false);
-        return false;
+        return true;
+    }
+    
+    public static boolean receiveShot(){
+        
+        String inputLine;
+        String[] reply;
+        
+        /*try {
+            inputLine = Authenticated.getClientSocket().read();
+            reply = decodeReply(inputLine, GAME);
+            if(reply[0].equals(ATTACK)){
+                if(reply[1].equals("hit")){
+                    Shot.mark(Integer.parseInt(reply[2]), Integer.parseInt(reply[3]));
+                    Shot.setHit(true);
+                    Shot.setCriticalHit(false);
+                    return true;
+                }
+                else if(reply[1].equals("criticalhit")){
+                    Shot.mark(Integer.parseInt(reply[2]), Integer.parseInt(reply[3]));
+                    Shot.setHit(true);
+                    Shot.setCriticalHit(true);
+                    Shot.setBoatName(reply[4]);
+                    return true;
+                }
+                else if(reply[1].equals("miss")){
+                    Shot.mark(Integer.parseInt(reply[2]), Integer.parseInt(reply[3]));
+                    Shot.setHit(false);
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        } catch (IOException ex) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+        
+        return false;*/
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+        }
+        Shot.mark(1, 1);
+        Shot.setHit(true);
+        Shot.setCriticalHit(false);
+        return true;
+    }
+    
+    public static boolean concedeGame(int gameID, int userID){
+        
+        String inputLine;
+        String[] reply;
+        
+        /*Authenticated.getClientSocket().write(GAME + TOKEN + QUIT + TOKEN + gameID + TOKEN + userID);
+
+        try {
+            inputLine = Authenticated.getClientSocket().read();
+            reply = decodeReply(inputLine, GAME);
+            if(reply[0].equals(QUIT)){
+                if(reply[1].equals("ok")){
+                    return true;
+                }
+                else
+                    return false;
+            }
+        } catch (IOException ex) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+        
+        return false;*/
+        return true;
+    }
+    
+    public static String[] getChallengeList(int userID){
+        String inputLine;
+        String[] reply;
+        
+        Authenticated.getClientSocket().write(CHALLENGE + TOKEN + userID);
+
+        try {
+            inputLine = Authenticated.getClientSocket().read();
+            reply = decodeReply(inputLine, CHALLENGE);
+            if(reply[0].equals("error")){
+                return null;
+            }
+            else{
+                return reply;
+            }
+        } catch (IOException ex) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+        
+        return null;/*
+        reply = new String[8];
+        reply[0] = "0";
+        reply[1] = "isto";
+        reply[2] = "1";
+        reply[3] = "e";
+        reply[4] = "2";
+        reply[5] = "um";
+        reply[6] = "3";
+        reply[7] = "teste";
+        return reply;*/
+    }
+    
+    public static String challengeUser(int userID, int opponentID, String opponentName){
+        
+        String inputLine;
+        String[] reply;
+        if (userID > 0){
+            Authenticated.getClientSocket().write(INVITE + TOKEN + userID + TOKEN + opponentID);
+
+            try {
+                inputLine = Authenticated.getClientSocket().read();
+                System.out.println(inputLine);
+                reply = decodeReply(inputLine, INVITE);
+                if(reply[0].equals("accept")){
+                    Game.reset();
+                    Game.setID(Integer.parseInt(reply[1]));
+                    Game.setOpponent(opponentName);
+                }
+                return reply[0];
+            } catch (IOException ex) {
+                System.err.println("Couldn't get I/O for the connection to gnomo.");
+            }
+        }
+        return "error";/*
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+        }
+        Game.reset();
+        Game.setOpponent("test_opponent");
+        Game.setID(1);
+        return "accept";*/
     }
     
     /**
@@ -328,15 +500,40 @@ public class Protocol {
      * @param input         message received from the server
      * @param operation     opcode to validate the message
      */
-     private static String[] decodeReply(String input, String operation){
+    private static String[] decodeReply(String input, String operation){
         String opcode[] = input.split(TOKEN);
         if (opcode[0].equals(operation)){
             return Arrays.copyOfRange(opcode, 1, opcode.length);
         }
         else {
-            System.out.println("Error communicating with server");
+            System.err.println("Error communicating with server");
             return null;                                                // secalhar mudar isto
         }
+    }
+     
+    private static String decodeServerRequests(String message) {
+        String[] opcode = message.split("#");
+        String reply;
+        
+        switch (opcode[0]) {
+            case EXIT:
+                reply = EXIT;
+                break;
+                
+            case INVITE:
+                reply = INVITE + TOKEN + "reply" + TOKEN + Authenticated.getID() + TOKEN + Integer.parseInt(opcode[1]) + TOKEN ;
+                if(Authenticated.acceptedChallenge(opcode[2]))
+                    reply += "accept";
+                else
+                    reply += "reject";
+                break;
+
+            default: 
+                reply = "error";      
+                break;
+        }
+        
+    return reply;    
     }
     
 }
