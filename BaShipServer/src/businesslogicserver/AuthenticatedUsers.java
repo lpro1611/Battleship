@@ -16,6 +16,8 @@ import java.util.*;
 public class AuthenticatedUsers {
     public static Map <Integer, Authenticated> authenticatedList = new HashMap<>();
     public static Map <Integer, Challenge> ChallengeList = new HashMap<>();
+    public static MatchMakerThread matchmakerthread;
+    public static Integer lastPlayerRequest;
     
     
     public AuthenticatedUsers () {}
@@ -99,7 +101,7 @@ public class AuthenticatedUsers {
         
         return reply;
     }
-    
+
     public static String replyChallenge(int player1Id, String message) {
         Integer gameId;
         long timeoutTime = 1 * 60 * 1000; //1 minuto 
@@ -125,5 +127,13 @@ public class AuthenticatedUsers {
         
         return reply;
     }
-    
+
+    public static void playNow(Integer PlayerID){
+        if(matchmakerthread.isAlive()==false){
+            matchmakerthread.run();
+        }
+      
+        matchmakerthread.Players.add(PlayerID);
+        return; 
+    }
 }

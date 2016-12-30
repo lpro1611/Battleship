@@ -23,7 +23,7 @@ public class ShipTest {
         System.out.println("hit");
         Ship instance = new Ship(2);
         int result = instance.hit();
-        assertEquals(2 , instance.size);
+        assertEquals(2 , instance.getSize());
         assertEquals(0, result); 
         result = instance.hit();
         assertEquals(1, result);

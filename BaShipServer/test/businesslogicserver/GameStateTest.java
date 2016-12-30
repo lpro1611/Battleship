@@ -54,10 +54,10 @@ public class GameStateTest {
         instance.placeShip(player1, boatid, startx, starty, endx, endy);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
-        assertEquals(0,instance.board1[0][7]);
-        assertEquals(1,instance.board1[1][2]);
-        assertEquals(1,instance.board1[1][3]);
-        assertEquals(0,instance.board1[1][4]);
+        assertEquals(0,instance.getPosition(0,7,player1));
+        assertEquals(1,instance.getPosition(1,2,player1));
+        assertEquals(1,instance.getPosition(1,3,player1));
+        assertEquals(0,instance.getPosition(1,4,player1));
        //teste another boat 
        boatid = 5;
        startx = 1;
@@ -66,14 +66,14 @@ public class GameStateTest {
        endy = 2;
        instance.placeShip(player2, boatid, startx, starty, endx, endy);
        
-       assertEquals(0,instance.board2[0][7]);
-       assertEquals(5,instance.board2[1][2]);
-       assertEquals(5,instance.board2[2][2]);
-       assertEquals(5,instance.board2[3][2]);
-       assertEquals(5,instance.board2[4][2]);
-       assertEquals(5,instance.board2[5][2]);
-       assertEquals(0,instance.board2[5][1]);
-       assertEquals(0,instance.board2[6][2]);
+       assertEquals(0,instance.getPosition(0,7,player2));
+       assertEquals(5,instance.getPosition(1,2,player2));
+       assertEquals(5,instance.getPosition(2,2,player2));
+       assertEquals(5,instance.getPosition(3,2,player2));
+       assertEquals(5,instance.getPosition(4,2,player2));
+       assertEquals(5,instance.getPosition(5,2,player2));
+       assertEquals(0,instance.getPosition(5,1,player2));
+       assertEquals(0,instance.getPosition(6,2,player2));
     }
 
     /**
@@ -124,14 +124,14 @@ public class GameStateTest {
         GameState instance = new GameState(2, player1,player2);
         String expResult = "Wait for other Player";
         String expResult2 = "Begin";
-        String result = instance.PlayerReady(player1);
+        String result = instance.playerReady(player1);
         assertEquals(expResult, result);
-        assertEquals(true, instance.ready1);
-        assertEquals(false, instance.ready2);
-        result = instance.PlayerReady(player2);
+        assertEquals(true, instance.getPlayerState(player1));
+        assertEquals(false, instance.getPlayerState(player2));
+        result = instance.playerReady(player2);
         assertEquals(expResult2, result);
-        assertEquals(true, instance.ready1);
-        assertEquals(true, instance.ready2);
+        assertEquals(true, instance.getPlayerState(player1));
+        assertEquals(true, instance.getPlayerState(player2));
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
