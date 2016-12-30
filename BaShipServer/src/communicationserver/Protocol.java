@@ -21,7 +21,6 @@ public class Protocol {
     private static final String EXIT = "exit";
     private static final String CHALLENGE = "challenge";
     private static final String INVITE = "invite";
-    private static final String REPLAY = "replay";
     private static final String GAME = "game";
     
     private static String reply;
@@ -150,7 +149,6 @@ public class Protocol {
     
     private static String gameDecode(String[] opcode) {
         final String BEGIN = "begin";
-        final String END = "end";
         final String QUIT = "quit";
         final String CHAT = "chat";
         final String PLACE = "place";
@@ -168,15 +166,6 @@ public class Protocol {
                 }
                 break;
                 
-            case END:
-                answer = END + "#";
-                try {
-                    
-                } catch (Exception e) {
-                    answer = "error";
-                }
-                break;
-                
             case QUIT:
                 answer = QUIT + "#";
                 try {
@@ -189,7 +178,7 @@ public class Protocol {
             case CHAT:
                 answer = CHAT + "#";
                 try {
-                    
+                    answer += "notimplemented";
                 } catch (Exception e) {
                     answer = "error";
                 }
