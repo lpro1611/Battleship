@@ -159,10 +159,11 @@ public class Protocol {
                     public void run() {
                         String inputLineInThread;
                         String replyInThread;
-                        System.out.println("server socket running");
+                        //System.out.println("server socket running");
                         while(true){
                             try{
                                 if((inputLineInThread = Authenticated.getServerSocket().read()) != null) {
+                                    System.out.println(inputLineInThread);
                                     replyInThread = Protocol.decodeServerRequests(inputLineInThread);
 
                                     if (replyInThread != null) {
@@ -176,14 +177,14 @@ public class Protocol {
                                 System.err.println("Couldn't get I/O for the connection to gnomo.");
                             }
                         }
-                        System.out.println("closing server socket");
+                        //System.out.println("closing server socket");
                         try {
                             Authenticated.getServerSocket().closeCom();
                         } catch (IOException ex) {
                             System.err.println("Couldn't get I/O for the connection to gnomo.");
                         }
                         Authenticated.setServerSocket(null);
-                        System.out.println("server socket closed");
+                        //System.out.println("server socket closed");
                         
                     }
 
@@ -206,9 +207,9 @@ public class Protocol {
             Authenticated.getClientSocket().write(EXIT + TOKEN + Authenticated.getID());
             inputLine=Authenticated.getClientSocket().read();
             if(inputLine.equals(EXIT)){
-                System.out.println("closing client socket");
+                //System.out.println("closing client socket");
                 Authenticated.getClientSocket().closeCom();
-                System.out.println("client socket closed");
+                //System.out.println("client socket closed");
             }
             
         } catch (IOException e) {
@@ -429,7 +430,7 @@ public class Protocol {
         String inputLine;
         String[] reply;
         
-        /*Authenticated.getClientSocket().write(CHALLENGE + TOKEN + userID);
+        Authenticated.getClientSocket().write(CHALLENGE + TOKEN + userID);
 
         try {
             inputLine = Authenticated.getClientSocket().read();
@@ -444,7 +445,7 @@ public class Protocol {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         
-        return null;*/
+        return null;/*
         reply = new String[8];
         reply[0] = "0";
         reply[1] = "isto";
@@ -454,18 +455,19 @@ public class Protocol {
         reply[5] = "um";
         reply[6] = "3";
         reply[7] = "teste";
-        return reply;
+        return reply;*/
     }
     
     public static String challengeUser(int userID, int opponentID, String opponentName){
         
-        /*String inputLine;
+        String inputLine;
         String[] reply;
         if (userID > 0){
             Authenticated.getClientSocket().write(INVITE + TOKEN + userID + TOKEN + opponentID);
 
             try {
                 inputLine = Authenticated.getClientSocket().read();
+                System.out.println(inputLine);
                 reply = decodeReply(inputLine, INVITE);
                 if(reply[0].equals("accept")){
                     Game.reset();
@@ -477,7 +479,7 @@ public class Protocol {
                 System.err.println("Couldn't get I/O for the connection to gnomo.");
             }
         }
-        return "error";*/
+        return "error";/*
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -485,7 +487,7 @@ public class Protocol {
         Game.reset();
         Game.setOpponent("test_opponent");
         Game.setID(1);
-        return "accept";
+        return "accept";*/
     }
     
     /**
@@ -504,7 +506,7 @@ public class Protocol {
             return Arrays.copyOfRange(opcode, 1, opcode.length);
         }
         else {
-            System.out.println("Error communicating with server");
+            System.err.println("Error communicating with server");
             return null;                                                // secalhar mudar isto
         }
     }
@@ -519,7 +521,7 @@ public class Protocol {
                 break;
                 
             case INVITE:
-                reply = INVITE + TOKEN + Authenticated.getID() + TOKEN + Integer.parseInt(opcode[1]) + TOKEN ;
+                reply = INVITE + TOKEN + "reply" + TOKEN + Authenticated.getID() + TOKEN + Integer.parseInt(opcode[1]) + TOKEN ;
                 if(Authenticated.acceptedChallenge(opcode[2]))
                     reply += "accept";
                 else

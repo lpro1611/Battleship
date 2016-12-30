@@ -201,10 +201,12 @@ public class ChallengeGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        String[] list;
         searchField.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         searchField.setForeground(new java.awt.Color(153, 153, 153));
         searchField.setText(" Search");
-        challengeList.setListData(Challenge.getList());
+        if ((list = Challenge.getList()) != null)
+            challengeList.setListData(list);
     }//GEN-LAST:event_formComponentShown
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed

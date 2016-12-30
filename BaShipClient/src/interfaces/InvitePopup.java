@@ -87,7 +87,10 @@ public class InvitePopup extends javax.swing.JPanel {
         this.setVisible(false);
     }//GEN-LAST:event_declineButtonActionPerformed
 
-
+    public void setUsername(String username){
+        inviteLabel.setText(username + "has invited you to a game.");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton acceptButton;
     private javax.swing.JButton declineButton;

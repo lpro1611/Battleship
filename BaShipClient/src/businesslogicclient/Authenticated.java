@@ -101,11 +101,12 @@ public class Authenticated {
         if(!Game.isRunning()){
             
             JFrame inviteFrame = new JFrame("Invite");
-            JPanel invitePanel = new InvitePopup();
+            InvitePopup invitePanel = new InvitePopup();
+            invitePanel.setUsername(username);
             inviteFrame.setSize(400, 130);
             inviteFrame.setResizable(false);
             inviteFrame.setLocationRelativeTo(null);
-            inviteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            inviteFrame.setDefaultCloseOperation(inviteFrame.EXIT_ON_CLOSE);
             
             inviteFrame.add(invitePanel);
             
@@ -113,11 +114,11 @@ public class Authenticated {
             
             
             while(invitePanel.isVisible()){
-                try {
+                /*try {
                     Thread.sleep(1);
                 } catch (InterruptedException ex) {
                     System.err.println("Thread interrupted");
-                }
+                }*/
             }
             
         }     

@@ -52,7 +52,10 @@ public class AuthenticatedUsers {
         
         for (Map.Entry<Integer, Authenticated> entry : authenticatedList.entrySet()) {
             if ((entry.getValue()).getId() != userId) {
-                usersString += "#";
+                if (usersString == null)
+                    usersString = "#";
+                else
+                    usersString += "#";
                 usersString += (entry.getValue()).getId();
                 usersString += "#";
                 usersString += (entry.getValue()).getName();
@@ -65,7 +68,7 @@ public class AuthenticatedUsers {
     public static String setChallenge(int player1Id, int player2Id) {
         long timeoutTime = 2 * 60 * 1000; //2 minutos 
         
-        if (authenticatedList.get(player2Id).getCurrentGameId() == -1) {
+        if (authenticatedList.get(player2Id).getCurrentGameId() != -1) {
              return "reject"; // the player is playing a game
          }
 
