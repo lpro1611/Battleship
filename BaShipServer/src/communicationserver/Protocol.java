@@ -138,10 +138,10 @@ public class Protocol {
     private static String inviteDecode(String[] opcode) {
         String inviteAnswer;
         
-        if (!opcode[1].equals("reply")) {
-            inviteAnswer = AuthenticatedUsers.setChallenge(Integer.parseInt(opcode[1]), Integer.parseInt(opcode[2]));
-        } else {
+        if (opcode[1].equals("reply")) {
             inviteAnswer = AuthenticatedUsers.replyChallenge(Integer.parseInt(opcode[3]), opcode[4]);
+        } else {
+            inviteAnswer = AuthenticatedUsers.setChallenge(Integer.parseInt(opcode[1]), Integer.parseInt(opcode[2]));
         }
         
         return inviteAnswer;

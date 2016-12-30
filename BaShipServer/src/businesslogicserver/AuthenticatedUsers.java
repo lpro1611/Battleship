@@ -85,6 +85,7 @@ public class AuthenticatedUsers {
         while (ChallengeList.get(player1Id).getState().equals("wait")) {
             /* do nothing */
             if (System.currentTimeMillis() >= (startTime + timeoutTime)) {
+                ChallengeList.remove(player1Id);
                 return "timeout";
             }
         }

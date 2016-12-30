@@ -27,6 +27,10 @@ public class GameState {
     private boolean ready2;
     private int criticalHits1;
     private int criticalHits2;
+    private int nextPlayer;
+    private int[] lastPlayer1Attack = new int[3];
+    private int[] lastPlayer2Attack = new int[3];
+    
     /**
      * This is the constructor for the GameState
      * <p>
@@ -42,10 +46,12 @@ public class GameState {
         this.gameId = gameId;
         this.player1Id = player1Id;
         this.player2Id = player2Id;
-        this.ready1 = false;
-        this.ready2 = false;
-        this.criticalHits1 = 0;
-        this.criticalHits2 = 0;
+        ready1 = false;
+        ready2 = false;
+        criticalHits1 = 0;
+        criticalHits2 = 0;
+        Random nextPlayerGenerator = new Random();
+        nextPlayer = nextPlayerGenerator.nextInt(2) + 1;
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -53,7 +59,15 @@ public class GameState {
                 this.board2[i][j] = 0;
             }
         }
-
+        
+        lastPlayer1Attack[0] = -1;
+        lastPlayer1Attack[1] = -1;
+        lastPlayer1Attack[2] = -1;
+        
+        lastPlayer2Attack[0] = -1;
+        lastPlayer2Attack[1] = -1;
+        lastPlayer2Attack[2] = -1;
+        
         player1Ships.add(new Ship(2)); //cria Destroyer,  os seis barcos aparecem ja ordenados na lista
         player1Ships.add(new Ship(3));
         player1Ships.add(new Ship(3));
@@ -65,6 +79,30 @@ public class GameState {
         player2Ships.add(new Ship(3));
         player2Ships.add(new Ship(4));
         player2Ships.add(new Ship(5));   
+    }
+    
+    public int[] getLastAtack(int playerId) {
+        if (playerId == player1Id) {
+            return lastPlayer1Attack;
+        } else {
+            return lastPlayer2Attack;
+        }
+    }
+    
+    public int getNextPlayer() {
+        if (nextPlayer == 1) {
+            return player1Id;
+        } else {
+            return player2Id;
+        }
+    }
+    
+    public void changeNextPlayer() {
+        if (nextPlayer == 1) {
+            nextPlayer = 2;
+        } else {
+            nextPlayer = 1;
+        }
     }
     
     /**
@@ -173,8 +211,17 @@ public class GameState {
             }
             
             criticalHits1 = criticalHits1 + hit[1];
-            //Protocol.hit(Player2, int x, int y, hit, "My Board"); mensagem para o outro jogado4
-            //Protocol.hit(Player1, int x, int y, hit, "Enemy Board");
+            
+            lastPlayer1Attack[0] = x;
+            lastPlayer1Attack[1] = y;
+            
+            if (hit[0] == 0) {
+                lastPlayer1Attack[2] = 0;
+            } else if (hit[1] == 0) {
+                lastPlayer1Attack[2] = 1;
+            } else {
+                lastPlayer1Attack[2] = 2;
+            }
             
             try {
                 DbGame.setMovePosition(x,y,saveHit,player,gameId );
@@ -182,7 +229,9 @@ public class GameState {
                 System.out.println("Error savin ship" + e );
             }
             
-            return criticalHits1;   //retorno para o Protocolo se necessario
+            changeNextPlayer();
+            
+            return criticalHits1;   
         } else {
             hit[0] = board1[x][y];
             
@@ -191,15 +240,26 @@ public class GameState {
                 saveHit = true;
             }
             
-            //Protocol.hit(Player1, int x, int y, hit, "MyBoard"); mensagem para o outro jogado
-            //Protocol.hit(Player2, int x, int y, hit, "Enemy Board");
             criticalHits2 += hit[1];
+            
+            lastPlayer2Attack[0] = x;
+            lastPlayer2Attack[1] = y;
+            
+            if (hit[0] == 0) {
+                lastPlayer2Attack[2] = 0;
+            } else if (hit[1] == 0) {
+                lastPlayer2Attack[2] = 1;
+            } else {
+                lastPlayer2Attack[2] = 2;
+            }
             
             try {
                 DbGame.setMovePosition(x,y,saveHit,player,gameId );
             } catch(SQLException e) {
                 System.out.println("Error savin ship" + e );
             }
+            
+            changeNextPlayer();
             
             return criticalHits2;
         } 

@@ -38,19 +38,22 @@ public class Game {
      * 
      * @param player1Id id number from player 1
      * @param player2Id id number from player 2
+     * @return          game's identifier
      */
     public static int createGame(int player1Id, int player2Id) {
         Random idGenerator = new Random();
-        int id = idGenerator.nextInt();
+        int id;
         
-        while(GameList.containsKey(id) )
+        do {
             id = idGenerator.nextInt();
+        } while (GameList.containsKey(id));
         
-        GameList.put(id, new GameState(id, player1Id, player2Id));        
-        try{
+        GameList.put(id, new GameState(id, player1Id, player2Id));
+        
+        try {
             DbGame.createGame(player1Id, player2Id);
-        } catch(SQLException e) {
-            System.out.println("Error saving ship" + e);
+        } catch (SQLException e) {
+            System.out.println("Error saving ship (Isto não é um barco!)" + e);
         }
         
         return id;
@@ -61,7 +64,11 @@ public class Game {
             /*do nothing*/
         }
         
-        return "start";
+        if (GameList.get(gameId).getNextPlayer() == playerId) {
+            return "start";
+        } else {
+            return "wait";
+        }
     }
     
     public static String placeShips(int gameId, int playerId, int id, int startX, int startY, int endX, int endY) {
@@ -73,8 +80,8 @@ public class Game {
     /**
      * This method handles an attack by a player and its consequences
      * <p>
-     * This method receives the identifaction numbers for the game an the attacking player.
-     * It also receives the attacked position. 
+     * This method receives the game's identification and the attacking player.
+     * It also receives the attacked position.
      * The method then calls the GameState method 
      * that processes the attacks.
      * If this method returns 6 critical hits, 
@@ -82,37 +89,87 @@ public class Game {
      * The method saves this information
      * in the database, and sends end game message to the players.
      * 
-     * @param gameId id number of game
-     * @param playerId id number of attacking player
-     * @param x horizontal board position 
-     * @param y vertical board position
-     * @return ok message to inform player
+     * @param gameId    game's identifier
+     * @param playerId  attacking player's identifier
+     * @param x         horizontal board position 
+     * @param y         vertical board position
+     * @return          message to inform player
      */
     public static String attack(int gameId, int playerId, int x, int y) {
-        int hits = GameList.get(gameId).attack(playerId, x, y);
+        String message = "";
+        int hits = 0;
+
+        if (x != -1) {
+            hits = GameList.get(gameId).attack(playerId, x, y);
+            GameList.get(gameId).changeNextPlayer();
+        }
+        
+        while ((GameList.get(gameId).getNextPlayer() != playerId) && GameList.containsKey(gameId)) {/*do nothing*/}
+        
+        if (!GameList.containsKey(gameId)) {
+                return "end#lose";
+        }
+        
+        
+        int[] otherPlayerAttack;
+        int[] thisPlayerAttack = GameList.get(gameId).getLastAtack(playerId);
+        
+        if (playerId == GameList.get(gameId).getPlayer1Id()) {
+            otherPlayerAttack = GameList.get(gameId).getLastAtack(GameList.get(gameId).getPlayer2Id());
+        } else {
+            otherPlayerAttack = GameList.get(gameId).getLastAtack(GameList.get(gameId).getPlayer1Id());
+        }
+        
+        switch (otherPlayerAttack[2]) {
+                case 2:
+                    message = "critical#";
+                    break;
+                case 1:
+                    message = "hit#";
+                    break;
+                default:
+                    message = "miss#";
+                    break;
+        }
+        
+        message += otherPlayerAttack[0] + "#" + otherPlayerAttack[1];
+        
+        if (x != -1) {
+            switch (thisPlayerAttack[2]) {
+                case 2:
+                    message += "#critical";
+                    break;
+                case 1:
+                    message += "#hit";
+                    break;
+                default:
+                    message += "#miss";
+                    break;
+            }
+        }
         
         if (hits == 6) {
             if (playerId == (GameList.get(gameId).getPlayer1Id())) {
-                //Protocol.endGame(..) Para ambos jogaores Player 1 victorious
+                
                 try {
                     DbGame.setGameWinner(playerId, gameId);
                 } catch (SQLException e) {
                     System.out.println("Error saving ship" + e );
                 }
-                
-                GameList.remove(gameId);
             } else {
-                //Protocol.endGame(..) Para ambos jogaoresPlayer 2 victorious
+                
                 try {
                     DbGame.setGameWinner(playerId, gameId);
                 } catch(SQLException e) {
                     System.out.println("Error saving ship" + e );
                 }
-                
-                GameList.remove(gameId);
-            }      
+            }    
+            
+            GameList.remove(gameId);
+            return "end#win";
         }
-        return "ok";
+        
+        return message;
     }
 }
     
