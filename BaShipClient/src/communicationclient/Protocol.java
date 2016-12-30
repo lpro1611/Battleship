@@ -3,11 +3,10 @@ package communicationclient;
 import businesslogicclient.Authenticated;
 import businesslogicclient.Game;
 import businesslogicclient.Shot;
+import interfaces.MainFrame;
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.sql.SQLException;
 import java.util.Arrays;
-import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -163,14 +162,12 @@ public class Protocol {
                         while(true){
                             try{
                                 if((inputLineInThread = Authenticated.getServerSocket().read()) != null) {
-                                    System.out.println(inputLineInThread);
                                     replyInThread = Protocol.decodeServerRequests(inputLineInThread);
-
                                     if (replyInThread != null) {
                                         if (replyInThread.equals("exit")) {
                                             break;
                                         }
-                                        Authenticated.getServerSocket().write(replyInThread);
+                                        
                                     }
                                 }
                             } catch (IOException e) {
@@ -464,10 +461,8 @@ public class Protocol {
         String[] reply;
         if (userID > 0){
             Authenticated.getClientSocket().write(INVITE + TOKEN + userID + TOKEN + opponentID);
-
             try {
                 inputLine = Authenticated.getClientSocket().read();
-                System.out.println(inputLine);
                 reply = decodeReply(inputLine, INVITE);
                 if(reply[0].equals("accept")){
                     Game.reset();
@@ -489,6 +484,37 @@ public class Protocol {
         Game.setID(1);
         return "accept";*/
     }
+    
+    
+    public static boolean receiveChallenge(int opponentID, String opponentName){
+        
+        String outputLine;
+        String inputLine;
+        String[] reply;
+        
+        outputLine = INVITE + TOKEN + "reply" + TOKEN + Authenticated.getID() + TOKEN + opponentID + TOKEN ;
+                if(Authenticated.acceptedChallenge(opponentName)){
+                    outputLine += "accept";}
+                else
+                    outputLine += "reject";
+                
+        Authenticated.getClientSocket().write(outputLine);
+        try {
+            inputLine = Authenticated.getClientSocket().read();
+            reply = decodeReply(inputLine, INVITE);
+            if(!reply[0].equals("error")){
+                Game.reset();
+                Game.setID(Integer.parseInt(reply[0]));
+                Game.setOpponent(opponentName);
+                MainFrame.changeInterface(MainFrame.PLACESHIPS);
+            }
+            return true;
+        } catch (IOException ex) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+        return false;
+    }
+    
     
     /**
      * Interprets the messages received from the server.
@@ -514,18 +540,16 @@ public class Protocol {
     private static String decodeServerRequests(String message) {
         String[] opcode = message.split("#");
         String reply;
-        
         switch (opcode[0]) {
             case EXIT:
                 reply = EXIT;
                 break;
                 
             case INVITE:
-                reply = INVITE + TOKEN + "reply" + TOKEN + Authenticated.getID() + TOKEN + Integer.parseInt(opcode[1]) + TOKEN ;
-                if(Authenticated.acceptedChallenge(opcode[2]))
-                    reply += "accept";
+                if (receiveChallenge(Integer.parseInt(opcode[1]), opcode[2]))
+                    reply = "ok";
                 else
-                    reply += "reject";
+                    reply = "error";
                 break;
 
             default: 

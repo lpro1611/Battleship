@@ -12,7 +12,7 @@ public class InvitePopup extends javax.swing.JPanel {
      * Creates new form NewJPanel
      */
     
-    private boolean accepted = false;
+    private boolean done = false;
     
     public InvitePopup() {
         initComponents();
@@ -79,16 +79,20 @@ public class InvitePopup extends javax.swing.JPanel {
 
     private void acceptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptButtonActionPerformed
         Challenge.accept(true);
-        this.setVisible(false);
+        done = true;
     }//GEN-LAST:event_acceptButtonActionPerformed
 
     private void declineButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_declineButtonActionPerformed
         Challenge.accept(false);
-        this.setVisible(false);
+        done = true;
     }//GEN-LAST:event_declineButtonActionPerformed
 
     public void setUsername(String username){
-        inviteLabel.setText(username + "has invited you to a game.");
+        inviteLabel.setText(username + " has invited you to a game.");
+    }
+    
+    public boolean isDone(){
+        return done;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

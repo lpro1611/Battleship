@@ -19,15 +19,15 @@ import sun.audio.ContinuousAudioDataStream;
  * @author Diogo Recharte
  */
 public class MainFrame extends JFrame{
-    static final String LOGIN = "Login panel";
-    static final String REGISTER = "Register panel";
-    static final String HOME = "Home panel";
-    static final String SETTINGS = "Settings panel";
-    static final String LOADING = "Loading panel";
-    static final String PLACESHIPS = "Place Ships panel";
-    static final String GAME = "Game panel";
-    static final String CHALLENGE = "Challenge panel";
-    static JPanel mainPanel;
+    public static final String LOGIN = "Login panel";
+    public static final String REGISTER = "Register panel";
+    public static final String HOME = "Home panel";
+    public static final String SETTINGS = "Settings panel";
+    public static final String LOADING = "Loading panel";
+    public static final String PLACESHIPS = "Place Ships panel";
+    public static final String GAME = "Game panel";
+    public static final String CHALLENGE = "Challenge panel";
+    public static JPanel mainPanel;
     /**
      * Constructor for the class.
      * <p>
@@ -78,6 +78,38 @@ public class MainFrame extends JFrame{
         
         
         this.setVisible(true);
+    }
+    
+    public static void changeInterface(String gui){
+        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+        switch(gui){
+            case LOGIN:
+                cl.show(MainFrame.mainPanel, MainFrame.LOGIN);
+                break;
+            case REGISTER:
+                cl.show(MainFrame.mainPanel, MainFrame.REGISTER);
+                break;
+            case HOME:
+                cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                break;
+            case SETTINGS:
+                cl.show(MainFrame.mainPanel, MainFrame.SETTINGS);
+                break;
+            case LOADING:
+                cl.show(MainFrame.mainPanel, MainFrame.LOADING);
+                break;
+            case PLACESHIPS:
+                cl.show(MainFrame.mainPanel, MainFrame.PLACESHIPS);
+                break;
+            case GAME:
+                cl.show(MainFrame.mainPanel, MainFrame.GAME);
+                break;
+            case CHALLENGE:
+                cl.show(MainFrame.mainPanel, MainFrame.CHALLENGE);
+                break;
+            default:
+                break;
+        }
     }
     
   /*  public static void music() {       
