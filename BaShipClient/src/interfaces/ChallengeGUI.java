@@ -5,6 +5,7 @@ import businesslogicclient.Challenge;
 import businesslogicclient.Game;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -244,6 +245,13 @@ public class ChallengeGUI extends javax.swing.JPanel {
         searchField.setForeground(Color.black);
     }//GEN-LAST:event_searchFieldFocusGained
 
+    @Override
+    public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    // Draw the background image.
+    g.drawImage(MainFrame.getBackgroundImage(), 0, 0, this);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adsLabel;

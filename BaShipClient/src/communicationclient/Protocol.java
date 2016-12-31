@@ -290,6 +290,8 @@ public class Protocol {
                     return true;
                 }
                 else if(reply[1].equals("wait")){
+                    Shot.mark(-1, -1);
+                    Shot.fire();
                     Game.setMyTurn(false);
                     return true;
                 }

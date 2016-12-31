@@ -49,7 +49,7 @@ public class MainFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("BaShip");
         
-        MainFrame.setBackgroundImage();
+        MainFrame.setBackgroundImage("Simple Grey");
         
         mainPanel = new JPanel(new CardLayout());
         mainPanel.add(new LoginGUI(), LOGIN);
@@ -139,9 +139,22 @@ public class MainFrame extends JFrame{
         return MainFrame.backgroundImage;
     }
     
-    public static void setBackgroundImage(){
+    public static void setBackgroundImage(String backgroundName){
         try {
-            MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/background.png"));
+            switch (backgroundName){
+                case "Simple Grey":
+                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/simplegrey_background.png"));
+                    break;
+                case "Blurry Blue":
+                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/blurryblue_background.png"));
+                    break;
+                case "Droplets":
+                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/droplets_background.png"));
+                    break;
+                default:
+                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/simplegrey_background.png"));
+                    break;
+            }
         } catch (IOException ex) {
             System.err.println("Error loading background image");
         }

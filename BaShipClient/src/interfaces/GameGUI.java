@@ -3,6 +3,7 @@ package interfaces;
 import businesslogicclient.Game;
 import businesslogicclient.Shot;
 import java.awt.CardLayout;
+import java.awt.Graphics;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
@@ -344,6 +345,13 @@ public class GameGUI extends javax.swing.JPanel {
         cl.show(MainFrame.mainPanel, MainFrame.SETTINGS);
     }//GEN-LAST:event_settingsButtonActionPerformed
 
+    @Override
+    public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    // Draw the background image.
+    g.drawImage(MainFrame.getBackgroundImage(), 0, 0, this);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adsLabel;

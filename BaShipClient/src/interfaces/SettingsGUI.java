@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,6 +41,8 @@ public class SettingsGUI extends javax.swing.JPanel {
         homeButton = new javax.swing.JButton();
         soundToggleButton = new javax.swing.JToggleButton();
         soundLabel = new javax.swing.JLabel();
+        walpaperLabel = new javax.swing.JLabel();
+        walpaperComboBox = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(220, 220, 225));
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -106,6 +109,16 @@ public class SettingsGUI extends javax.swing.JPanel {
         soundLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         soundLabel.setText("Sound");
 
+        walpaperLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        walpaperLabel.setText("Walpaper");
+
+        walpaperComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple Grey", "Blurry Blue", "Droplets" }));
+        walpaperComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                walpaperComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,11 +137,15 @@ public class SettingsGUI extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(500, 500, 500)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(soundLabel)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(soundLabel)
+                                    .addComponent(walpaperLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(soundToggleButton))
-                            .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(soundToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(walpaperComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap(190, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -144,9 +161,13 @@ public class SettingsGUI extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(soundLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(walpaperLabel)
+                            .addComponent(walpaperComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
@@ -205,6 +226,11 @@ public class SettingsGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_soundToggleButtonActionPerformed
 
+    private void walpaperComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_walpaperComboBoxActionPerformed
+        MainFrame.setBackgroundImage(walpaperComboBox.getSelectedItem().toString());
+        this.repaint();
+    }//GEN-LAST:event_walpaperComboBoxActionPerformed
+
     @Override
     public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -221,5 +247,7 @@ public class SettingsGUI extends javax.swing.JPanel {
     private javax.swing.JButton lougoutButton;
     private javax.swing.JLabel soundLabel;
     private javax.swing.JToggleButton soundToggleButton;
+    private javax.swing.JComboBox<String> walpaperComboBox;
+    private javax.swing.JLabel walpaperLabel;
     // End of variables declaration//GEN-END:variables
 }

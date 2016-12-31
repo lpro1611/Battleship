@@ -42,9 +42,10 @@ public class HomePageGUI extends javax.swing.JPanel {
         setBackground(new java.awt.Color(220, 220, 225));
 
         bashipLabel.setBackground(new java.awt.Color(220, 220, 225));
-        bashipLabel.setFont(new java.awt.Font("Tahoma", 1, 90)); // NOI18N
+        bashipLabel.setFont(new java.awt.Font("Tahoma", 1, 120)); // NOI18N
         bashipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        bashipLabel.setText("BaShip");
+        bashipLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/ship-large-plus.png"))); // NOI18N
+        bashipLabel.setText(" BaShip");
 
         adsLabel.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         adsLabel.setText("Ads");
@@ -100,11 +101,15 @@ public class HomePageGUI extends javax.swing.JPanel {
                 .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(190, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(483, 483, 483)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(bashipLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(playNowButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(361, 361, 361)
+                        .addComponent(bashipLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(483, 483, 483)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(playNowButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(challengeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
@@ -112,17 +117,15 @@ public class HomePageGUI extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(bashipLabel)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(settingsButton)))
-                .addGap(123, 123, 123)
+                    .addComponent(settingsButton)
+                    .addComponent(bashipLabel))
+                .addGap(81, 81, 81)
                 .addComponent(playNowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addGap(80, 80, 80)
                 .addComponent(challengeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );

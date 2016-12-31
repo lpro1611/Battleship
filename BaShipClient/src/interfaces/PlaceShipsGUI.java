@@ -2,6 +2,7 @@ package interfaces;
 
 import businesslogicclient.Game;
 import java.awt.CardLayout;
+import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -402,6 +403,13 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
             playButton.setEnabled(true);
     }//GEN-LAST:event_formMouseMoved
 
+    @Override
+    public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    // Draw the background image.
+    g.drawImage(MainFrame.getBackgroundImage(), 0, 0, this);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adsLabel;
