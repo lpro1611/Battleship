@@ -249,13 +249,12 @@ public class Protocol {
     }
     
     
-    public static boolean placeShip(int gameID, int userID, int rowStart, int colStart, int rowEnd, int colEnd){
+    public static boolean placeShip(int gameID, int userID, int size, int rowStart, int colStart, int rowEnd, int colEnd){
         
         String inputLine;
         String[] reply;
         
-        Authenticated.getClientSocket().write(GAME + TOKEN + PLACE + TOKEN + gameID + TOKEN + userID + TOKEN + rowStart + TOKEN + colStart + TOKEN + rowEnd + TOKEN + colEnd);
-        System.out.println(GAME + TOKEN + PLACE + TOKEN + gameID + TOKEN + userID + TOKEN + rowStart + TOKEN + colStart + TOKEN + rowEnd + TOKEN + colEnd);
+        Authenticated.getClientSocket().write(GAME + TOKEN + PLACE + TOKEN + gameID + TOKEN + userID + TOKEN + size + TOKEN + rowStart + TOKEN + colStart + TOKEN + rowEnd + TOKEN + colEnd);
         try {
             inputLine = Authenticated.getClientSocket().read();
             System.out.println(inputLine);
