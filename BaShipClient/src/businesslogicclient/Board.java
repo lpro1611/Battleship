@@ -58,7 +58,7 @@ public class Board {
     public boolean placeAllShips(){
        if(boatsPlacement.size()==5){
            for(BoatPlacement boat : boatsPlacement){
-               if(!Protocol.placeShip(Game.getID(), Authenticated.getID(), boat.getRowStart(), boat.getColStart(), boat.getRowEnd(), boat.getColEnd()))
+               if(!Protocol.placeShip(Game.getID(), Authenticated.getID(), boat.getSize(), boat.getRowStart(), boat.getColStart(), boat.getRowEnd(), boat.getColEnd()))
                    return false;
            }
            return true;
@@ -109,8 +109,10 @@ public class Board {
         private final int colStart;
         private final int rowEnd; 
         private final int colEnd;
+        private final int size;
         
-        public BoatPlacement(int row, int col, int size, boolean horizontalOrientation){
+        public BoatPlacement(int row, int col, int ssize, boolean horizontalOrientation){
+            size = ssize;
             rowStart = row;
             colStart = col;
             if (horizontalOrientation){
@@ -137,6 +139,10 @@ public class Board {
         
         public int getColEnd(){
             return colEnd;
+        }
+        
+        public int getSize(){
+            return size;
         }
         
     }
