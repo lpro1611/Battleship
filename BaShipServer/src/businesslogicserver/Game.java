@@ -71,8 +71,8 @@ public class Game {
         }
     }
     
-    public static String placeShips(int gameId, int playerId, int id, int startX, int startY, int endX, int endY) {
-        GameList.get(gameId).placeShip(playerId, id, startX, startY, endX, endY);
+    public static String placeShips(int gameId, int playerId, int size, int startX, int startY, int endX, int endY) {
+        GameList.get(gameId).placeShip(playerId, size, startX, startY, endX, endY);
         
         return "ok";
     }     

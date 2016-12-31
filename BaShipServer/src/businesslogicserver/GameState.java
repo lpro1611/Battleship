@@ -31,6 +31,7 @@ public class GameState {
     private int[] lastPlayer1Attack = new int[3];
     private int[] lastPlayer2Attack = new int[3];
     private boolean end;
+    private boolean treta;
     
     /**
      * This is the constructor for the GameState
@@ -53,6 +54,7 @@ public class GameState {
         criticalHits2 = 0;
         Random nextPlayerGenerator = new Random();
         nextPlayer = nextPlayerGenerator.nextInt(2) + 1;
+        treta = true;
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -139,17 +141,17 @@ public class GameState {
      * The method fills the correct positions of the player's board with 
      * the id of the boat. This signals that the boat is in those positions
      * 
-     * @param playerId identification number of player 
-     * @param boatid identification number of boat
+     * @param playerId identification number of player
+     * @param size
      * @param startX starting horizontal position
      * @param startY starting vertical position
      * @param endX final horizontal position
      * @param endY final vertical position 
      */
-    public void placeShip(int playerId, int boatid, int startX, int startY, int endX, int endY) {
+    public void placeShip(int playerId, int size, int startX, int startY, int endX, int endY) {
         //no caso de string id é String e eu depois passo a numero
         int placey = startY, placex = startX;
-        int size;
+        int boatid;
         
         if (endX < startX) { //certifica ordem crescente 
             placex = endX;
@@ -159,9 +161,19 @@ public class GameState {
             placey = endY;
         }
         
+         if (size == 5) {
+                boatid = 5;
+            } else if (size == 4) {
+                boatid = 4;
+            } else if (size == 2) {
+                boatid = 1;
+            } else if (treta) {
+                boatid = 2;
+            } else {
+                boatid = 3;
+            }
+        
         if (player1Id == playerId) {
-            size = (player1Ships.get(boatid-1)).getSize();
-            
             for (int i = 0; i < size; i++) {
                 if (startY == endY) {
                     board1[placex + i][placey] = boatid;
@@ -172,8 +184,6 @@ public class GameState {
                 }
             }
         } else {
-            size = (player2Ships.get(boatid-1)).getSize();
-            
             for (int i = 0; i < size; i++) {
                 if (startY == endY) {
                     board2[placex + i][placey] = boatid;
