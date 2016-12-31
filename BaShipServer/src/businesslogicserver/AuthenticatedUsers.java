@@ -21,11 +21,27 @@ public class AuthenticatedUsers {
     
     
     public AuthenticatedUsers () {}
-    
+    /**
+     * This method adds another User to the User list
+     * 
+     * @param id identification number of player
+     * @return confirmation
+     * 
+     * @throws SQLException
+     * @throws NotFoundException 
+     */
     public static boolean add (int id) throws SQLException, NotFoundException {
         return authenticatedList.putIfAbsent(id, new Authenticated(id)) != null;
     }
     
+    /**
+     * This method removes a player from the authenticted users list
+     * <p>
+     * 
+     * After a player is removed the method waits ten second
+     * to ?
+     * @param userId identification number of user to remove
+     */
     public static void remove(int userId) {
         long timeoutTime = 10 * 1000; //10 segundos
         
@@ -39,6 +55,19 @@ public class AuthenticatedUsers {
         } 
     }
     
+    /**
+     * This method connects an individual Socket to a user through an
+     * output stream.
+     * <p>
+     * This method gives the user a stream to communicate with a Socket. 
+     * This Socket is used by the server to send messages to 
+     * the declared user as an argument. The Socket is left open, 
+     * while the user is active. The moment the user is off the list 
+     * it sends an exit message to the Socket.
+     * 
+     * @param userId identification numbe of user to be given 
+     * @param out stream given to the user
+     */
     public static void addSocket(int userId, PrintWriter out) {
         authenticatedList.get(userId).setSocket(out);
         
@@ -49,6 +78,11 @@ public class AuthenticatedUsers {
         new SendMessageSocket("exit", out).start();
     }
     
+    /**
+     * 
+     * @param userId
+     * @return 
+     */
     public static String menuChallenge(int userId) {
         String usersString = null;
         
@@ -67,6 +101,15 @@ public class AuthenticatedUsers {
         return usersString;
     }
     
+    /**
+     * This method is called to send a challenge to another User
+     * <p>
+     * The challenging and challenges user id numbers are given as arguments
+     * 
+     * @param player1Id
+     * @param player2Id
+     * @return 
+     */
     public static String setChallenge(int player1Id, int player2Id) {
         long timeoutTime = 2 * 60 * 1000; //2 minutos 
         
@@ -101,7 +144,14 @@ public class AuthenticatedUsers {
         
         return reply;
     }
-
+    /**
+     * This method is called to reply to a challenge
+     * <p>
+     * 
+     * @param player1Id
+     * @param message
+     * @return 
+     */
     public static String replyChallenge(int player1Id, String message) {
         Integer gameId;
         long timeoutTime = 1 * 60 * 1000; //1 minuto 
@@ -127,7 +177,16 @@ public class AuthenticatedUsers {
         
         return reply;
     }
-
+    
+    /**
+     * This method adds a player to a list of users currently searching for game.
+     * <p>
+     * If the thread that handles the matchmaking
+     * isn´t already opened, this method opens it. Else it only
+     * adds the player to the list.
+     * 
+     * @param PlayerID identification number of player that is searching for a game
+     */
     public static void playNow(Integer PlayerID){
         if(matchmakerthread.isAlive()==false){
             matchmakerthread.run();
