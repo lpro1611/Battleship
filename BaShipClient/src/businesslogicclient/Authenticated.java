@@ -3,6 +3,8 @@ package businesslogicclient;
 import communicationclient.Protocol;
 import communicationclient.SocketClient;
 import interfaces.InvitePopup;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -98,28 +100,35 @@ public class Authenticated {
     }
     
     public static boolean acceptedChallenge (String username){
+        Challenge.accept(false);
         if(!Game.isRunning()){
             
+            //boolean done;
             JFrame inviteFrame = new JFrame("Invite");
             InvitePopup invitePanel = new InvitePopup();
             invitePanel.setUsername(username);
             inviteFrame.setSize(400, 130);
             inviteFrame.setResizable(false);
             inviteFrame.setLocationRelativeTo(null);
-            inviteFrame.setDefaultCloseOperation(inviteFrame.EXIT_ON_CLOSE);
-            
+            inviteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
             inviteFrame.add(invitePanel);
-            
+
             inviteFrame.setVisible(true);
-            
-            
-            while(invitePanel.isVisible()){
-                /*try {
-                    Thread.sleep(1);
-                } catch (InterruptedException ex) {
-                    System.err.println("Thread interrupted");
-                }*/
+
+
+            while(true){
+                //done = invitePanel.isDone();
+                //System.out.println(done);
+                if(invitePanel.isDone())
+                    break;
+                try{
+                    Thread.sleep(100);
+                }catch(InterruptedException e){
+                    
+                }
             }
+            inviteFrame.dispose();
             
         }     
         

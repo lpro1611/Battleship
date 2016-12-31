@@ -175,8 +175,7 @@ public class LoginGUI extends JPanel {
     }//GEN-LAST:event_usernameTextFieldActionPerformed
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.REGISTER);
+        MainFrame.changeInterface(MainFrame.REGISTER);
     }//GEN-LAST:event_registerButtonActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
@@ -195,8 +194,7 @@ private void loginAction(){
     //System.out.println("username: " + username + "\npassword: " + password);
 
     if(Visitor.login(username, password)){
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+        MainFrame.changeInterface(MainFrame.HOME);
     }
     else
         JOptionPane.showMessageDialog(LoginGUI.this, "Authentication Failed", "Error", JOptionPane.ERROR_MESSAGE);
