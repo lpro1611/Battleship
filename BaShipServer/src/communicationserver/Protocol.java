@@ -135,6 +135,16 @@ public class Protocol {
     return reply;    
     }
     
+    /**
+     * This method decodes messages dedicaded challenging a player
+     * <p>
+     * If the message is a challenge the player identification numbers in the message
+     * are given to the business logic to setup the challenge. If its a reply to the challeng,
+     * the method passes the reply to the business logic. 
+     * 
+     * @param opcode message sent to the srevre
+     * @return confirmation to Socket
+     */
     private static String inviteDecode(String[] opcode) {
         String inviteAnswer;
         
@@ -146,7 +156,14 @@ public class Protocol {
         
         return inviteAnswer;
     }
-    
+    /**
+     * This method decodes the messages dedicated to a match
+     * <p>
+     * This method analyses the received messages, and ,based of its contents,
+     * it choses which method of the classes, involved in a match, to call.
+     * @param opcode message received from Socket
+     * @return confirmation to the Socket
+     */
     private static String gameDecode(String[] opcode) {
         final String BEGIN = "begin";
         final String QUIT = "quit";

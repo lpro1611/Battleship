@@ -16,7 +16,7 @@ public class SendMessageSocket extends Thread {
      * Class Constructor specifying the socket and the properties
      * 
      * @param message   message to send to the client
-     * @param out
+     * @param out stream that connets to the Socket 
      */
     public SendMessageSocket(String message, PrintWriter out) {
         super("SendMessageSocket");
