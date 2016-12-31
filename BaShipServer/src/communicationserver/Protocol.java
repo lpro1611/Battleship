@@ -136,13 +136,13 @@ public class Protocol {
     }
     
     /**
-     * This method decodes messages dedicaded challenging a player
+     * This method decodes messages dedicated challenging a player
      * <p>
      * If the message is a challenge the player identification numbers in the message
-     * are given to the business logic to setup the challenge. If its a reply to the challeng,
+     * are given to the business logic to setup the challenge. If its a reply to the challenge,
      * the method passes the reply to the business logic. 
      * 
-     * @param opcode message sent to the srevre
+     * @param opcode message sent to the server
      * @return confirmation to Socket
      */
     private static String inviteDecode(String[] opcode) {
@@ -160,7 +160,7 @@ public class Protocol {
      * This method decodes the messages dedicated to a match
      * <p>
      * This method analyses the received messages, and ,based of its contents,
-     * it choses which method of the classes, involved in a match, to call.
+     * it chooses which method of the classes, involved in a match, to call.
      * @param opcode message received from Socket
      * @return confirmation to the Socket
      */
@@ -202,6 +202,7 @@ public class Protocol {
                 break;
                 
             case PLACE:
+                System.out.println("here");
                 answer = PLACE + "#";
                 try {
                     answer += Game.placeShips(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), Integer.parseInt(opcode[4]), Integer.parseInt(opcode[5]), Integer.parseInt(opcode[6]), Integer.parseInt(opcode[7]), Integer.parseInt(opcode[8]));
