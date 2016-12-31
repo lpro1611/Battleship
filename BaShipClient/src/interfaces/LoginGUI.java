@@ -186,20 +186,28 @@ public class LoginGUI extends JPanel {
         loginAction();
     }//GEN-LAST:event_loginButtonActionPerformed
 
-private void loginAction(){
-    String username;
-    char[] password;
-    username = usernameTextField.getText();
-    password = passwordField.getPassword();
-    //System.out.println("username: " + username + "\npassword: " + password);
+    @Override
+    public void paintComponent(Graphics g) {
+    super.paintComponent(g);
 
-    if(Visitor.login(username, password)){
-        MainFrame.changeInterface(MainFrame.HOME);
+    // Draw the background image.
+    g.drawImage(MainFrame.getBackgroundImage(), 0, 0, this);
     }
-    else
-        JOptionPane.showMessageDialog(LoginGUI.this, "Authentication Failed", "Error", JOptionPane.ERROR_MESSAGE);
-    loginButton.setSelected(false);
-}
+    
+    private void loginAction(){
+        String username;
+        char[] password;
+        username = usernameTextField.getText();
+        password = passwordField.getPassword();
+        //System.out.println("username: " + username + "\npassword: " + password);
+
+        if(Visitor.login(username, password)){
+            MainFrame.changeInterface(MainFrame.HOME);
+        }
+        else
+            JOptionPane.showMessageDialog(LoginGUI.this, "Authentication Failed", "Error", JOptionPane.ERROR_MESSAGE);
+        loginButton.setSelected(false);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adsLabel;
     private javax.swing.JPanel adsPanel;

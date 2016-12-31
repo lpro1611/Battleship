@@ -5,15 +5,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import sun.audio.AudioData;
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
-
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 /**
  * Container for every different interface in this project.
  * @author Diogo Recharte
@@ -28,6 +27,9 @@ public class MainFrame extends JFrame{
     public static final String GAME = "Game panel";
     public static final String CHALLENGE = "Challenge panel";
     public static JPanel mainPanel;
+    private static Image backgroundImage = null;
+    private static Clip clip;
+    
     /**
      * Constructor for the class.
      * <p>
@@ -47,6 +49,8 @@ public class MainFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("BaShip");
         
+        MainFrame.setBackgroundImage();
+        
         mainPanel = new JPanel(new CardLayout());
         mainPanel.add(new LoginGUI(), LOGIN);
         mainPanel.add(new RegisterGUI(), REGISTER);
@@ -64,7 +68,6 @@ public class MainFrame extends JFrame{
         {
             @Override
             public void windowOpened(WindowEvent e) {
-                // to do
             }
             @Override
             public void windowClosing(WindowEvent e)
@@ -112,32 +115,37 @@ public class MainFrame extends JFrame{
         }
     }
     
-  /*  public static void music() {       
-        AudioPlayer MGP = AudioPlayer.player;
-        AudioStream BGM;
-        AudioData MD;
-
-        ContinuousAudioDataStream loop = null;
-
-        try
-        {
-            InputStream test = new FileInputStream("./resources/music/bensound-epic.mp3");
-            BGM = new AudioStream(test);
-            AudioPlayer.player.start(BGM);
-            //MD = BGM.getData();
-            //loop = new ContinuousAudioDataStream(MD);
-
+    public static void music() {       
+        AudioInputStream inputStream;
+        try {
+            inputStream = AudioSystem.getAudioInputStream(new File("src/resources/music/bensound-epic.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(inputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            System.err.println("Error playing sound file");
         }
-        catch(FileNotFoundException e){
-            System.out.print(e.toString());
-        }
-        catch(IOException error)
-        {
-            System.out.print(error.toString());
-        }
-        MGP.start(loop);
     }
-*/
+    
+    public static void startMusic(){
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+    
+    public static void stopMusic(){
+        clip.stop();
+    }
+    
+    public static Image getBackgroundImage(){
+        return MainFrame.backgroundImage;
+    }
+    
+    public static void setBackgroundImage(){
+        try {
+            MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/background.png"));
+        } catch (IOException ex) {
+            System.err.println("Error loading background image");
+        }
+    }
     
     
     /**
@@ -147,6 +155,6 @@ public class MainFrame extends JFrame{
      */
     public static void main(String[] args){
         MainFrame mainFrame = new MainFrame();
-        //music();
+        music();
     }
 }

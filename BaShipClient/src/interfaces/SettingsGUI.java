@@ -3,6 +3,7 @@ package interfaces;
 import businesslogicclient.Authenticated;
 import businesslogicclient.Game;
 import java.awt.CardLayout;
+import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -37,6 +38,8 @@ public class SettingsGUI extends javax.swing.JPanel {
         adsLabel = new javax.swing.JLabel();
         lougoutButton = new javax.swing.JButton();
         homeButton = new javax.swing.JButton();
+        soundToggleButton = new javax.swing.JToggleButton();
+        soundLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(220, 220, 225));
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -87,6 +90,22 @@ public class SettingsGUI extends javax.swing.JPanel {
             }
         });
 
+        soundToggleButton.setBackground(new java.awt.Color(220, 220, 225));
+        soundToggleButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/off-switch.png"))); // NOI18N
+        soundToggleButton.setSelected(true);
+        soundToggleButton.setBorder(null);
+        soundToggleButton.setBorderPainted(false);
+        soundToggleButton.setContentAreaFilled(false);
+        soundToggleButton.setSelectedIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/on-switch.png"))); // NOI18N
+        soundToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                soundToggleButtonActionPerformed(evt);
+            }
+        });
+
+        soundLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        soundLabel.setText("Sound");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -103,8 +122,13 @@ public class SettingsGUI extends javax.swing.JPanel {
                         .addGap(190, 190, 190)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(483, 483, 483)
-                        .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(500, 500, 500)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(soundLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(soundToggleButton))
+                            .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(190, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -116,11 +140,18 @@ public class SettingsGUI extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(homeButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 258, Short.MAX_VALUE)
-                .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addGap(84, 84, 84)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(soundLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                        .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                        .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(soundToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -165,6 +196,22 @@ public class SettingsGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_formComponentShown
 
+    private void soundToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_soundToggleButtonActionPerformed
+        if(soundToggleButton.isSelected()){
+            MainFrame.startMusic();
+        }
+        else{
+            MainFrame.stopMusic();
+        }
+    }//GEN-LAST:event_soundToggleButtonActionPerformed
+
+    @Override
+    public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    // Draw the background image.
+    g.drawImage(MainFrame.getBackgroundImage(), 0, 0, this);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adsLabel;
@@ -172,5 +219,7 @@ public class SettingsGUI extends javax.swing.JPanel {
     private javax.swing.JLabel bashipLabel;
     private javax.swing.JButton homeButton;
     private javax.swing.JButton lougoutButton;
+    private javax.swing.JLabel soundLabel;
+    private javax.swing.JToggleButton soundToggleButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -235,23 +235,31 @@ public class RegisterGUI extends JPanel {
         registerAction();
     }//GEN-LAST:event_registerButtonActionPerformed
 
-private void registerAction(){
-    
-    String email = emailTextField.getText();
-    String username = usernameTextField.getText();
-    char[] password = passwordField.getPassword();
-    char[] confirmPassword = confirmPasswordField.getPassword();
-    boolean termsAccepted = termsCheckbox.isSelected();
-    
-    String status=Visitor.register(email, username, password, confirmPassword, termsAccepted);
-    if(status.equals("ok")){
-        JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Sucessful", "Register", JOptionPane.INFORMATION_MESSAGE);
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+    @Override
+    public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    // Draw the background image.
+    g.drawImage(MainFrame.getBackgroundImage(), 0, 0, this);
     }
-    else
-        JOptionPane.showMessageDialog(RegisterGUI.this, status, "Registration Failed", JOptionPane.ERROR_MESSAGE);
-}
+    
+    private void registerAction(){
+
+        String email = emailTextField.getText();
+        String username = usernameTextField.getText();
+        char[] password = passwordField.getPassword();
+        char[] confirmPassword = confirmPasswordField.getPassword();
+        boolean termsAccepted = termsCheckbox.isSelected();
+
+        String status=Visitor.register(email, username, password, confirmPassword, termsAccepted);
+        if(status.equals("ok")){
+            JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Sucessful", "Register", JOptionPane.INFORMATION_MESSAGE);
+            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+            cl.show(MainFrame.mainPanel, MainFrame.HOME);
+        }
+        else
+            JOptionPane.showMessageDialog(RegisterGUI.this, status, "Registration Failed", JOptionPane.ERROR_MESSAGE);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel adsLabel;
