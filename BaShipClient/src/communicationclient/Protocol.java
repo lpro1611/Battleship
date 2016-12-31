@@ -460,7 +460,6 @@ public class Protocol {
                 if(reply[0].equals("accept")){
                     Game.reset();
                     Game.setID(Integer.parseInt(reply[1]));
-                    System.out.println("gameID: " + Game.getID()+ " server : " + Integer.parseInt(reply[1]));
                     Game.setOpponent(opponentName);
                 }
                 return reply[0];
@@ -483,7 +482,10 @@ public class Protocol {
                     outputLine += "accept";}
                 else
                     outputLine += "reject";
-                
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+        }
         Authenticated.getClientSocket().write(outputLine);
         try {
             inputLine = Authenticated.getClientSocket().read();
@@ -491,7 +493,6 @@ public class Protocol {
             if(!reply[0].equals("error")){
                 Game.reset();
                 Game.setID(Integer.parseInt(reply[0]));
-                System.out.println("gameID: " + Game.getID() + " server : " + Integer.parseInt(reply[0]));
                 Game.setOpponent(opponentName);
                 MainFrame.changeInterface(MainFrame.PLACESHIPS);
             }
