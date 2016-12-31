@@ -58,7 +58,7 @@ public class Game {
         
         return id;
     }
-
+    
     public static String playerReady(int gameId, int playerId) {
         while (GameList.get(gameId).playerReady(playerId).equals("wait")) {
             /*do nothing*/
@@ -96,7 +96,7 @@ public class Game {
      * @return          message to inform player
      */
     public static String attack(int gameId, int playerId, int x, int y) {
-        String message = "";
+        String message;
         int hits = 0;
 
         if (x != -1) {
@@ -110,6 +110,10 @@ public class Game {
                 return "end#lose";
         }
         
+        if (GameList.get(gameId).getEndGame()) {
+            GameList.remove(gameId);
+            return "end#win";
+        }
         
         int[] otherPlayerAttack;
         int[] thisPlayerAttack = GameList.get(gameId).getLastAtack(playerId);
@@ -170,6 +174,15 @@ public class Game {
         }
         
         return message;
+    }
+    
+    
+    public static String quitGame(int gameId, int playerId) {
+        GameList.get(gameId).setEndGame();
+        
+        GameList.get(gameId).changeNextPlayer();
+        
+        return "ok";
     }
 }
     

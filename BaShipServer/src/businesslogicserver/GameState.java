@@ -30,6 +30,7 @@ public class GameState {
     private int nextPlayer;
     private int[] lastPlayer1Attack = new int[3];
     private int[] lastPlayer2Attack = new int[3];
+    private boolean end;
     
     /**
      * This is the constructor for the GameState
@@ -68,6 +69,8 @@ public class GameState {
         lastPlayer2Attack[1] = -1;
         lastPlayer2Attack[2] = -1;
         
+        end = false;
+        
         player1Ships.add(new Ship(2)); //cria Destroyer,  os seis barcos aparecem ja ordenados na lista
         player1Ships.add(new Ship(3));
         player1Ships.add(new Ship(3));
@@ -79,6 +82,14 @@ public class GameState {
         player2Ships.add(new Ship(3));
         player2Ships.add(new Ship(4));
         player2Ships.add(new Ship(5));   
+    }
+    
+    public void setEndGame() {
+        end = true;
+    }
+    
+    public boolean getEndGame() {
+        return end;
     }
     
     public int[] getLastAtack(int playerId) {
