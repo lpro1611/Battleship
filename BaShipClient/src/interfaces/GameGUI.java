@@ -289,6 +289,7 @@ public class GameGUI extends javax.swing.JPanel {
                             MainFrame.changeInterface(MainFrame.HOME);
                             JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
                         }
+                        Game.reset();
                     }
                 }
                 else{
