@@ -115,6 +115,8 @@ public class Game {
         int[] playerAttack;
 
         if (GameList.get(gameId).getEndGame()) {
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer1Id()).clearCurrentGameId();
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer2Id()).clearCurrentGameId();
             GameList.remove(gameId);
             return "end#win";
         }   
@@ -160,6 +162,8 @@ public class Game {
                 }
             }
             
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer1Id()).clearCurrentGameId();
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer2Id()).clearCurrentGameId();
             GameList.remove(gameId);
             message = "end#win";
         }
@@ -186,6 +190,8 @@ public class Game {
         }
         
         if (GameList.get(gameId).getEndGame()) {
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer1Id()).clearCurrentGameId();
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer2Id()).clearCurrentGameId();
             GameList.remove(gameId);
             return "end#win";
         }   
