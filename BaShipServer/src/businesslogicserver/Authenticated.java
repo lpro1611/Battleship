@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businesslogicserver;
 
 import dataacess.DbUser;
 import exceptions.NotFoundException;
 import java.io.PrintWriter;
-import java.net.*;
 import java.sql.SQLException;
 
 /**
- *This class hold the data server-side
+ * This class hold the data server-side
  * of a  currently logged player
  * @author diogo
  */
@@ -21,6 +15,7 @@ public class Authenticated {
     private final String name;
     private PrintWriter out;
     private int currentGameId;
+   
     /**
      * Construtor of the class, receives the identification
      * numebr o player. Uses it to get the username from the
@@ -66,6 +61,7 @@ public class Authenticated {
     public PrintWriter getSocket() {
         return out;
     }
+    
     /**
      * Sets the currentGameId as the one passed in the
      * argument of the method
@@ -77,6 +73,7 @@ public class Authenticated {
             this.currentGameId = currentGameId;
         }
     }
+    
     /**
      * clear the currentGameid
      */
@@ -94,8 +91,5 @@ public class Authenticated {
      */
     public void setSocket(PrintWriter out) {
         this.out = out;
-    } 
-    
-    public void addGame() {}
-    public void removeGame() {}
+    }
 }

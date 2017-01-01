@@ -5,8 +5,7 @@ import java.util.Properties;
 import java.io.*;
 
 /**
- * Deals with generating all the sockets to communicate with 
- * multiple clients simultaneously.
+ * Prepare to Initialize the server.
  * 
  * @author Alunos-i221-16
  */

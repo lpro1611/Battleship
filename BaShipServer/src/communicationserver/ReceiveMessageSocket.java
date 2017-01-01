@@ -28,7 +28,7 @@ public class ReceiveMessageSocket extends Thread {
      * This method is run every time a client is accepted and it 
      * receives and sends messages to the client. Received messages 
      * are sent to the communication protocol. Replies are sent to 
-     * the client, after which the socket is closed.
+     * the client.
      */
     @Override
     public void run() {

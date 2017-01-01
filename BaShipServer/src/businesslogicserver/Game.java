@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businesslogicserver;
 
 import dataacess.DbGame;
@@ -11,20 +6,21 @@ import java.util.*;
 
 
 /**
- *Hold the information from all the games currently played.
+ * Hold the information from all the games currently played.
  * Processes thecreationa an finalization of a game
  * 
  * @author CPU TOSH
  */
 public class Game {
+    
     /**
      * Gamelsist : Map of all currently played games
      */
-    
     public static Map <Integer, GameState> GameList = new HashMap<>();
     //private static int id = 0;
     
     public Game() {}
+    
     /**
      * This method handles the initilization of new game
      * <p>
@@ -71,6 +67,21 @@ public class Game {
         }
     }
     
+    /**
+     * This method handles the placement of ships.
+     * <p>
+     * It receive the ship's parameteres and connect to the next layer to 
+     * save the ship in this match. 
+     * 
+     * @param gameId    game's identifier
+     * @param playerId  player's identifier who put this ship
+     * @param size      ship's size
+     * @param startX    ship's begin x coordinate
+     * @param startY    ship's begin y coordinate
+     * @param endX      ship's finish x coordinate
+     * @param endY      ship's finish y coordinate
+     * @return          message to the previous layer
+     */
     public static String placeShips(int gameId, int playerId, int size, int startX, int startY, int endX, int endY) {
         GameList.get(gameId).placeShip(playerId, size, startX, startY, endX, endY);
         
@@ -176,7 +187,13 @@ public class Game {
         return message;
     }
     
-    
+    /**
+     * End a game specific game based on a customer's request.
+     * 
+     * @param gameId    game's identifier
+     * @param playerId  player's identifier who request the end of game
+     * @return          messge to previous layer
+     */
     public static String quitGame(int gameId, int playerId) {
         GameList.get(gameId).setEndGame();
         

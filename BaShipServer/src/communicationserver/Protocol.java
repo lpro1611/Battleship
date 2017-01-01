@@ -136,7 +136,7 @@ public class Protocol {
     }
     
     /**
-     * This method decodes messages dedicated challenging a player
+     * This method decodes messages dedicated to challenging a player
      * <p>
      * If the message is a challenge the player identification numbers in the message
      * are given to the business logic to setup the challenge. If its a reply to the challenge,
@@ -159,8 +159,9 @@ public class Protocol {
     /**
      * This method decodes the messages dedicated to a match
      * <p>
-     * This method analyses the received messages, and ,based of its contents,
+     * This method analyses the received messages, and, based of its contents,
      * it chooses which method of the classes, involved in a match, to call.
+     * 
      * @param opcode message received from Socket
      * @return confirmation to the Socket
      */

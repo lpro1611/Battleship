@@ -1,6 +1,5 @@
 package businesslogicserver;
 
-import communicationserver.SendMessageSocket;
 import dataacess.*;
 import exceptions.DuplicatedNameException;
 import exceptions.NotFoundException;
