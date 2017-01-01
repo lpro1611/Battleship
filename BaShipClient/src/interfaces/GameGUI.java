@@ -376,6 +376,11 @@ public class GameGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_chatTextFieldFocusGained
 
+    public static void addToChat(String message){
+        chatTextArea.append(Game.getOpponent() + " :  " + message);
+    }
+    
+    
     @Override
     public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -391,7 +396,7 @@ public class GameGUI extends javax.swing.JPanel {
     private interfaces.BoardGUI board1;
     private interfaces.BoardGUI board2;
     private javax.swing.JScrollPane chatScrollPane;
-    private javax.swing.JTextArea chatTextArea;
+    private static javax.swing.JTextArea chatTextArea;
     private javax.swing.JTextField chatTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

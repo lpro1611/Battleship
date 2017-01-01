@@ -3,6 +3,7 @@ package communicationclient;
 import businesslogicclient.Authenticated;
 import businesslogicclient.Game;
 import businesslogicclient.Shot;
+import interfaces.GameGUI;
 import interfaces.MainFrame;
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -641,6 +642,7 @@ public class Protocol {
         }
         return false;
     }
+ 
     
     /**
      * Interprets the reply message from the server.
@@ -687,12 +689,15 @@ public class Protocol {
                 else
                     reply = "error";
                 break;
-            /*case GAME:
-                if (receiveChatMessage(Integer.parseInt(opcode[1]), opcode[2]))
+            case GAME:
+                if (opcode[1].equals(CHAT) && opcode[2].equals("message")){
+                    GameGUI.addToChat(opcode[3]);
                     reply = "ok";
-                else
+                }
+                else{
                     reply = "error";
-                break;*/
+                }
+                break;
 
             default: 
                 reply = "error";      
