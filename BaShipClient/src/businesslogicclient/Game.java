@@ -9,11 +9,12 @@ import communicationclient.Protocol;
 public class Game {
     private static int id;
     private static String opponent;
-    private static String outcome;
     private static Board board1;
     private static Board board2;
+    private static boolean placingShips;
     private static boolean myTurn;
     private static boolean firstTurn;
+    private static boolean win;
     
     public static int getID(){
         return Game.id;
@@ -23,8 +24,8 @@ public class Game {
         return Game.opponent;
     }
     
-    public static String getOutcome(){
-        return Game.outcome;
+    public static boolean isWin(){
+        return Game.win;
     }
     
     public static Board getBoard1(){
@@ -39,6 +40,9 @@ public class Game {
         return Game.firstTurn;
     }
     
+    public static boolean isPlacingShips(){
+        return Game.placingShips;
+    }
     
     public static void setID(int id){
         Game.id = id;
@@ -48,8 +52,8 @@ public class Game {
         Game.opponent = opponent;
     }
     
-    public static void setOutcome(String outcome){
-        Game.outcome = outcome;
+    public static void setWin(boolean win){
+        Game.win = win;
     }
     
     public static void setBoard(Board board){
@@ -62,6 +66,10 @@ public class Game {
     
     public static void setFirstTurn(boolean firstTurn){
         Game.firstTurn = firstTurn;
+    }
+    
+    public static void setPlacingShips(boolean placingShips){
+        Game.placingShips = placingShips;
     }
     
     public static boolean begin(){
@@ -88,9 +96,10 @@ public class Game {
     public static void reset(){
         Game.id = 0;
         Game.opponent = null;
-        Game.outcome = null;
         Game.board1 = null;
         Game.board2 = null;
-        
+        Game.myTurn = false;
+        Game.firstTurn = false;
+        Game.win = false;
     }
 }
