@@ -111,14 +111,57 @@ public class Game {
      */
     public static String attack(int gameId, int playerId, int x, int y) {
         String message;
-        int hits = 0;
+        int hits;
+        int[] playerAttack;
 
-        if (x != -1) {
-            hits = GameList.get(gameId).attack(playerId, x, y);
-            GameList.get(gameId).changeNextPlayer();
+        hits = GameList.get(gameId).attack(playerId, x, y);
+        
+        playerAttack = GameList.get(gameId).getLastAtack(playerId);
+        
+        switch (playerAttack[2]) {
+            case 2:
+                message = "#critical";
+                break;
+            case 1:
+                message = "#hit";
+                break;
+            default:
+                message = "#miss";
+                break;
         }
         
-        while ((GameList.get(gameId).getNextPlayer() != playerId) && GameList.containsKey(gameId)) {/*do nothing*/}
+        
+        if (hits == 6) {
+            if (playerId == (GameList.get(gameId).getPlayer1Id())) {
+                
+                try {
+                    DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
+                } catch (SQLException e) {
+                    System.out.println("Error saving ship" + e );
+                }
+            } else {
+                
+                try {
+                    DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
+                } catch(SQLException e) {
+                    System.out.println("Error saving ship" + e );
+                }
+            }    
+            
+            GameList.remove(gameId);
+            message = "end#win";
+        }
+        
+        GameList.get(gameId).changeNextPlayer();
+        
+        return message;
+    }
+    
+    public static String oponentAttack(int gameId, int playerId) {
+        String message;
+        int[] otherPlayerAttack;
+        
+        while((GameList.get(gameId).getNextPlayer() != playerId) && GameList.containsKey(gameId)) {/*do nothing*/}
         
         if (!GameList.containsKey(gameId)) {
                 return "end#lose";
@@ -127,10 +170,7 @@ public class Game {
         if (GameList.get(gameId).getEndGame()) {
             GameList.remove(gameId);
             return "end#win";
-        }
-        
-        int[] otherPlayerAttack;
-        int[] thisPlayerAttack = GameList.get(gameId).getLastAtack(playerId);
+        }   
         
         if (playerId == GameList.get(gameId).getPlayer1Id()) {
             otherPlayerAttack = GameList.get(gameId).getLastAtack(GameList.get(gameId).getPlayer2Id());
@@ -151,41 +191,6 @@ public class Game {
         }
         
         message += otherPlayerAttack[0] + "#" + otherPlayerAttack[1];
-        
-        if (x != -1) {
-            switch (thisPlayerAttack[2]) {
-                case 2:
-                    message += "#critical";
-                    break;
-                case 1:
-                    message += "#hit";
-                    break;
-                default:
-                    message += "#miss";
-                    break;
-            }
-        }
-        
-        if (hits == 6) {
-            if (playerId == (GameList.get(gameId).getPlayer1Id())) {
-                
-                try {
-                    DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
-                } catch (SQLException e) {
-                    System.out.println("Error saving ship" + e );
-                }
-            } else {
-                
-                try {
-                    DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
-                } catch(SQLException e) {
-                    System.out.println("Error saving ship" + e );
-                }
-            }    
-            
-            GameList.remove(gameId);
-            return "end#win";
-        }
         
         return message;
     }

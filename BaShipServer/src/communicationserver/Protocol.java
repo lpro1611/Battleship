@@ -214,7 +214,11 @@ public class Protocol {
             case ATTACK:
                 answer = ATTACK + "#";
                 try {
-                    answer += Game.attack(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), Integer.parseInt(opcode[4]), Integer.parseInt(opcode[5]));
+                    if (opcode[4].equals("wait")) {
+                        answer += Game.oponentAttack(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]));
+                    } else {
+                        answer += Game.attack(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), Integer.parseInt(opcode[4]), Integer.parseInt(opcode[5]));
+                    }
                 } catch (Exception e) {
                     answer = "error";
                 }
