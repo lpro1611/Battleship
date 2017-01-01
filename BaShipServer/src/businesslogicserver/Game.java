@@ -136,6 +136,7 @@ public class Game {
         }
         
         System.out.println(hits);
+        GameList.get(gameId).changeNextPlayer();
         
         if (hits == 5) {
             if (playerId == (GameList.get(gameId).getPlayer1Id())) {
@@ -154,13 +155,11 @@ public class Game {
                 } catch(SQLException e) {
                     System.out.println("Error saving ship" + e );
                 }
-            }    
+            }
             
             GameList.remove(gameId);
             message = "end#win";
         }
-        
-        GameList.get(gameId).changeNextPlayer();
         
         return message;
     }
@@ -178,8 +177,6 @@ public class Game {
                 return "error";
             }
         }
-        
-        
         
         if (GameList.get(gameId).getEndGame()) {
             GameList.remove(gameId);

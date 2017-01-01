@@ -212,6 +212,7 @@ public class GameState {
                 treta = false;
             } else {
                 boatid = 3;
+                treta = true;
             }
         
         if (player1Id == playerId) {
