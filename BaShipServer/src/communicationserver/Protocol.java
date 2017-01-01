@@ -187,7 +187,7 @@ public class Protocol {
             case QUIT:
                 answer = QUIT + "#";
                 try {
-                    
+                    answer += Game.quitGame(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]));
                 } catch (Exception e) {
                     answer = "error";
                 }

@@ -42,7 +42,7 @@ public class Game {
         int dataBaseId = 0;
         
         do {
-            id = idGenerator.nextInt();
+            id = idGenerator.nextInt(2147483640) + 1;
         } while (GameList.containsKey(id));
         
         GameList.put(id, new GameState(id, player1Id, player2Id));

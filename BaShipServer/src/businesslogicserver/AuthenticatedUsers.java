@@ -136,7 +136,6 @@ public class AuthenticatedUsers {
         }
         
         String reply = ChallengeList.get(player1Id).getState();
-        ChallengeList.remove(player1Id);
         
         if (reply.equals("accept")) {
             int gameId = Game.createGame(player1Id, player2Id);
@@ -144,6 +143,8 @@ public class AuthenticatedUsers {
             authenticatedList.get(player2Id).setCurrentGameId(gameId);
             reply += "#" + gameId;
         }
+        
+        ChallengeList.remove(player1Id);
         
         return reply;
     }
@@ -173,8 +174,8 @@ public class AuthenticatedUsers {
                 if (System.currentTimeMillis() >= (startTime + timeoutTime)) {
                     return "error";
                 }
-            }
-            
+            } 
+           
             reply = gameId.toString();
         }
         
