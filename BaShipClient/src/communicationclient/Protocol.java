@@ -257,7 +257,6 @@ public class Protocol {
         Authenticated.getClientSocket().write(GAME + TOKEN + PLACE + TOKEN + gameID + TOKEN + userID + TOKEN + size + TOKEN + rowStart + TOKEN + colStart + TOKEN + rowEnd + TOKEN + colEnd);
         try {
             inputLine = Authenticated.getClientSocket().read();
-            System.out.println(inputLine);
             reply = decodeReply(inputLine, GAME);
             if(reply[0].equals(PLACE)){
                 if(reply[1].equals("ok")){
@@ -315,7 +314,7 @@ public class Protocol {
         String inputLine;
         String[] reply;
         
-        /*Authenticated.getClientSocket().write(GAME + TOKEN + ATTACK + TOKEN + gameID + TOKEN + userID + TOKEN + row + TOKEN + col);
+        Authenticated.getClientSocket().write(GAME + TOKEN + ATTACK + TOKEN + gameID + TOKEN + userID + TOKEN + row + TOKEN + col);
 
         try {
             inputLine = Authenticated.getClientSocket().read();
@@ -329,7 +328,7 @@ public class Protocol {
                 else if(reply[1].equals("criticalhit")){
                     Shot.setHit(true);
                     Shot.setCriticalHit(true);
-                    Shot.setBoadName(reply[4]);
+                    Shot.setBoatName(reply[4]);
                     return true;
                 }
                 else if(reply[1].equals("miss")){
@@ -344,14 +343,14 @@ public class Protocol {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         
-        return false;*/
+        return false;/*
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
         }
         Shot.setHit(true);
         Shot.setCriticalHit(false);
-        return true;
+        return true;*/
     }
     
     public static boolean receiveShot(){
@@ -359,7 +358,7 @@ public class Protocol {
         String inputLine;
         String[] reply;
         
-        /*try {
+        try {
             inputLine = Authenticated.getClientSocket().read();
             reply = decodeReply(inputLine, GAME);
             if(reply[0].equals(ATTACK)){
@@ -389,7 +388,7 @@ public class Protocol {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         
-        return false;*/
+        return false;/*
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -397,7 +396,7 @@ public class Protocol {
         Shot.mark(1, 1);
         Shot.setHit(true);
         Shot.setCriticalHit(false);
-        return true;
+        return true;*/
     }
     
     public static boolean concedeGame(int gameID, int userID){

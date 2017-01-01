@@ -86,6 +86,9 @@ public class Authenticated {
     }
      
     public static void logout(){
+        /*if (Game.isRunning()){
+            Game.concede();
+        }*/
         Protocol.endComs();
         Authenticated.setID(0);
         Authenticated.setUsername(null);
