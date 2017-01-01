@@ -1,7 +1,9 @@
 package interfaces;
 
+import businesslogicclient.Authenticated;
 import businesslogicclient.Game;
 import businesslogicclient.Shot;
+import communicationclient.Protocol;
 import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.util.concurrent.ExecutorService;
@@ -37,9 +39,9 @@ public class GameGUI extends javax.swing.JPanel {
         attackButton = new javax.swing.JButton();
         board2 = new interfaces.BoardGUI();
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        chatTextField = new javax.swing.JTextField();
+        chatScrollPane = new javax.swing.JScrollPane();
+        chatTextArea = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
         youLabel = new javax.swing.JLabel();
         opponentLabel = new javax.swing.JLabel();
@@ -99,16 +101,21 @@ public class GameGUI extends javax.swing.JPanel {
             }
         });
 
-        jTextField1.setText("Type here");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        chatTextField.setText("Chat here");
+        chatTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                chatTextFieldFocusGained(evt);
+            }
+        });
+        chatTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                chatTextFieldActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        chatTextArea.setColumns(20);
+        chatTextArea.setRows(5);
+        chatScrollPane.setViewportView(chatTextArea);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,17 +124,17 @@ public class GameGUI extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chatScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                .addComponent(chatScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(chatTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -309,9 +316,17 @@ public class GameGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_board2MouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void chatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatTextFieldActionPerformed
+        if(!chatTextField.getText().isEmpty()){
+            if(Protocol.sendChatMessage(Game.getID(), Authenticated.getID(), chatTextField.getText())){
+                chatTextArea.append("You:  " + chatTextField.getText());
+            }
+            else{
+                chatTextArea.append("Error sending message:  " + chatTextField.getText());
+            }
+            chatTextField.setText("");
+        }
+    }//GEN-LAST:event_chatTextFieldActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         board1.setBoard(Game.getBoard1());
@@ -355,6 +370,12 @@ public class GameGUI extends javax.swing.JPanel {
         MainFrame.changeInterface(MainFrame.SETTINGS);
     }//GEN-LAST:event_settingsButtonActionPerformed
 
+    private void chatTextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_chatTextFieldFocusGained
+        if(chatTextField.getText().equals("Chat here")){
+            chatTextField.setText("");
+        }
+    }//GEN-LAST:event_chatTextFieldFocusGained
+
     @Override
     public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -369,11 +390,11 @@ public class GameGUI extends javax.swing.JPanel {
     private javax.swing.JButton attackButton;
     private interfaces.BoardGUI board1;
     private interfaces.BoardGUI board2;
+    private javax.swing.JScrollPane chatScrollPane;
+    private javax.swing.JTextArea chatTextArea;
+    private javax.swing.JTextField chatTextField;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel opponentLabel;
     private javax.swing.JButton settingsButton;
     private javax.swing.JLabel turnLabel;

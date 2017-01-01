@@ -33,6 +33,7 @@ public class Protocol {
     private static final String QUIT = "quit";
     private static final String CHALLENGE = "challenge";
     private static final String INVITE = "invite";
+    private static final String CHAT = "chat";
     
     /**
      * Class Constructor
@@ -394,22 +395,22 @@ public class Protocol {
                     Shot.setCriticalHit(false);
                     return true;
                 }
+                else if(reply[1].equals(END)){
+                    Shot.setFinalHit(true);
+                    if(reply[2].equals("win")){
+                        Game.setWin(true);
+                        return true;
+                    }
+                    else if(reply[2].equals("lose")){
+                        Game.setWin(false);
+                        return true;
+                    }
+                    else
+                        return false;
+                }
                 else{
                     return false;
                 }
-            }
-            else if(reply[0].equals(END)){
-                Shot.setFinalHit(true);
-                if(reply[1].equals("win")){
-                    Game.setWin(true);
-                    return true;
-                }
-                else if(reply[1].equals("lose")){
-                    Game.setWin(false);
-                    return true;
-                }
-                else
-                    return false;
             }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
@@ -455,23 +456,24 @@ public class Protocol {
                     Shot.setCriticalHit(false);
                     return true;
                 }
+                else if(reply[1].equals(END)){
+                    Shot.setFinalHit(true);
+                    if(reply[2].equals("win")){
+                        Game.setWin(true);
+                        return true;
+                    }
+                    else if(reply[2].equals("lose")){
+                        Game.setWin(false);
+                        return true;
+                    }
+                    else
+                        return false;
+                }
                 else{
                     return false;
                 }
             }
-            else if(reply[0].equals(END)){
-                Shot.setFinalHit(true);
-                if(reply[1].equals("win")){
-                    Game.setWin(true);
-                    return true;
-                }
-                else if(reply[1].equals("lose")){
-                    Game.setWin(false);
-                    return true;
-                }
-                else
-                    return false;
-            }
+            
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
@@ -620,6 +622,25 @@ public class Protocol {
         return false;
     }
     
+    public static boolean sendChatMessage(int gameID, int userID, String message){
+        String inputLine;
+        String[] reply;
+        
+        Authenticated.getClientSocket().write(GAME + TOKEN + CHAT + TOKEN + gameID + TOKEN + userID + TOKEN + message);
+        try {
+            inputLine = Authenticated.getClientSocket().read();
+            reply = decodeReply(inputLine, GAME);
+            if(reply[0].equals(CHAT)){
+                if (reply[1].equals("ok")){
+                    return true;
+                }
+            }
+            return false;
+        } catch (IOException ex) {
+            System.err.println("Couldn't get I/O for the connection to gnomo.");
+        }
+        return false;
+    }
     
     /**
      * Interprets the reply message from the server.
@@ -666,6 +687,12 @@ public class Protocol {
                 else
                     reply = "error";
                 break;
+            /*case GAME:
+                if (receiveChatMessage(Integer.parseInt(opcode[1]), opcode[2]))
+                    reply = "ok";
+                else
+                    reply = "error";
+                break;*/
 
             default: 
                 reply = "error";      
