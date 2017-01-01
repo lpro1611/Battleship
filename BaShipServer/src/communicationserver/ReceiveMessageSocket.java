@@ -43,6 +43,7 @@ public class ReceiveMessageSocket extends Thread {
                         
                         if (reply != null) {
                             out.println(reply);
+                            System.out.println(reply);
                             
                             if (reply.equals("exit")) {
                                 break;

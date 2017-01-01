@@ -135,9 +135,12 @@ public class Game {
                 break;
         }
         
+        System.out.println(hits);
         
-        if (hits == 6) {
+        if (hits == 5) {
             if (playerId == (GameList.get(gameId).getPlayer1Id())) {
+                
+                System.out.println("player 1 wins");
                 
                 try {
                     DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
@@ -145,7 +148,7 @@ public class Game {
                     System.out.println("Error saving ship" + e );
                 }
             } else {
-                
+                 System.out.println("player 2 wins");
                 try {
                     DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
                 } catch(SQLException e) {
@@ -166,11 +169,17 @@ public class Game {
         String message;
         int[] otherPlayerAttack;
         
-        while((GameList.get(gameId).getNextPlayer() != playerId) && GameList.containsKey(gameId)) {/*do nothing*/}
-        
-        if (!GameList.containsKey(gameId)) {
+        try {
+            while((GameList.get(gameId).getNextPlayer() != playerId) && GameList.containsKey(gameId)) {/*do nothing*/}
+        } catch (Exception e) {
+            if (!GameList.containsKey(gameId)) {
                 return "end#lose";
+            } else {
+                return "error";
+            }
         }
+        
+        
         
         if (GameList.get(gameId).getEndGame()) {
             GameList.remove(gameId);
