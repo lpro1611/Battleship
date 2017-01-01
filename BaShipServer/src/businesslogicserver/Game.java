@@ -39,6 +39,7 @@ public class Game {
     public static int createGame(int player1Id, int player2Id) {
         Random idGenerator = new Random();
         int id;
+        int dataBaseId = 0;
         
         do {
             id = idGenerator.nextInt();
@@ -47,10 +48,12 @@ public class Game {
         GameList.put(id, new GameState(id, player1Id, player2Id));
         
         try {
-            DbGame.createGame(player1Id, player2Id);
+            dataBaseId = DbGame.createGame(player1Id, player2Id);
         } catch (SQLException e) {
             System.out.println("Error saving ship (Isto não é um barco!)" + e);
         }
+        
+        GameList.get(id).setDataBaseGameId(dataBaseId);
         
         return id;
     }
@@ -167,14 +170,14 @@ public class Game {
             if (playerId == (GameList.get(gameId).getPlayer1Id())) {
                 
                 try {
-                    DbGame.setGameWinner(playerId, gameId);
+                    DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
                 } catch (SQLException e) {
                     System.out.println("Error saving ship" + e );
                 }
             } else {
                 
                 try {
-                    DbGame.setGameWinner(playerId, gameId);
+                    DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
                 } catch(SQLException e) {
                     System.out.println("Error saving ship" + e );
                 }
@@ -202,5 +205,3 @@ public class Game {
         return "ok";
     }
 }
-    
-

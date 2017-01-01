@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class GameState {
     private final int gameId;
+    private int dataBaseId;
     private final int player1Id;
     private final int player2Id;
     private int[][] board1 = new int[10][10];
@@ -67,6 +68,7 @@ public class GameState {
         lastPlayer2Attack[2] = -1;
         
         end = false;
+        dataBaseId = 0;
         
         player1Ships.add(new Ship(2)); //cria Destroyer,  os seis barcos aparecem ja ordenados na lista
         player1Ships.add(new Ship(3));
@@ -79,6 +81,25 @@ public class GameState {
         player2Ships.add(new Ship(3));
         player2Ships.add(new Ship(4));
         player2Ships.add(new Ship(5));   
+    }
+    
+    
+    /**
+     * Set the identifier of game in the database
+     * 
+     * @param dataBaseId game's id in the data base
+     */
+    public void setDataBaseGameId(int dataBaseId) {
+        this.dataBaseId = dataBaseId;
+    }
+    
+    /**
+     * Get he identifier of game in the datbase
+     * 
+     * @return  game's id in the data base 
+     */
+    public int getDataBaseGameId() {
+        return dataBaseId;
     }
     
     /**
@@ -216,7 +237,7 @@ public class GameState {
         }
       
         try {
-            DbGame.setShipPosition(boatid,startX,startY,endX,endY, player1Id, gameId );
+            DbGame.setShipPosition(boatid,startX,startY,endX,endY, player1Id, getDataBaseGameId());
         } catch (SQLException e) {
             System.out.println("Error savin ship" + e );
         }
@@ -265,7 +286,7 @@ public class GameState {
             }
             
             try {
-                DbGame.setMovePosition(x,y,saveHit,player,gameId );
+                DbGame.setMovePosition(x,y,saveHit,player, getDataBaseGameId());
             } catch(SQLException e) {
                 System.out.println("Error savin ship" + e );
             }
@@ -295,7 +316,7 @@ public class GameState {
             }
             
             try {
-                DbGame.setMovePosition(x,y,saveHit,player,gameId );
+                DbGame.setMovePosition(x,y,saveHit,player, getDataBaseGameId());
             } catch(SQLException e) {
                 System.out.println("Error savin ship" + e );
             }
