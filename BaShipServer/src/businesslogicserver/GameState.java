@@ -291,8 +291,6 @@ public class GameState {
                 System.out.println("Error savin ship" + e );
             }
             
-            changeNextPlayer();
-            
             return criticalHits1;   
         } else {
             hit[0] = board1[x][y];
@@ -320,8 +318,6 @@ public class GameState {
             } catch(SQLException e) {
                 System.out.println("Error savin ship" + e );
             }
-            
-            changeNextPlayer();
             
             return criticalHits2;
         } 
