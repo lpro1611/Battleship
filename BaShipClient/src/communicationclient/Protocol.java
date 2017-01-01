@@ -268,13 +268,8 @@ public class Protocol {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         return false;*/
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-        }
-        Game.setOpponent("test_opponent");
-        Game.setID(1);
-        return true;
+        
+        return false;
     }
     
     /**
@@ -351,13 +346,7 @@ public class Protocol {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         
-        return false;/*
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-        }
-        Game.setMyTurn(true);
-        return true;*/
+        return false;
     }
     /**
      * Attack the opponent.
@@ -623,6 +612,15 @@ public class Protocol {
         return false;
     }
     
+    /**
+     * Sends a message to the opponent.
+     * 
+     * @param gameID    game identification number
+     * @param userID    user identification number
+     * @param message   message to send
+     * @return          <code>true</code> if successful; 
+     *                  <code>false</code> otherwise.
+     */
     public static boolean sendChatMessage(int gameID, int userID, String message){
         String inputLine;
         String[] reply;

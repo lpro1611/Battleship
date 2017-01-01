@@ -3,14 +3,28 @@ package businesslogicclient;
 import communicationclient.Protocol;
 
 /**
- *
- * @author diogo
+ * Represents the challenge task
+ * 
+ * @author Diogo Recharte
  */
 public class Challenge {
     private static int[] id;
     private static String[] username;
     private static boolean accepted = false;
     
+    /**
+     * Class Constructor.
+     */
+    public Challenge(){}
+    
+    /**
+     * Gets the array of authenticated user names.
+     * <p>
+     * Calls the communication protocol to access the server and
+     * return the list of users.
+     * 
+     * @return      array of authenticated user names
+     */
     public static String[] getList(){
         String[] list;
         list = Protocol.getChallengeList(Authenticated.getID());
