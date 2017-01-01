@@ -276,6 +276,13 @@ public class GameGUI extends javax.swing.JPanel {
                         if(Shot.isCriticalHit()){
                             JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
                         }
+                        else if (Shot.isFinalHit()){
+                            if (Game.isWin())
+                                JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                            else
+                                JOptionPane.showMessageDialog(GameGUI.this, "You Lose", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                            MainFrame.changeInterface(MainFrame.HOME);
+                        }
                         Game.setMyTurn(true);
                         turnLabel.setText("Your Turn");
                         board2.setActionSize(1);

@@ -3,10 +3,7 @@ package businesslogicclient;
 import communicationclient.Protocol;
 import communicationclient.SocketClient;
 import interfaces.InvitePopup;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  * Represents an authenticated user which has a name 
@@ -170,7 +167,6 @@ public class Authenticated {
         Challenge.accept(false);
         if(!Game.isRunning()){
             
-            //boolean done;
             JFrame inviteFrame = new JFrame("Invite");
             InvitePopup invitePanel = new InvitePopup();
             invitePanel.setUsername(username);
@@ -185,8 +181,6 @@ public class Authenticated {
 
 
             while(true){
-                //done = invitePanel.isDone();
-                //System.out.println(done);
                 if(invitePanel.isDone())
                     break;
                 try{

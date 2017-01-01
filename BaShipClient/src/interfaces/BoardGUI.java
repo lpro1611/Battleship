@@ -160,7 +160,7 @@ public class BoardGUI extends JPanel{
         this.size=size;
     }
     public boolean boatsReady(){
-        return board.boatsReady();
+        return board.shipsReady();
     }
     
     public void showShot(){
