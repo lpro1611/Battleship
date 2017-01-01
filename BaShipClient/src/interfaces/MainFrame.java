@@ -115,7 +115,7 @@ public class MainFrame extends JFrame{
         }
     }
     
-    public static void music() {       
+    private static void music() {       
         AudioInputStream inputStream;
         try {
             inputStream = AudioSystem.getAudioInputStream(new File("src/resources/music/bensound-epic.wav"));

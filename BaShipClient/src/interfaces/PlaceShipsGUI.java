@@ -58,6 +58,7 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
         playButton = new javax.swing.JButton();
         orientatioButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
+        settingsButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(220, 220, 225));
         addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -268,15 +269,15 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
             }
         });
 
+        settingsButton.setBackground(new java.awt.Color(220, 220, 225));
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/settings.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(217, 217, 217)
-                        .addComponent(placeyourshipsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(190, 190, 190)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -292,13 +293,24 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
                         .addGap(70, 70, 70)
                         .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(190, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(217, 217, 217)
+                .addComponent(placeyourshipsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(placeyourshipsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(placeyourshipsLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(settingsButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,6 +446,7 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
     private javax.swing.JLabel placeyourshipsLabel;
     private javax.swing.JButton playButton;
     private javax.swing.JButton resetButton;
+    private javax.swing.JButton settingsButton;
     private javax.swing.JPanel shipsTable;
     private javax.swing.JButton submarineButton;
     // End of variables declaration//GEN-END:variables

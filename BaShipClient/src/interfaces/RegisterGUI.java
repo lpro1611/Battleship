@@ -40,6 +40,7 @@ public class RegisterGUI extends JPanel {
         emailLabel = new javax.swing.JLabel();
         adsPanel = new javax.swing.JPanel();
         adsLabel = new javax.swing.JLabel();
+        settingsButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(220, 220, 225));
 
@@ -133,6 +134,14 @@ public class RegisterGUI extends JPanel {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
+        settingsButton.setBackground(new java.awt.Color(220, 220, 225));
+        settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/settings.png"))); // NOI18N
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -168,7 +177,9 @@ public class RegisterGUI extends JPanel {
                                                 .addComponent(emailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addComponent(usernameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addGap(180, 180, 180)))
-                        .addGap(244, 244, 244))
+                        .addGap(155, 155, 155)
+                        .addComponent(settingsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(190, 190, 190))))
@@ -176,8 +187,13 @@ public class RegisterGUI extends JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(bashipLabel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(bashipLabel))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(settingsButton)))
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(emailLabel)
@@ -207,8 +223,7 @@ public class RegisterGUI extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.LOGIN);
+        MainFrame.changeInterface(MainFrame.LOGIN);
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
@@ -235,6 +250,10 @@ public class RegisterGUI extends JPanel {
         registerAction();
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        MainFrame.changeInterface(MainFrame.SETTINGS);
+    }//GEN-LAST:event_settingsButtonActionPerformed
+
     @Override
     public void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -254,8 +273,7 @@ public class RegisterGUI extends JPanel {
         String status=Visitor.register(email, username, password, confirmPassword, termsAccepted);
         if(status.equals("ok")){
             JOptionPane.showMessageDialog(RegisterGUI.this, "Registration Sucessful", "Register", JOptionPane.INFORMATION_MESSAGE);
-            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-            cl.show(MainFrame.mainPanel, MainFrame.HOME);
+            MainFrame.changeInterface(MainFrame.HOME);
         }
         else
             JOptionPane.showMessageDialog(RegisterGUI.this, status, "Registration Failed", JOptionPane.ERROR_MESSAGE);
@@ -273,6 +291,7 @@ public class RegisterGUI extends JPanel {
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton registerButton;
+    private javax.swing.JButton settingsButton;
     private javax.swing.JCheckBox termsCheckbox;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JTextField usernameTextField;

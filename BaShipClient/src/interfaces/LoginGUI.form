@@ -25,34 +25,38 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="361" max="-2" attributes="0"/>
               <Component id="bashipLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" attributes="0">
-              <EmptySpace pref="397" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="usernameLabel" min="-2" max="-2" attributes="0"/>
-                  <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="usernameTextField" min="-2" pref="331" max="-2" attributes="0"/>
-                  <Component id="passwordField" min="-2" pref="331" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="411" max="-2" attributes="0"/>
+              <Component id="settingsButton" min="-2" pref="49" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="adsPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="loginButton" min="-2" pref="320" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
-              <Component id="registerButton" min="-2" pref="320" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
+              <EmptySpace pref="190" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="usernameLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="usernameTextField" min="-2" pref="331" max="-2" attributes="0"/>
+                          <Component id="passwordField" min="-2" pref="331" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="411" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="adsPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="190" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="loginButton" min="-2" pref="320" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="216" max="-2" attributes="0"/>
+                      <Component id="registerButton" min="-2" pref="320" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,7 +64,10 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-              <Component id="bashipLabel" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="bashipLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="settingsButton" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="82" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="usernameTextField" alignment="1" min="-2" pref="33" max="-2" attributes="0"/>
@@ -194,5 +201,18 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="settingsButton">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="e1" green="dc" red="dc" type="rgb"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/resources/images/settings.png"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="settingsButtonActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

@@ -37,7 +37,7 @@ public class SettingsGUI extends javax.swing.JPanel {
         bashipLabel = new javax.swing.JLabel();
         adsPanel = new javax.swing.JPanel();
         adsLabel = new javax.swing.JLabel();
-        lougoutButton = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
         homeButton = new javax.swing.JButton();
         soundToggleButton = new javax.swing.JToggleButton();
         soundLabel = new javax.swing.JLabel();
@@ -77,11 +77,11 @@ public class SettingsGUI extends javax.swing.JPanel {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        lougoutButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lougoutButton.setText("Logout");
-        lougoutButton.addActionListener(new java.awt.event.ActionListener() {
+        logoutButton.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lougoutButtonActionPerformed(evt);
+                logoutButtonActionPerformed(evt);
             }
         });
 
@@ -132,12 +132,12 @@ public class SettingsGUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
+                        .addContainerGap(190, Short.MAX_VALUE)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(500, 500, 500)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(soundLabel)
@@ -146,7 +146,7 @@ public class SettingsGUI extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(soundToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(walpaperComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addGap(190, 190, 190))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,7 +166,7 @@ public class SettingsGUI extends javax.swing.JPanel {
                             .addComponent(walpaperLabel)
                             .addComponent(walpaperComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
-                        .addComponent(lougoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40))
@@ -176,44 +176,53 @@ public class SettingsGUI extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lougoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lougoutButtonActionPerformed
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         if (Game.isRunning()){
             if (Game.concede()){
                 JOptionPane.showMessageDialog(SettingsGUI.this, "You Lost", "Game Over", JOptionPane.CANCEL_OPTION);
-                CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                MainFrame.changeInterface(MainFrame.HOME);
             }
             else{
                 JOptionPane.showMessageDialog(SettingsGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         else{
-            if (Authenticated.getID()>=0)
+            if (Authenticated.getID()>0)
                 Authenticated.logout();
-            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-            cl.show(MainFrame.mainPanel, MainFrame.LOGIN);
+            MainFrame.changeInterface(MainFrame.LOGIN);
         }
-    }//GEN-LAST:event_lougoutButtonActionPerformed
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
-        if (Game.isRunning()){
-            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-            cl.show(MainFrame.mainPanel, MainFrame.GAME);
+        if(Authenticated.getID()>0){
+            if (Game.isRunning()){
+                MainFrame.changeInterface(MainFrame.GAME);
+            }
+            else{
+                MainFrame.changeInterface(MainFrame.HOME);
+            }
         }
         else{
-            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-            cl.show(MainFrame.mainPanel, MainFrame.HOME);
+            MainFrame.changeInterface(MainFrame.LOGIN);
         }
     }//GEN-LAST:event_homeButtonActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        if (Game.isRunning()){
-            lougoutButton.setText("Concede Game");
+        if(Authenticated.getID()>0){
+            if (Game.isRunning()){
+            logoutButton.setText("Concede Game");
+            logoutButton.setVisible(true);
             homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/back.png")));
+            }
+            else{
+            logoutButton.setText("Logout");
+            logoutButton.setVisible(true);
+            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/home.png")));
+            }
         }
         else{
-            lougoutButton.setText("Logout");
-            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/home.png")));
+            logoutButton.setVisible(false);
+            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/back.png")));
         }
     }//GEN-LAST:event_formComponentShown
 
@@ -244,7 +253,7 @@ public class SettingsGUI extends javax.swing.JPanel {
     private javax.swing.JPanel adsPanel;
     private javax.swing.JLabel bashipLabel;
     private javax.swing.JButton homeButton;
-    private javax.swing.JButton lougoutButton;
+    private javax.swing.JButton logoutButton;
     private javax.swing.JLabel soundLabel;
     private javax.swing.JToggleButton soundToggleButton;
     private javax.swing.JComboBox<String> walpaperComboBox;

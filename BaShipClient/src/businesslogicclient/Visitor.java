@@ -24,8 +24,8 @@ public class Visitor {
      * <p>
      * If successful the user will be given the authenticated user privileges. 
      * 
-     * @param username  the user's name
-     * @param password  the user's password
+     * @param username  user name
+     * @param password  user password
      * @return          <code>true</code> if successful; 
      *                  <code>false</code> otherwise.
      */
@@ -48,8 +48,8 @@ public class Visitor {
      * <p>
      * If successful the user will be given the authenticated user privileges. 
      * 
-     * @param email             e-mail address of the user
-     * @param username          name of the user
+     * @param email             user e-mail address
+     * @param username          user name
      * @param pass              password for the user's login
      * @param confirmPass       password for the user's login
      * @param termsAccepted     terms accepted by the user

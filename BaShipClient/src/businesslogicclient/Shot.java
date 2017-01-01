@@ -12,7 +12,6 @@ public class Shot {
     private static boolean marked = false;
     private static boolean hit = false;
     private static boolean criticalHit = false;
-    private static String boatName;
     
     public static void mark(int row, int col){
         Shot.row = row;
@@ -27,9 +26,6 @@ public class Shot {
         Shot.criticalHit = criticalHit;
     }
     
-    public static void setBoatName(String boatName){
-        Shot.boatName = boatName;
-    }
     
     public static boolean fire(){
         Shot.marked = false;
@@ -64,7 +60,5 @@ public class Shot {
     public static boolean isCriticalHit(){
         return Shot.criticalHit;
     }
-    public static String getBoatName(){
-        return Shot.boatName;
-    }
+
 }

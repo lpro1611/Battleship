@@ -222,12 +222,9 @@ public class GameGUI extends javax.swing.JPanel {
                         .addComponent(board1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(opponentLabel)
-                                .addGap(18, 18, 18))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(settingsButton)
-                                .addGap(27, 27, 27)))
+                            .addComponent(opponentLabel)
+                            .addComponent(settingsButton))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(board2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
@@ -259,6 +256,9 @@ public class GameGUI extends javax.swing.JPanel {
                     turnLabel.setText("Your Opponent's Turn");
                     if(Shot.receive()){
                         board1.showShot();
+                        if(Shot.isCriticalHit()){
+                            JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Error", JOptionPane.INFORMATION_MESSAGE);
+                        }
                         Game.setMyTurn(true);
                         turnLabel.setText("Your Turn");
                         board2.setActionSize(1);

@@ -4,8 +4,8 @@ import communicationclient.Protocol;
 import java.util.ArrayList;
 
 /**
- *
- * @author diogo
+ * Represents the 10x10 play board.
+ * @author Diogo Recharte
  */
 public class Board {
     
@@ -13,6 +13,9 @@ public class Board {
     private int numCellsFilled;
     private final ArrayList<BoatPlacement> boatsPlacement;
     
+    /**
+     * Class constructor.
+     */
     public Board(){
         cell = new int[10][10];
         numCellsFilled = 0;
