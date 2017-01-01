@@ -42,6 +42,11 @@ public class LoginGUI extends JPanel {
 
         setBackground(new java.awt.Color(220, 220, 225));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         bashipLabel.setFont(new java.awt.Font("Tahoma", 1, 120)); // NOI18N
         bashipLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -200,6 +205,10 @@ public class LoginGUI extends JPanel {
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
         MainFrame.changeInterface(MainFrame.SETTINGS);
     }//GEN-LAST:event_settingsButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        usernameTextField.requestFocus();
+    }//GEN-LAST:event_formComponentShown
 
     @Override
     public void paintComponent(Graphics g) {

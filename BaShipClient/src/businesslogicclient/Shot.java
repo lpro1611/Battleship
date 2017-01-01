@@ -12,6 +12,7 @@ public class Shot {
     private static boolean marked = false;
     private static boolean hit = false;
     private static boolean criticalHit = false;
+    private static boolean finalHit = false;
     
     public static void mark(int row, int col){
         Shot.row = row;
@@ -24,6 +25,10 @@ public class Shot {
     
     public static void setCriticalHit(boolean criticalHit){
         Shot.criticalHit = criticalHit;
+    }
+    
+    public static void setFinalHit(boolean finalHit){
+        Shot.finalHit = finalHit;
     }
     
     
@@ -59,6 +64,10 @@ public class Shot {
     }
     public static boolean isCriticalHit(){
         return Shot.criticalHit;
+    }
+    
+    public static boolean isFinalHit(){
+        return Shot.finalHit;
     }
 
 }

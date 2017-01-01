@@ -24,6 +24,7 @@ public class Protocol {
     private static final String EXIT = "exit";
     private static final String GAME = "game";
     private static final String BEGIN = "begin";
+    private static final String END = "end";
     private static final String START = "start";
     private static final String WAIT = "wait";
     private static final String ATTACK = "attack";
@@ -396,6 +397,11 @@ public class Protocol {
                     return false;
                 }
             }
+            else if (reply[0].equals(END)){
+                Shot.setFinalHit(true);
+                Game.setOutcome(reply[1]);
+                return true;
+            }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
@@ -450,6 +456,11 @@ public class Protocol {
                 else{
                     return false;
                 }
+            }
+            else if(reply[0].equals(END)){
+                Shot.setFinalHit(true);
+                Game.setOutcome(reply[1]);
+                return true;
             }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");

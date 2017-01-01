@@ -253,25 +253,35 @@ public class GameGUI extends javax.swing.JPanel {
             public void run() {
                 if(Shot.fire()){
                     board2.showShot();
+                    if(Shot.isCriticalHit()){
+                        JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                    else if (Shot.isFinalHit()){
+                        if (Game.getOutcome().equals("win"))
+                            JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                        else if (Game.getOutcome().equals("win"))
+                            JOptionPane.showMessageDialog(GameGUI.this, "You Loose", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                        else 
+                            JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                        MainFrame.changeInterface(MainFrame.HOME);
+                    }
                     turnLabel.setText("Your Opponent's Turn");
                     if(Shot.receive()){
                         board1.showShot();
                         if(Shot.isCriticalHit()){
-                            JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Error", JOptionPane.INFORMATION_MESSAGE);
+                            JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
                         }
                         Game.setMyTurn(true);
                         turnLabel.setText("Your Turn");
                         board2.setActionSize(1);
                     }
                     else{
-                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                        MainFrame.changeInterface(MainFrame.HOME);
                         JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 else{
-                    CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                    cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                    MainFrame.changeInterface(MainFrame.HOME);
                     JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
