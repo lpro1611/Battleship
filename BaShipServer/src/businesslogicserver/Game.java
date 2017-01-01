@@ -120,13 +120,13 @@ public class Game {
         
         switch (playerAttack[2]) {
             case 2:
-                message = "#critical";
+                message = "critical";
                 break;
             case 1:
-                message = "#hit";
+                message = "hit";
                 break;
             default:
-                message = "#miss";
+                message = "miss";
                 break;
         }
         
