@@ -27,6 +27,7 @@ public class GameState {
     private int[] lastPlayer1Attack = new int[3];
     private int[] lastPlayer2Attack = new int[3];
     private boolean end;
+    private boolean end2;
     private boolean treta;
     
     /**
@@ -68,6 +69,7 @@ public class GameState {
         lastPlayer2Attack[2] = -1;
         
         end = false;
+        end2 = false;
         dataBaseId = 0;
         
         player1Ships.add(new Ship(2)); //cria Destroyer,  os seis barcos aparecem ja ordenados na lista
@@ -116,6 +118,22 @@ public class GameState {
      */
     public boolean getEndGame() {
         return end;
+    }
+    
+    /**
+     *  This method is to indicate that the match end.
+     */
+    public void setEndGame2() {
+        end2 = true;
+    }
+    
+    /**
+     * Returns if the match is finish or not. 
+     * 
+     * @return end (true or false).
+     */
+    public boolean getEndGame2() {
+        return end2;
     }
     
     /**
@@ -201,7 +219,7 @@ public class GameState {
             placey = endY;
         }
         
-         if (size == 5) {
+        if (size == 5) {
                 boatid = 5;
             } else if (size == 4) {
                 boatid = 4;

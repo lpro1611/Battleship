@@ -136,6 +136,9 @@ public class Game {
         }
         
         System.out.println(hits);
+        if (hits == 5) {
+            GameList.get(gameId).setEndGame2();
+        }
         GameList.get(gameId).changeNextPlayer();
         
         if (hits == 5) {
@@ -176,6 +179,10 @@ public class Game {
             } else {
                 return "error";
             }
+        }
+        
+        if (GameList.get(gameId).getEndGame2()) {
+            return "end#lose";
         }
         
         if (GameList.get(gameId).getEndGame()) {
