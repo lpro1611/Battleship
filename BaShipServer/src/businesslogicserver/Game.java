@@ -42,7 +42,7 @@ public class Game {
         int dataBaseId = 0;
         
         do {
-            id = idGenerator.nextInt();
+            id = idGenerator.nextInt(2147483640) + 1;
         } while (GameList.containsKey(id));
         
         GameList.put(id, new GameState(id, player1Id, player2Id));
@@ -115,6 +115,8 @@ public class Game {
         int[] playerAttack;
 
         if (GameList.get(gameId).getEndGame()) {
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer1Id()).clearCurrentGameId();
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer2Id()).clearCurrentGameId();
             GameList.remove(gameId);
             return "end#win";
         }   
@@ -160,6 +162,8 @@ public class Game {
                 }
             }
             
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer1Id()).clearCurrentGameId();
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer2Id()).clearCurrentGameId();
             GameList.remove(gameId);
             message = "end#win";
         }
@@ -186,6 +190,8 @@ public class Game {
         }
         
         if (GameList.get(gameId).getEndGame()) {
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer1Id()).clearCurrentGameId();
+            AuthenticatedUsers.authenticatedList.get(GameList.get(gameId).getPlayer2Id()).clearCurrentGameId();
             GameList.remove(gameId);
             return "end#win";
         }   

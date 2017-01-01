@@ -105,14 +105,14 @@ public class GameState {
     }
     
     /**
-     *  This method is to indicate that the match end.
+     *  This method is to indicate that the match end by user request.
      */
     public void setEndGame() {
         end = true;
     }
     
     /**
-     * Returns if the match is finish or not. 
+     * Returns if the match is finish or not, by user request. 
      * 
      * @return end (true or false).
      */
