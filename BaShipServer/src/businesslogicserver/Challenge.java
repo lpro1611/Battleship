@@ -12,6 +12,7 @@ public class Challenge {
     
     /**
      * Constructor of Challenge class
+     * 
      * @param playerId1 identication number of challenger
      * @param playerId2 identification umber of challengee
      */
@@ -22,21 +23,26 @@ public class Challenge {
     
     /**
      * This method changes the state of the challenge
+     * 
      * @param state new state to be given the challenge
      */
     public void setState(String state) {
         this.state = state;
     }
+    
     /**
      * This method gets the currrent state of the challenge
-     * @return 
+     * 
+     * @return  state of current challenge
      */
     public String getState() {
         return state;
     }
+    
     /**
-     * Gets the identification number of the player1
-     * @return the identification number of player1
+     * Gets the identification number of the player1.
+     * 
+     * @return player1's identifier
      */
     public int getPlayerId1() {
         return playerId1;
@@ -44,7 +50,8 @@ public class Challenge {
     
      /**
      * Gets the identification number of the player2
-     * @return the identification number of player2
+     * 
+     * @return player2's identifier
      */
     public int getPlayerId2() {
         return playerId2;

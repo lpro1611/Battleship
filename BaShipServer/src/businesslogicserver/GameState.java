@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package businesslogicserver;
 
 import dataacess.DbGame;
@@ -10,13 +5,14 @@ import java.sql.SQLException;
 import java.util.*;
 
 /**
- *This class handles and saves the state of current game
+ * This class handles and saves the state of current game.
  * 
  * @author CPU TOSH
  *
  */
 public class GameState {
     private final int gameId;
+    private int dataBaseId;
     private final int player1Id;
     private final int player2Id;
     private int[][] board1 = new int[10][10];
@@ -72,6 +68,7 @@ public class GameState {
         lastPlayer2Attack[2] = -1;
         
         end = false;
+        dataBaseId = 0;
         
         player1Ships.add(new Ship(2)); //cria Destroyer,  os seis barcos aparecem ja ordenados na lista
         player1Ships.add(new Ship(3));
@@ -86,14 +83,47 @@ public class GameState {
         player2Ships.add(new Ship(5));   
     }
     
+    
+    /**
+     * Set the identifier of game in the database
+     * 
+     * @param dataBaseId game's id in the data base
+     */
+    public void setDataBaseGameId(int dataBaseId) {
+        this.dataBaseId = dataBaseId;
+    }
+    
+    /**
+     * Get he identifier of game in the datbase
+     * 
+     * @return  game's id in the data base 
+     */
+    public int getDataBaseGameId() {
+        return dataBaseId;
+    }
+    
+    /**
+     *  This method is to indicate that the match end.
+     */
     public void setEndGame() {
         end = true;
     }
     
+    /**
+     * Returns if the match is finish or not. 
+     * 
+     * @return end (true or false).
+     */
     public boolean getEndGame() {
         return end;
     }
     
+    /**
+     * This method cn return a simple struct with last player attack.
+     * 
+     * @param playerId  player's identifier
+     * @return          last player attack
+     */
     public int[] getLastAtack(int playerId) {
         if (playerId == player1Id) {
             return lastPlayer1Attack;
@@ -102,6 +132,11 @@ public class GameState {
         }
     }
     
+    /**
+     * Get what player is the current turn.
+     * 
+     * @return player's identifier
+     */
     public int getNextPlayer() {
         if (nextPlayer == 1) {
             return player1Id;
@@ -110,6 +145,9 @@ public class GameState {
         }
     }
     
+    /**
+     * Change next player turn.
+     */
     public void changeNextPlayer() {
         if (nextPlayer == 1) {
             nextPlayer = 2;
@@ -120,14 +158,16 @@ public class GameState {
     
     /**
      * This method return the id number of player 1
-     * @return id number of player 1
+     * 
+     * @return player1's identifier
      */
     public int getPlayer1Id()  {
         return player1Id;
     }
     /**
      * This method return the id number of player 2
-     * @return id number of player 2
+     * 
+     * @return player2's identifier
      */
     public int getPlayer2Id()  {
         return player2Id;
@@ -141,12 +181,12 @@ public class GameState {
      * The method fills the correct positions of the player's board with 
      * the id of the boat. This signals that the boat is in those positions
      * 
-     * @param playerId identification number of player
-     * @param size
-     * @param startX starting horizontal position
-     * @param startY starting vertical position
-     * @param endX final horizontal position
-     * @param endY final vertical position 
+     * @param playerId  identification number of player
+     * @param size      ship's size
+     * @param startX    starting horizontal position
+     * @param startY    starting vertical position
+     * @param endX      final horizontal position
+     * @param endY      final vertical position 
      */
     public void placeShip(int playerId, int size, int startX, int startY, int endX, int endY) {
         //no caso de string id é String e eu depois passo a numero
@@ -169,6 +209,7 @@ public class GameState {
                 boatid = 1;
             } else if (treta) {
                 boatid = 2;
+                treta = false;
             } else {
                 boatid = 3;
             }
@@ -196,7 +237,7 @@ public class GameState {
         }
       
         try {
-            DbGame.setShipPosition(boatid,startX,startY,endX,endY, player1Id, gameId );
+            DbGame.setShipPosition(boatid,startX,startY,endX,endY, player1Id, getDataBaseGameId());
         } catch (SQLException e) {
             System.out.println("Error savin ship" + e );
         }
@@ -245,7 +286,7 @@ public class GameState {
             }
             
             try {
-                DbGame.setMovePosition(x,y,saveHit,player,gameId );
+                DbGame.setMovePosition(x,y,saveHit,player, getDataBaseGameId());
             } catch(SQLException e) {
                 System.out.println("Error savin ship" + e );
             }
@@ -275,7 +316,7 @@ public class GameState {
             }
             
             try {
-                DbGame.setMovePosition(x,y,saveHit,player,gameId );
+                DbGame.setMovePosition(x,y,saveHit,player, getDataBaseGameId());
             } catch(SQLException e) {
                 System.out.println("Error savin ship" + e );
             }
@@ -289,8 +330,9 @@ public class GameState {
     /**
      * This method signal that a player is ready to start the game
      * If both players are ready a begin game message is sent to both. 
-     * @param player identification number of player 
-     * @return String message to the cliente
+     * 
+     * @param player    identification number of player 
+     * @return          String message to the cliente
      */
     public String playerReady(int player) { 
         if (player1Id == player) {
@@ -307,11 +349,12 @@ public class GameState {
         }
     }
     /**
-     * This method gets the value on the players board
-     * @param x horizontal position
-     * @param y vertical position
-     * @param player identification number of the player
-     * @return value on the players board
+     * This method gets the value on the players board.
+     * 
+     * @param x         horizontal position
+     * @param y         vertical position
+     * @param player    identification number of the player
+     * @return          value on the players board
      */
     public int getPosition(int x, int y, int player){
         if(player == player1Id)
@@ -319,11 +362,12 @@ public class GameState {
         else
         return board2 [x] [y];    
     }
+    
     /**
      * This method checks the ready state of a player
      * 
-     * @param player identification number of the player
-     * @return the rady state of the player
+     * @param player    identification number of the player
+     * @return          the ready state of the player
      */
     public boolean getPlayerState(int player){
         if(player == player1Id)

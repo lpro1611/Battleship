@@ -9,8 +9,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
- *
- * @author diogo
+ * Deals with generating all the sockets to communicate with 
+ * multiple clients simultaneously.
+ * 
+ * @author alunos-i221- 16
  */
 public class MultiServer extends Thread {
     private final int port;

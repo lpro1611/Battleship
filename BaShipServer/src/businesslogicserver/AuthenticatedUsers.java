@@ -3,7 +3,6 @@ package businesslogicserver;
 import communicationserver.SendMessageSocket;
 import exceptions.NotFoundException;
 import java.io.PrintWriter;
-import java.net.Socket;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -21,11 +20,12 @@ public class AuthenticatedUsers {
     
     
     public AuthenticatedUsers () {}
+    
     /**
      * This method adds another User to the User list
      * 
-     * @param id identification number of player
-     * @return confirmation
+     * @param id    identification number of player
+     * @return      confirmation
      * 
      * @throws SQLException
      * @throws NotFoundException 
@@ -39,7 +39,8 @@ public class AuthenticatedUsers {
      * <p>
      * 
      * After a player is removed the method waits ten second
-     * to ?
+     * to second socket closes itself.
+     * 
      * @param userId identification number of user to remove
      */
     public static void remove(int userId) {
@@ -65,8 +66,8 @@ public class AuthenticatedUsers {
      * while the user is active. The moment the user is off the list 
      * it sends an exit message to the Socket.
      * 
-     * @param userId identification numbe of user to be given 
-     * @param out stream given to the user
+     * @param userId    identification numbe of user to be given 
+     * @param out       1stream given to the user
      */
     public static void addSocket(int userId, PrintWriter out) {
         authenticatedList.get(userId).setSocket(out);
@@ -79,9 +80,10 @@ public class AuthenticatedUsers {
     }
     
     /**
+     * Send the active players to a specific client to create the chllenge menu.
      * 
-     * @param userId
-     * @return 
+     * @param userId    user's identifier
+     * @return          list with active users.
      */
     public static String menuChallenge(int userId) {
         String usersString = null;
@@ -106,9 +108,9 @@ public class AuthenticatedUsers {
      * <p>
      * The challenging and challenges user id numbers are given as arguments
      * 
-     * @param player1Id
-     * @param player2Id
-     * @return 
+     * @param player1Id     challenger's identifier
+     * @param player2Id     guest's identifier
+     * @return              reply of guest, or timeout
      */
     public static String setChallenge(int player1Id, int player2Id) {
         long timeoutTime = 2 * 60 * 1000; //2 minutos 
@@ -145,13 +147,13 @@ public class AuthenticatedUsers {
         
         return reply;
     }
+    
     /**
      * This method is called to reply to a challenge
-     * <p>
      * 
-     * @param player1Id
-     * @param message
-     * @return 
+     * @param player1Id guest's identifier
+     * @param message   reply of the guest    
+     * @return          message to previous layer
      */
     public static String replyChallenge(int player1Id, String message) {
         Integer gameId;
