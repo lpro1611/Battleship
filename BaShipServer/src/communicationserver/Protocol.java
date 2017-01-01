@@ -203,7 +203,6 @@ public class Protocol {
                 break;
                 
             case PLACE:
-                System.out.println("here");
                 answer = PLACE + "#";
                 try {
                     answer += Game.placeShips(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), Integer.parseInt(opcode[4]), Integer.parseInt(opcode[5]), Integer.parseInt(opcode[6]), Integer.parseInt(opcode[7]), Integer.parseInt(opcode[8]));
