@@ -114,6 +114,11 @@ public class Game {
         int hits;
         int[] playerAttack;
 
+        if (GameList.get(gameId).getEndGame()) {
+            GameList.remove(gameId);
+            return "end#win";
+        }   
+        
         hits = GameList.get(gameId).attack(playerId, x, y);
         
         playerAttack = GameList.get(gameId).getLastAtack(playerId);
