@@ -271,6 +271,11 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
 
         settingsButton.setBackground(new java.awt.Color(220, 220, 225));
         settingsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/settings.png"))); // NOI18N
+        settingsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -279,7 +284,7 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(190, 190, 190)
+                        .addContainerGap(190, Short.MAX_VALUE)
                         .addComponent(adsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(65, 65, 65)
@@ -292,7 +297,7 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
                         .addComponent(board1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
                         .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addGap(190, 190, 190))
             .addGroup(layout.createSequentialGroup()
                 .addGap(217, 217, 217)
                 .addComponent(placeyourshipsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,6 +356,7 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
                 @Override
                 public void run() {
                     if(Game.begin()){
+                        Game.setPlacingShips(false);
                         Game.setBoard(board1.getBoard());
                         CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
                         cl.show(MainFrame.mainPanel, MainFrame.GAME);
@@ -414,6 +420,10 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
         if (board1.boatsReady())
             playButton.setEnabled(true);
     }//GEN-LAST:event_formMouseMoved
+
+    private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
+        MainFrame.changeInterface(MainFrame.SETTINGS);
+    }//GEN-LAST:event_settingsButtonActionPerformed
 
     @Override
     public void paintComponent(Graphics g) {

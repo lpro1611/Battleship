@@ -196,7 +196,10 @@ public class SettingsGUI extends javax.swing.JPanel {
     private void homeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeButtonActionPerformed
         if(Authenticated.getID()>0){
             if (Game.isRunning()){
-                MainFrame.changeInterface(MainFrame.GAME);
+                if (Game.isPlacingShips())
+                    MainFrame.changeInterface(MainFrame.PLACESHIPS);
+                else
+                    MainFrame.changeInterface(MainFrame.GAME);
             }
             else{
                 MainFrame.changeInterface(MainFrame.HOME);

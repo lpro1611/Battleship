@@ -258,6 +258,7 @@ public class Protocol {
                     Game.reset();
                     Game.setID(Integer.parseInt(reply[2]));
                     Game.setOpponent(reply[3]);
+                    Game.setPlacingShips(true);
                     return true;
                 }
             }
@@ -397,23 +398,24 @@ public class Protocol {
                     return false;
                 }
             }
-            else if (reply[0].equals(END)){
+            else if(reply[0].equals(END)){
                 Shot.setFinalHit(true);
-                Game.setOutcome(reply[1]);
-                return true;
+                if(reply[1].equals("win")){
+                    Game.setWin(true);
+                    return true;
+                }
+                else if(reply[1].equals("lose")){
+                    Game.setWin(false);
+                    return true;
+                }
+                else
+                    return false;
             }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         
-        return false;/*
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-        }
-        Shot.setHit(true);
-        Shot.setCriticalHit(false);
-        return true;*/
+        return false;
     }
     /**
      * Receive the opponent's attack.
@@ -459,8 +461,16 @@ public class Protocol {
             }
             else if(reply[0].equals(END)){
                 Shot.setFinalHit(true);
-                Game.setOutcome(reply[1]);
-                return true;
+                if(reply[1].equals("win")){
+                    Game.setWin(true);
+                    return true;
+                }
+                else if(reply[1].equals("lose")){
+                    Game.setWin(false);
+                    return true;
+                }
+                else
+                    return false;
             }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
@@ -481,7 +491,7 @@ public class Protocol {
         String inputLine;
         String[] reply;
         
-        /*Authenticated.getClientSocket().write(GAME + TOKEN + QUIT + TOKEN + gameID + TOKEN + userID);
+        Authenticated.getClientSocket().write(GAME + TOKEN + QUIT + TOKEN + gameID + TOKEN + userID);
 
         try {
             inputLine = Authenticated.getClientSocket().read();
@@ -497,8 +507,7 @@ public class Protocol {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
         
-        return false;*/
-        return true;
+        return false;
     }
     
     /**
@@ -554,6 +563,7 @@ public class Protocol {
                     Game.reset();
                     Game.setID(Integer.parseInt(reply[1]));
                     Game.setOpponent(opponentName);
+                    Game.setPlacingShips(true);
                 }
                 return reply[0];
             } catch (IOException ex) {
@@ -597,6 +607,7 @@ public class Protocol {
                 Game.reset();
                 Game.setID(Integer.parseInt(reply[0]));
                 Game.setOpponent(opponentName);
+                Game.setPlacingShips(true);
                 MainFrame.changeInterface(MainFrame.PLACESHIPS);
                 return true;
             }

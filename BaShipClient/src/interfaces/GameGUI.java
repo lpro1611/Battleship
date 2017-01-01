@@ -257,12 +257,10 @@ public class GameGUI extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else if (Shot.isFinalHit()){
-                        if (Game.getOutcome().equals("win"))
+                        if (Game.isWin())
                             JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
-                        else if (Game.getOutcome().equals("win"))
-                            JOptionPane.showMessageDialog(GameGUI.this, "You Loose", "Game Over", JOptionPane.INFORMATION_MESSAGE);
-                        else 
-                            JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                        else
+                            JOptionPane.showMessageDialog(GameGUI.this, "You Lose", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                         MainFrame.changeInterface(MainFrame.HOME);
                     }
                     turnLabel.setText("Your Opponent's Turn");
@@ -354,8 +352,7 @@ public class GameGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_formComponentShown
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.SETTINGS);
+        MainFrame.changeInterface(MainFrame.SETTINGS);
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     @Override
