@@ -2,24 +2,19 @@ package interfaces;
 
 import businesslogicclient.Authenticated;
 import businesslogicclient.Game;
-import java.awt.CardLayout;
 import java.awt.Graphics;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import javax.swing.ComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author diogo
+ * Represents the settings graphical user interface.
+ * @author Diogo Recharte
  */
 public class SettingsGUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form HomePageGUI
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the Settings GUI.
      */
     public SettingsGUI() {
         initComponents();

@@ -487,6 +487,7 @@ public class Protocol {
 
         try {
             inputLine = Authenticated.getClientSocket().read();
+            System.out.println(inputLine);
             reply = decodeReply(inputLine, GAME);
             if(reply[0].equals(QUIT)){
                 if(reply[1].equals("ok")){

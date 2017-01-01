@@ -41,7 +41,12 @@ public class Challenge {
             return null;
         }
     }
-    
+    /**
+     * Returns the opponent user id number.
+     * 
+     * @param name  opponent user name
+     * @return      opponent user identification number.
+     */
     public static int getID(String name){
         for (int i = 0; i < username.length; i++){
             if (username[i].equals(name)){
@@ -51,10 +56,22 @@ public class Challenge {
         return 0;
     }
     
+    /**
+     * Returns if the challenge was accepted or not.
+     * 
+     * @return      <code>true</code> if accepted; 
+     *              <code>false</code> otherwise.
+     */
     public static boolean wasAccepted(){
         return accepted;
     }
     
+    /**
+     * Accept the challenge.
+     * 
+     * @param accepted      <code>true</code> if it was accepted; 
+     *                      <code>false</code> otherwise.
+     */
     public static void accept(boolean accepted){
         Challenge.accepted = accepted;
     }

@@ -3,24 +3,21 @@ package interfaces;
 import businesslogicclient.Game;
 import java.awt.CardLayout;
 import java.awt.Graphics;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author diogo
+ * Represents the place ships process's graphical user interface.
+ * @author Diogo Recharte
  */
 public class PlaceShipsGUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form PlaceShipsGUI
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the PlaceShips GUI.
      */
-    
-    
     public PlaceShipsGUI() {
         initComponents();
     }
@@ -417,7 +414,7 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_board1MouseClicked
 
     private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
-        if (board1.boatsReady())
+        if (board1.shipsReady())
             playButton.setEnabled(true);
     }//GEN-LAST:event_formMouseMoved
 

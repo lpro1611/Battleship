@@ -3,17 +3,18 @@ package interfaces;
 import businesslogicclient.Challenge;
 
 /**
- *
- * @author diogo
+ * Represents the invite pop-up graphical user interface.
+ * @author Diogo Recharte
  */
 public class InvitePopup extends javax.swing.JPanel {
 
-    /**
-     * Creates new form NewJPanel
-     */
-    
     private boolean done = false;
     
+    /**
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the Invite Pop-up.
+     */
     public InvitePopup() {
         initComponents();
     }
@@ -87,12 +88,33 @@ public class InvitePopup extends javax.swing.JPanel {
         done = true;
     }//GEN-LAST:event_declineButtonActionPerformed
 
+    /**
+     * Sets the opponent user name.
+     * 
+     * @param username      opponent user name
+     */
     public void setUsername(String username){
         inviteLabel.setText(username + " has invited you to a game.");
     }
     
+    /**
+     * Return if the user answered the request or not.
+     * 
+     * @return      <code>true</code> if answered; 
+     *              <code>false</code> otherwise.
+     */
     public boolean isDone(){
         return done;
+    }
+    
+    /**
+     * Sets if the user answered the request or not.
+     * 
+     * @param done      <code>true</code> if answered; 
+     *                  <code>false</code> otherwise.
+     */
+    public void setDone(boolean done){
+        this.done = done;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -9,17 +9,18 @@ import java.awt.Graphics;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
+
 /**
- *
- * @author diogo
+ * Represents the game graphical user interface.
+ * @author Diogo Recharte
  */
 public class GameGUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form PlaceShipsGUI
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the Game GUI.
      */
-    
-    
     public GameGUI() {
         initComponents();
     }
@@ -264,32 +265,30 @@ public class GameGUI extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else if (Shot.isFinalHit()){
-                        if (Game.isWin())
-                            JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
-                        else
-                            JOptionPane.showMessageDialog(GameGUI.this, "You Lose", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                        Game.reset();
                         MainFrame.changeInterface(MainFrame.HOME);
                     }
                     turnLabel.setText("Your Opponent's Turn");
-                    if(Shot.receive()){
-                        board1.showShot();
-                        if(Shot.isCriticalHit()){
-                            JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
+                    if(!Shot.isFinalHit()){
+                        if(Shot.receive()){
+                            board1.showShot();
+                            if(Shot.isCriticalHit()){
+                                JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            else if (Shot.isFinalHit()){
+                                JOptionPane.showMessageDialog(GameGUI.this, "You Lost", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                                Game.reset();
+                                MainFrame.changeInterface(MainFrame.HOME);
+                            }
+                            Game.setMyTurn(true);
+                            turnLabel.setText("Your Turn");
+                            board2.setActionSize(1);
                         }
-                        else if (Shot.isFinalHit()){
-                            if (Game.isWin())
-                                JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
-                            else
-                                JOptionPane.showMessageDialog(GameGUI.this, "You Lose", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                        else{
                             MainFrame.changeInterface(MainFrame.HOME);
+                            JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
                         }
-                        Game.setMyTurn(true);
-                        turnLabel.setText("Your Turn");
-                        board2.setActionSize(1);
-                    }
-                    else{
-                        MainFrame.changeInterface(MainFrame.HOME);
-                        JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
                 else{

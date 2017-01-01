@@ -33,7 +33,7 @@ public class Authenticated {
      * <p>
      * This method always returns successfully.
      * 
-     * @return  authenticated user unique identifier number.
+     * @return  authenticated user identification number.
      */
     public static int getID(){
         return id;
@@ -116,9 +116,9 @@ public class Authenticated {
      * 
      */
     public static void logout(){
-        /*if (Game.isRunning()){
+        if (Game.isRunning()){
             Game.concede();
-        }*/
+        }
         Protocol.endComs();
         Authenticated.setID(0);
         Authenticated.setUsername(null);
@@ -170,6 +170,7 @@ public class Authenticated {
             JFrame inviteFrame = new JFrame("Invite");
             InvitePopup invitePanel = new InvitePopup();
             invitePanel.setUsername(username);
+            invitePanel.setDone(false);
             inviteFrame.setSize(400, 130);
             inviteFrame.setResizable(false);
             inviteFrame.setLocationRelativeTo(null);

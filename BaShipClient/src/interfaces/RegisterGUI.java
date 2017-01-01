@@ -1,7 +1,8 @@
 package interfaces;
-import businesslogicclient.*;
-import java.awt.*;
-import javax.swing.*;
+import businesslogicclient.Visitor;
+import java.awt.Graphics;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 /**
  * Represents the register process's graphical user interface.
  * @author Diogo Recharte
@@ -9,9 +10,9 @@ import javax.swing.*;
 public class RegisterGUI extends JPanel {
 
     /**
-     * Constructor for the class.
+     * Class Constructor.
      * <p>
-     * Initialises all the components used in the Login GUI.
+     * Initialises all the components used in the Register GUI.
      */
     public RegisterGUI() {
         initComponents();

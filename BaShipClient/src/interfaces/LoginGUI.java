@@ -1,8 +1,11 @@
 package interfaces;
 
-import businesslogicclient.*;
-import java.awt.*;
-import javax.swing.*;
+import businesslogicclient.Visitor;
+import java.awt.Graphics;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+
 
 /**
  * Represents the login process's graphical user interface.
@@ -12,7 +15,7 @@ public class LoginGUI extends JPanel {
 
     
     /**
-     * Constructor for the class.
+     * Class Constructor.
      * <p>
      * Initialises all the components used in the Login GUI.
      */

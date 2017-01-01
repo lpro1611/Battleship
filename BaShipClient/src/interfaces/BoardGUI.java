@@ -5,8 +5,8 @@ import businesslogicclient.Shot;
 import java.awt.Color;
 import javax.swing.*;
 /**
- *
- * @author diogo
+ * Represents the board graphical user interface.
+ * @author Diogo Recharte
  */
 public class BoardGUI extends JPanel{
     
@@ -15,6 +15,11 @@ public class BoardGUI extends JPanel{
     private int size=0;
     private boolean horizontalOrientation=true;
     
+    /**
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the Board GUI.
+     */
     public BoardGUI() {
         initComponents();
     }
@@ -32,8 +37,6 @@ public class BoardGUI extends JPanel{
                 cell[i][j].putClientProperty( "row", i );
                 cell[i][j].putClientProperty( "col", j );
                 cell[i][j].setBackground(new java.awt.Color(220, 220, 225));
-                //cell[i][j].setOpaque(false);
-                //cell[i][j].setFocusable(false);
                 cell[i][j].addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent evt) {
                         cellActionPerformed(evt);
@@ -48,11 +51,6 @@ public class BoardGUI extends JPanel{
                         cellMouseExited(evt);
                     }
                 });
-                /*cell[i][j].addFocusListener(new java.awt.event.FocusAdapter() {
-                    public void focusGained(java.awt.event.FocusEvent evt) {
-                        cellFocusGained(evt);
-                    }
-                });*/
                 add(cell[i][j]);
             }
         }
@@ -156,13 +154,29 @@ public class BoardGUI extends JPanel{
                 }
     }
     
+    /**
+     * Sets the size of the action being performed.
+     * 
+     * @param size      size of the action
+     */
     public void setActionSize(int size){
         this.size=size;
     }
-    public boolean boatsReady(){
+    
+    /**
+     * Returns if all ships are placed or not.
+     * 
+     * @return      <code>true</code> if all ships are placed; 
+     *              <code>false</code> otherwise.
+     */
+    public boolean shipsReady(){
         return board.shipsReady();
     }
     
+    /**
+     * Update the interface with the attack.
+     * 
+     */
     public void showShot(){
         board.markShot();
         int row = Shot.getRow();
@@ -172,14 +186,29 @@ public class BoardGUI extends JPanel{
         else
             cell[row][col].setBackground(Color.blue);
     }
+    
+    /**
+     * Toggles ship's orientation.
+     * <p>
+     * Vertical or horizontal.
+     */
     public void toggleHorizontalOrientation(){
         this.horizontalOrientation = (!this.horizontalOrientation);
     }
     
+    /**
+     * Sets the board.
+     * 
+     * @param board     board to set
+     */
     public void setBoard(Board board){
         this.board = board;
     }
     
+    /**
+     * Updates the interface with the board data.
+     * 
+     */
     public void updateBoard(){
         for(int i=0; i<10; i++){
             for(int j=0;j<10;j++){
@@ -189,12 +218,22 @@ public class BoardGUI extends JPanel{
             }
         }
     }
+    
+    /**
+     * Resets the interface.
+     * 
+     */
     public void reset(){
         board.reset();
         for(int row = 0; row<10; row++)
             for(int col = 0; col<10; col++)
                 cell[row][col].setBackground(new java.awt.Color(220, 220, 225));
     }
+    /**
+     * Returns the board.
+     * 
+     * @return  board.
+     */
     public Board getBoard(){
         return board;
     }

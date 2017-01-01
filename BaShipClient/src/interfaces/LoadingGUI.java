@@ -1,23 +1,17 @@
 package interfaces;
 
-import java.awt.CardLayout;
 import java.awt.Graphics;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 /**
- *
- * @author diogo
+ * Represents the loading process's graphical user interface.
+ * @author Diogo Recharte
  */
 public class LoadingGUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form LoadingGUI
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the Loading GUI.
      */
     public LoadingGUI() {
         initComponents();
@@ -112,18 +106,6 @@ public class LoadingGUI extends javax.swing.JPanel {
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         
-        /*String str=null;
-        BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            str=input.readLine();
-        } catch (IOException ex) {
-        }
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        if(str.equals("game"))
-            cl.show(MainFrame.mainPanel, MainFrame.GAME);
-        else
-            cl.show(MainFrame.mainPanel, MainFrame.PLACESHIPS);
-        */
     }//GEN-LAST:event_formComponentShown
 
     @Override

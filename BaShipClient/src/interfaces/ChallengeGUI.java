@@ -2,26 +2,22 @@ package interfaces;
 
 import businesslogicclient.Authenticated;
 import businesslogicclient.Challenge;
-import businesslogicclient.Game;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.swing.JOptionPane;
 import javax.swing.text.Position;
 
 /**
- *
- * @author diogo
+ * Represents the challenge process's graphical user interface.
+ * @author Diogo Recharte
  */
 public class ChallengeGUI extends javax.swing.JPanel {
 
     /**
-     * Creates new form HomePageGUI
+     * Class Constructor.
+     * <p>
+     * Initialises all the components used in the Challenge GUI.
      */
     public ChallengeGUI() {
         initComponents();

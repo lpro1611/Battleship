@@ -1,8 +1,8 @@
 package interfaces;
 
 import businesslogicclient.Authenticated;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.CardLayout;
+import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -13,6 +13,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
  * Container for every different interface in this project.
  * @author Diogo Recharte
@@ -61,8 +64,9 @@ public class MainFrame extends JFrame{
         mainPanel.add(new GameGUI(), GAME);
         mainPanel.add(new ChallengeGUI(), CHALLENGE);
         this.setContentPane(mainPanel);
-        //this.pack(); //poe a janela do tamanho preferido dos paineis
         
+        
+        music();
         
         addWindowListener(new WindowAdapter()
         {
@@ -83,6 +87,11 @@ public class MainFrame extends JFrame{
         this.setVisible(true);
     }
     
+    /**
+     * Changes the panel shown in the frame.
+     * 
+     * @param gui       panel name
+     */
     public static void changeInterface(String gui){
         CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
         switch(gui){
@@ -127,18 +136,36 @@ public class MainFrame extends JFrame{
         }
     }
     
+    /**
+     * Starts playing the music in loop.
+     * 
+     */
     public static void startMusic(){
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
     
+    /**
+     * Stops the music.
+     * 
+     */
     public static void stopMusic(){
         clip.stop();
     }
     
+    /**
+     * Returns the background image.
+     * 
+     * @return      background image.
+     */
     public static Image getBackgroundImage(){
         return MainFrame.backgroundImage;
     }
     
+    /**
+     * Sets the background image.
+     * 
+     * @param backgroundName        background image name
+     */
     public static void setBackgroundImage(String backgroundName){
         try {
             switch (backgroundName){
@@ -167,7 +194,6 @@ public class MainFrame extends JFrame{
      * @param args commands line arguments (not used)
      */
     public static void main(String[] args){
-        MainFrame mainFrame = new MainFrame();
-        music();
+        new MainFrame();
     }
 }
