@@ -41,7 +41,7 @@ public class Shot {
         }
     }
     public static boolean receive(){
-        if(Protocol.receiveShot()){
+        if(Protocol.receiveShot(Game.getID(), Authenticated.getID())){
             Shot.marked = false;
             return true;
         }

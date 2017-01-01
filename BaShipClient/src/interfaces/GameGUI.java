@@ -318,25 +318,28 @@ public class GameGUI extends javax.swing.JPanel {
             turnLabel.setText("Your Opponent's Turn");
             board2.setActionSize(0);
             attackButton.setEnabled(false);
-            ExecutorService executor = Executors.newCachedThreadPool();
-            executor.submit(new Runnable(){
-                @Override
-                public void run() {
-                    if(Shot.receive()){
-                        board1.showShot();
-                        Game.setMyTurn(true);
-                        turnLabel.setText("Your Turn");
-                        board2.setActionSize(1);
+            if (Game.isFirstTurn()){
+                ExecutorService executor = Executors.newCachedThreadPool();
+                executor.submit(new Runnable(){
+                    @Override
+                    public void run() {
+                        if(Shot.receive()){
+                            board1.showShot();
+                            Game.setMyTurn(true);
+                            turnLabel.setText("Your Turn");
+                            board2.setActionSize(1);
+                        }
+                        else{
+                            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
+                            cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                            JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
-                    else{
-                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                        cl.show(MainFrame.mainPanel, MainFrame.HOME);
-                        JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
 
-            });
-            executor.shutdown();
+                });
+                executor.shutdown();
+                Game.setFirstTurn(false);
+            }
         }
     }//GEN-LAST:event_formComponentShown
 

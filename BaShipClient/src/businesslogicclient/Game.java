@@ -13,6 +13,7 @@ public class Game {
     private static Board board1;
     private static Board board2;
     private static boolean myTurn;
+    private static boolean firstTurn;
     
     public static int getID(){
         return Game.id;
@@ -34,6 +35,10 @@ public class Game {
         return Game.myTurn;
     }
     
+    public static boolean isFirstTurn(){
+        return Game.firstTurn;
+    }
+    
     
     public static void setID(int id){
         Game.id = id;
@@ -53,6 +58,10 @@ public class Game {
     
     public static void setMyTurn(boolean myTurn){
         Game.myTurn = myTurn;
+    }
+    
+    public static void setFirstTurn(boolean firstTurn){
+        Game.firstTurn = firstTurn;
     }
     
     public static boolean begin(){

@@ -24,6 +24,8 @@ public class Protocol {
     private static final String EXIT = "exit";
     private static final String GAME = "game";
     private static final String BEGIN = "begin";
+    private static final String START = "start";
+    private static final String WAIT = "wait";
     private static final String ATTACK = "attack";
     private static final String CREATE = "create";
     private static final String PLACE = "place";
@@ -284,14 +286,13 @@ public class Protocol {
             inputLine = Authenticated.getClientSocket().read();
             reply = decodeReply(inputLine, GAME);
             if(reply[0].equals(BEGIN)){
-                if(reply[1].equals("start")){
+                if(reply[1].equals(START)){
                     Game.setMyTurn(true);
                     return true;
                 }
-                else if(reply[1].equals("wait")){
-                    Shot.mark(-1, -1);
-                    Shot.fire();
+                else if(reply[1].equals(WAIT)){
                     Game.setMyTurn(false);
+                    Game.setFirstTurn(true);
                     return true;
                 }
                 else
@@ -315,7 +316,6 @@ public class Protocol {
         String[] reply;
         
         Authenticated.getClientSocket().write(GAME + TOKEN + ATTACK + TOKEN + gameID + TOKEN + userID + TOKEN + row + TOKEN + col);
-
         try {
             inputLine = Authenticated.getClientSocket().read();
             reply = decodeReply(inputLine, GAME);
@@ -353,11 +353,12 @@ public class Protocol {
         return true;*/
     }
     
-    public static boolean receiveShot(){
+    public static boolean receiveShot(int gameID, int userID){
         
         String inputLine;
         String[] reply;
         
+        Authenticated.getClientSocket().write(GAME + TOKEN + ATTACK + TOKEN + gameID + TOKEN + userID + TOKEN + WAIT);
         try {
             inputLine = Authenticated.getClientSocket().read();
             reply = decodeReply(inputLine, GAME);
