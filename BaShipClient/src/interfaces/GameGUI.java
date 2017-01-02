@@ -402,6 +402,16 @@ public class GameGUI extends javax.swing.JPanel {
         chatTextArea.append(Game.getOpponent() + " :  " + message + "\n");
     }
     
+    public static BoardGUI getBoardOne(){
+        return board1;
+    }
+    
+   
+    public static BoardGUI getBoardTwo(){
+        return board2;
+    }
+    
+    
     
     @Override
     public void paintComponent(Graphics g) {
@@ -415,8 +425,8 @@ public class GameGUI extends javax.swing.JPanel {
     private javax.swing.JLabel adsLabel;
     private javax.swing.JPanel adsPanel;
     private javax.swing.JButton attackButton;
-    private interfaces.BoardGUI board1;
-    private interfaces.BoardGUI board2;
+    private static interfaces.BoardGUI board1;
+    private static interfaces.BoardGUI board2;
     private javax.swing.JScrollPane chatScrollPane;
     private static javax.swing.JTextArea chatTextArea;
     private javax.swing.JTextField chatTextField;
