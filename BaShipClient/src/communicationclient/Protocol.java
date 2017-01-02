@@ -247,10 +247,10 @@ public class Protocol {
      */
     public static boolean findGame(int userID){
         
-        String inputLine = null;
+        String inputLine;
         String[] reply;
         
-        /*Authenticated.getClientSocket().write(GAME + TOKEN + CREATE + TOKEN + userID);
+        Authenticated.getClientSocket().write(GAME + TOKEN + CREATE + TOKEN + userID);
 
         try {
             inputLine = Authenticated.getClientSocket().read();
@@ -267,8 +267,6 @@ public class Protocol {
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
-        return false;*/
-        
         return false;
     }
     
