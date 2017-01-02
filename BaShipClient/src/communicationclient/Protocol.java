@@ -257,10 +257,6 @@ public class Protocol {
             reply = decodeReply(inputLine, GAME);
             if(reply[0].equals(CREATE)){
                 if(reply[1].equals("ok")){
-                    Game.reset();
-                    Game.setID(Integer.parseInt(reply[2]));
-                    Game.setOpponent(reply[3]);
-                    Game.setPlacingShips(true);
                     return true;
                 }
             }
@@ -688,6 +684,14 @@ public class Protocol {
             case GAME:
                 if (opcode[1].equals(CHAT) && opcode[2].equals("message")){
                     GameGUI.addToChat(opcode[3]);
+                    reply = "ok";
+                }
+                else if(opcode[1].equals(CREATE)){
+                    Game.reset();
+                    Game.setID(Integer.parseInt(opcode[2]));
+                    Game.setOpponent(opcode[3]);
+                    Game.setPlacingShips(true);
+                    MainFrame.changeInterface(MainFrame.PLACESHIPS);
                     reply = "ok";
                 }
                 else{

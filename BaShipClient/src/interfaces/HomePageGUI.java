@@ -136,10 +136,7 @@ public class HomePageGUI extends javax.swing.JPanel {
         executor.submit(new Runnable(){
             @Override
             public void run() {
-                if(Authenticated.playGame()){
-                    MainFrame.changeInterface(MainFrame.PLACESHIPS);
-                }
-                else{
+                if(!Authenticated.playGame()){
                     MainFrame.changeInterface(MainFrame.HOME);
                     JOptionPane.showMessageDialog(HomePageGUI.this, "Couldn't find game", "Error", JOptionPane.ERROR_MESSAGE);
                 }
