@@ -28,8 +28,8 @@ public class AuthenticatedUsers {
      * @param id    identification number of player
      * @return      confirmation
      * 
-     * @throws SQLException
-     * @throws NotFoundException 
+     * @throws SQLException problems interacting with the DB
+     * @throws NotFoundException cannot find user's ID in the DB
      */
     public static boolean add (int id) throws SQLException, NotFoundException {
         return authenticatedList.putIfAbsent(id, new Authenticated(id)) != null;

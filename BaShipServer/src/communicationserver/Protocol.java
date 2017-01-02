@@ -39,7 +39,7 @@ public class Protocol {
      * the business logic and replies to the client.
      * 
      * @param message   received message
-     * @param out
+     * @param out       stream to send messages
      * @return          message to reply to the client
      */
     public static String protocolDecode(String message, PrintWriter out) {

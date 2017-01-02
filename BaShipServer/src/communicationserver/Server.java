@@ -28,7 +28,7 @@ public class Server {
      * Create a new thread to do the connections with clients.
      * 
      * @param  args         command line arguments.
-     * @throws java.io.IOException
+     * @throws java.io.IOException  problems interacting with IO
      */
     public static void main(String[] args) throws IOException {
         props = new Properties();
