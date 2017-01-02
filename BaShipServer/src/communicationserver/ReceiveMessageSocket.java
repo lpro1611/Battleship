@@ -41,9 +41,11 @@ public class ReceiveMessageSocket extends Thread {
                     if((inputLine = in.readLine()) != null) {
                         reply = Protocol.protocolDecode(inputLine, out);
                         
+                        //System.out.println("client -> " + inputLine);
+                        
                         if (reply != null) {
                             out.println(reply);
-                            System.out.println(reply);
+                            //System.out.println("server -> " + reply);
                             
                             if (reply.equals("exit")) {
                                 break;
