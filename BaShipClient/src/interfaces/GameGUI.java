@@ -268,7 +268,6 @@ public class GameGUI extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
                         Game.reset();
                         MainFrame.changeInterface(MainFrame.HOME);
-                        Shot.setFinalHit(false);
                     }
                     turnLabel.setText("Your Opponent's Turn");
                     if(!Shot.isFinalHit()){
@@ -291,6 +290,10 @@ public class GameGUI extends javax.swing.JPanel {
                             MainFrame.changeInterface(MainFrame.HOME);
                             JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
                         }
+                    }
+                    else{
+                        Game.reset();
+                        Shot.setFinalHit(false);
                     }
                 }
                 else{
