@@ -173,12 +173,14 @@ public class SettingsGUI extends javax.swing.JPanel {
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         if (Game.isRunning()){
-            if (Game.concede()){
-                JOptionPane.showMessageDialog(SettingsGUI.this, "You Lost", "Game Over", JOptionPane.CANCEL_OPTION);
-                MainFrame.changeInterface(MainFrame.HOME);
-            }
-            else{
-                JOptionPane.showMessageDialog(SettingsGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!Game.isPlacingShips()){
+                if (Game.concede()){
+                    JOptionPane.showMessageDialog(SettingsGUI.this, "You Lost", "Game Over", JOptionPane.CANCEL_OPTION);
+                    MainFrame.changeInterface(MainFrame.HOME);
+                }
+                else{
+                    JOptionPane.showMessageDialog(SettingsGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
         else{
@@ -208,9 +210,16 @@ public class SettingsGUI extends javax.swing.JPanel {
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
         if(Authenticated.getID()>0){
             if (Game.isRunning()){
-            logoutButton.setText("Concede Game");
-            logoutButton.setVisible(true);
-            homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/back.png")));
+                if (Game.isPlacingShips()){
+                    logoutButton.setVisible(false);
+                    homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/back.png")));
+                }
+                else{
+                    logoutButton.setText("Concede Game");
+                    logoutButton.setVisible(true);
+                    homeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/images/back.png")));
+                }
+                
             }
             else{
             logoutButton.setText("Logout");

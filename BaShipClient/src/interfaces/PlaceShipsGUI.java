@@ -63,6 +63,11 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
                 formMouseMoved(evt);
             }
         });
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
 
         board1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -353,14 +358,12 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
                 @Override
                 public void run() {
                     if(Game.begin()){
-                        Game.setPlacingShips(false);
                         Game.setBoard(board1.getBoard());
-                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                        cl.show(MainFrame.mainPanel, MainFrame.GAME);
+                        Game.setPlacingShips(false);
+                        MainFrame.changeInterface(MainFrame.GAME);
                     }
                     else{
-                        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                        cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                        MainFrame.changeInterface(MainFrame.HOME);
                         JOptionPane.showMessageDialog(PlaceShipsGUI.this, "Couldn't start game", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -421,6 +424,17 @@ public class PlaceShipsGUI extends javax.swing.JPanel {
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
         MainFrame.changeInterface(MainFrame.SETTINGS);
     }//GEN-LAST:event_settingsButtonActionPerformed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+        carrierButton.setEnabled(true);
+        battleshipButton.setEnabled(true);
+        cruiserButton.setEnabled(true);
+        submarineButton.setEnabled(true);
+        destroyerButton.setEnabled(true);
+        playButton.setEnabled(false);
+        board1.reset();
+        board1.updateBoard();
+    }//GEN-LAST:event_formComponentShown
 
     @Override
     public void paintComponent(Graphics g) {
