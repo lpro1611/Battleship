@@ -4,7 +4,6 @@ import businesslogicclient.Authenticated;
 import businesslogicclient.Game;
 import businesslogicclient.Shot;
 import communicationclient.Protocol;
-import java.awt.CardLayout;
 import java.awt.Graphics;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -429,7 +428,6 @@ public class GameGUI extends javax.swing.JPanel {
     public static BoardGUI getBoardOne(){
         return board1;
     }
-    
    
     public static BoardGUI getBoardTwo(){
         return board2;
