@@ -336,12 +336,13 @@ public class GameGUI extends javax.swing.JPanel {
     private void chatTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatTextFieldActionPerformed
         if(!chatTextField.getText().isEmpty()){
             if(Protocol.sendChatMessage(Game.getID(), Authenticated.getID(), chatTextField.getText())){
-                chatTextArea.append("You:  " + chatTextField.getText());
+                chatTextArea.append("You:  " + chatTextField.getText() + "\n");
             }
             else{
-                chatTextArea.append("Error sending message:  " + chatTextField.getText());
+                chatTextArea.append("Error sending message:  " + chatTextField.getText() + "\n");
             }
             chatTextField.setText("");
+            
         }
     }//GEN-LAST:event_chatTextFieldActionPerformed
 
@@ -394,7 +395,7 @@ public class GameGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_chatTextFieldFocusGained
 
     public static void addToChat(String message){
-        chatTextArea.append(Game.getOpponent() + " :  " + message);
+        chatTextArea.append(Game.getOpponent() + " :  " + message + "\n");
     }
     
     
