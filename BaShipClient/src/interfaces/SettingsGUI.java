@@ -175,6 +175,9 @@ public class SettingsGUI extends javax.swing.JPanel {
         if (Game.isRunning()){
             if (!Game.isPlacingShips()){
                 if (Game.concede()){
+                    GameGUI.getBoardOne().reset();
+                    GameGUI.getBoardTwo().reset();
+                    Game.reset();
                     JOptionPane.showMessageDialog(SettingsGUI.this, "You Lost", "Game Over", JOptionPane.CANCEL_OPTION);
                     MainFrame.changeInterface(MainFrame.HOME);
                 }
