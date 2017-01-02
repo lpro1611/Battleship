@@ -169,6 +169,15 @@ public class Game {
         return message;
     }
     
+    /**
+     * Check if the opponent attack is a miss or a hit, 
+     * if opponent wins the game return a message to say that
+     * player lose the match.
+     * 
+     * @param gameId    game's identifier
+     * @param playerId  player's identifier
+     * @return          message to palayer
+     */
     public static String oponentAttack(int gameId, int playerId) {
         String message;
         int[] otherPlayerAttack;
@@ -232,6 +241,14 @@ public class Game {
         return "ok";
     }
     
+    /**
+     * Receive a message to send to the opponent.
+     * 
+     * @param gameId    game's identifier
+     * @param playerId  player's identifier
+     * @param string    message to send to the opponent
+     * @return          check message to player
+     */
     public static String internalChat(int gameId, int playerId, String string) {
         //falta guardar na base de dados
         int otherPlayerId;

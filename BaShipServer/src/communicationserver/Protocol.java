@@ -171,6 +171,7 @@ public class Protocol {
         final String CHAT = "chat";
         final String PLACE = "place";
         final String ATTACK = "attack";
+        final String CREATE = "create";
         
         String answer = "error";
         
@@ -188,6 +189,15 @@ public class Protocol {
                 answer = QUIT + "#";
                 try {
                     answer += Game.quitGame(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]));
+                } catch (Exception e) {
+                    answer = "error";
+                }
+                break;
+                
+            case CREATE:
+                answer = CREATE + "#";
+                try {
+                    answer += AuthenticatedUsers.playNow(Integer.parseInt(opcode[2]));
                 } catch (Exception e) {
                     answer = "error";
                 }

@@ -1,5 +1,6 @@
 package businesslogicserver;
 
+import static businesslogicserver.AuthenticatedUsers.matchmakerthread;
 import communicationserver.SendMessageSocket;
 import exceptions.NotFoundException;
 import java.io.PrintWriter;
@@ -15,7 +16,7 @@ import java.util.*;
 public class AuthenticatedUsers {
     public static Map <Integer, Authenticated> authenticatedList = new HashMap<>();
     public static Map <Integer, Challenge> ChallengeList = new HashMap<>();
-    public static MatchMakerThread matchmakerthread;
+    public static MatchMakerThread matchmakerthread = new MatchMakerThread("matchmaker");
     public static Integer lastPlayerRequest;
     
     
@@ -190,13 +191,16 @@ public class AuthenticatedUsers {
      * adds the player to the list.
      * 
      * @param PlayerID identification number of player that is searching for a game
+     * @return          check message to client
      */
-    public static void playNow(Integer PlayerID){
-        if(matchmakerthread.isAlive()==false){
-            matchmakerthread.run();
+    public static String playNow(Integer PlayerID){
+        
+        if(!matchmakerthread.isAlive()) {
+            matchmakerthread.start();
         }
       
-        matchmakerthread.Players.add(PlayerID);
-        return; 
+        matchmakerthread.players.add(PlayerID);
+        
+        return "ok"; 
     }
 }
