@@ -114,6 +114,7 @@ public class GameGUI extends javax.swing.JPanel {
             }
         });
 
+        chatTextArea.setEditable(false);
         chatTextArea.setColumns(20);
         chatTextArea.setRows(5);
         chatScrollPane.setViewportView(chatTextArea);
