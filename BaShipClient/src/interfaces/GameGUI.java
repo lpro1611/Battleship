@@ -266,7 +266,10 @@ public class GameGUI extends javax.swing.JPanel {
                         JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
                     }
                     else if (Shot.isFinalHit()){
-                        JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                        if (Game.isWin())
+                            JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                        else
+                            JOptionPane.showMessageDialog(GameGUI.this, "You Lost", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                         Game.reset();
                         board1.reset();
                         board2.reset();
@@ -368,16 +371,37 @@ public class GameGUI extends javax.swing.JPanel {
                 executor.submit(new Runnable(){
                     @Override
                     public void run() {
-                        if(Shot.receive()){
-                            board1.showShot();
-                            Game.setMyTurn(true);
-                            turnLabel.setText("Your Turn");
-                            board2.setActionSize(1);
+                        if(!Shot.isFinalHit()){
+                            if(Shot.receive()){
+                                board1.showShot();
+                                if(Shot.isCriticalHit()){
+                                    JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                                else if (Shot.isFinalHit()){
+                                    if (Game.isWin())
+                                        JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                                    else
+                                        JOptionPane.showMessageDialog(GameGUI.this, "You Lost", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                                    Game.reset();
+                                    board1.reset();
+                                    board2.reset();
+                                    MainFrame.changeInterface(MainFrame.HOME);
+                                }
+                                Game.setMyTurn(true);
+                                turnLabel.setText("Your Turn");
+                                board2.setActionSize(1);
+                                Shot.setFinalHit(false);
+                            }
+                            else{
+                                MainFrame.changeInterface(MainFrame.HOME);
+                                JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
                         else{
-                            CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                            cl.show(MainFrame.mainPanel, MainFrame.HOME);
-                            JOptionPane.showMessageDialog(GameGUI.this, "An error occured", "Error", JOptionPane.ERROR_MESSAGE);
+                            Game.reset();
+                            board1.reset();
+                            board2.reset();
+                            Shot.setFinalHit(false);
                         }
                     }
 

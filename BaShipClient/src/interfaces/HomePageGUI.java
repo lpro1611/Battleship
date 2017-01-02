@@ -131,19 +131,13 @@ public class HomePageGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void playNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playNowButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.LOADING);
+        MainFrame.changeInterface(MainFrame.LOADING);
         ExecutorService executor = Executors.newCachedThreadPool();
         executor.submit(new Runnable(){
             @Override
             public void run() {
-                if(Authenticated.playGame()){
-                    CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                    cl.show(MainFrame.mainPanel, MainFrame.PLACESHIPS);
-                }
-                else{
-                    CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-                    cl.show(MainFrame.mainPanel, MainFrame.HOME);
+                if(!Authenticated.playGame()){
+                    MainFrame.changeInterface(MainFrame.HOME);
                     JOptionPane.showMessageDialog(HomePageGUI.this, "Couldn't find game", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -153,13 +147,11 @@ public class HomePageGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_playNowButtonActionPerformed
 
     private void challengeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.CHALLENGE);
+        MainFrame.changeInterface(MainFrame.CHALLENGE);
     }//GEN-LAST:event_challengeButtonActionPerformed
 
     private void settingsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsButtonActionPerformed
-        CardLayout cl = (CardLayout)(MainFrame.mainPanel.getLayout());
-        cl.show(MainFrame.mainPanel, MainFrame.SETTINGS);
+        MainFrame.changeInterface(MainFrame.SETTINGS);
     }//GEN-LAST:event_settingsButtonActionPerformed
 
     @Override

@@ -247,28 +247,22 @@ public class Protocol {
      */
     public static boolean findGame(int userID){
         
-        String inputLine = null;
+        String inputLine;
         String[] reply;
         
-        /*Authenticated.getClientSocket().write(GAME + TOKEN + CREATE + TOKEN + userID);
+        Authenticated.getClientSocket().write(GAME + TOKEN + CREATE + TOKEN + userID);
 
         try {
             inputLine = Authenticated.getClientSocket().read();
             reply = decodeReply(inputLine, GAME);
             if(reply[0].equals(CREATE)){
                 if(reply[1].equals("ok")){
-                    Game.reset();
-                    Game.setID(Integer.parseInt(reply[2]));
-                    Game.setOpponent(reply[3]);
-                    Game.setPlacingShips(true);
                     return true;
                 }
             }
         } catch (IOException ex) {
             System.err.println("Couldn't get I/O for the connection to gnomo.");
         }
-        return false;*/
-        
         return false;
     }
     
@@ -690,6 +684,14 @@ public class Protocol {
             case GAME:
                 if (opcode[1].equals(CHAT) && opcode[2].equals("message")){
                     GameGUI.addToChat(opcode[3]);
+                    reply = "ok";
+                }
+                else if(opcode[1].equals(CREATE)){
+                    Game.reset();
+                    Game.setID(Integer.parseInt(opcode[2]));
+                    Game.setOpponent(opcode[3]);
+                    Game.setPlacingShips(true);
+                    MainFrame.changeInterface(MainFrame.PLACESHIPS);
                     reply = "ok";
                 }
                 else{
