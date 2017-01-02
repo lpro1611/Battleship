@@ -196,7 +196,7 @@ public class Protocol {
             case CHAT:
                 answer = CHAT + "#";
                 try {
-                    answer += "notimplemented";
+                    answer += Game.internalChat(Integer.parseInt(opcode[2]), Integer.parseInt(opcode[3]), opcode[4]);
                 } catch (Exception e) {
                     answer = "error";
                 }

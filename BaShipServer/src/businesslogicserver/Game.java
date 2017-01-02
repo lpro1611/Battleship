@@ -1,5 +1,6 @@
 package businesslogicserver;
 
+import communicationserver.SendMessageSocket;
 import dataacess.DbGame;
 import java.sql.SQLException;
 import java.util.*;
@@ -146,15 +147,12 @@ public class Game {
         if (hits == 5) {
             if (playerId == (GameList.get(gameId).getPlayer1Id())) {
                 
-                System.out.println("player 1 wins");
-                
                 try {
                     DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
                 } catch (SQLException e) {
                     System.out.println("Error saving ship" + e );
                 }
             } else {
-                 System.out.println("player 2 wins");
                 try {
                     DbGame.setGameWinner(playerId, GameList.get(gameId).getDataBaseGameId());
                 } catch(SQLException e) {
@@ -230,6 +228,23 @@ public class Game {
         GameList.get(gameId).setEndGame();
         
         GameList.get(gameId).changeNextPlayer();
+        
+        return "ok";
+    }
+    
+    public static String internalChat(int gameId, int playerId, String string) {
+        //falta guardar na base de dados
+        int otherPlayerId;
+        String message = "game#chat#message#" + string;
+        
+        //get other player id
+        if (playerId == GameList.get(gameId).getPlayer1Id()) {
+            otherPlayerId = GameList.get(gameId).getPlayer2Id();
+        } else {
+            otherPlayerId = GameList.get(gameId).getPlayer1Id();
+        }
+        
+        new SendMessageSocket(message , AuthenticatedUsers.authenticatedList.get(otherPlayerId).getSocket()).start();
         
         return "ok";
     }
