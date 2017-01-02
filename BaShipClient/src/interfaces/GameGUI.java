@@ -280,7 +280,10 @@ public class GameGUI extends javax.swing.JPanel {
                                 JOptionPane.showMessageDialog(GameGUI.this, "Ship sunk", "Critical Hit", JOptionPane.INFORMATION_MESSAGE);
                             }
                             else if (Shot.isFinalHit()){
-                                JOptionPane.showMessageDialog(GameGUI.this, "You Lost", "Game Over", JOptionPane.INFORMATION_MESSAGE);
+                                if (Game.isWin())
+                                    JOptionPane.showMessageDialog(GameGUI.this, "You Won!!!", "Victory", JOptionPane.INFORMATION_MESSAGE);
+                                else
+                                    JOptionPane.showMessageDialog(GameGUI.this, "You Lost", "Game Over", JOptionPane.INFORMATION_MESSAGE);
                                 Game.reset();
                                 board1.reset();
                                 board2.reset();
