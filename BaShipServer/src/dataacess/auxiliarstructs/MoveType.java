@@ -20,11 +20,11 @@ public class MoveType {
     /**
      * Set all MoveType fields at beginning
      * 
-     * @param x
-     * @param y
-     * @param hit
+     * @param x         X coordinate
+     * @param y         Y coordinate
+     * @param hit       hit or miss a ship
      * @param playerId  user's DB identifier of the player
-     * @param gameId    Game's DB identifier
+     * @param gameId    game's DB identifier
      */
     public MoveType(int x, int y, boolean hit, int playerId, int gameId) {
         this.x = x;
@@ -35,17 +35,18 @@ public class MoveType {
     }
     
     /**
-     *
+     * Set X coordinate of this moviment
      * 
-     * @param x 
+     * @param x X coordinate
      */
     public void setX(int x) {
         this.x = x;
     }
     
     /**
+     * Set Y coordinate of this moviment
      * 
-     * @param y 
+     * @param y Y coordinate
      */
     public void setY(int y) {
         this.y = y;
@@ -63,55 +64,61 @@ public class MoveType {
     /**
      * Set game's identifier
      * 
-     * @param gameId Game's DB identifier
+     * @param gameId game's DB identifier
      */
     public void setGameId(int gameId) {
         this.gameId = gameId;
     }
     
     /**
+     * Set if this move was a hit or was a shot in the water
      * 
-     * @param hit 
+     * @param hit hit or miss a ship
      */
     public void setHit(boolean hit) {
         this.hit = hit;
     }  
     
     /**
+     * Get Y coordinate of this moviment
      * 
-     * @return 
+     * @return Y coordinate 
      */
     public int getX() {
         return x;
     }
-    
+
     /**
+     * Get Y coordinate of this moviment
      * 
-     * @return 
+     * @return Y coordinate 
      */
     public int getY() {
         return y;
     }
     
     /**
+     * Get player's identifier
      * 
-     * @return 
+     * @return player's identifier
      */
-    public int getPLayerId() {
+    public int getPlayerId() {
         return playerId;
     }
     
     /**
+     * Get game's identifier
      * 
-     * @return 
+     * @return game's identifier
      */
     public int getGameId() {
         return gameId;
     }
     
     /**
+     * Get type of shot of this move, hit or miss
      * 
-     * @return 
+     * @return hit or miss
      */
     public boolean getHit() {
         return hit;

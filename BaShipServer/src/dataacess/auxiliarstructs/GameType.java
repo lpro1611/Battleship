@@ -34,7 +34,7 @@ public class GameType {
     /**
      * Set game's identifier
      * 
-     * @param gameId Game's DB identifier
+     * @param gameId game's DB identifier
      */
     public void setGameId(int gameId) {
         this.gameId = gameId;
@@ -81,7 +81,7 @@ public class GameType {
      * 
      * @return player1's identifier
      */
-    public int getPLayer1Id() {
+    public int getPlayer1Id() {
         return player1Id;
     }
     
@@ -90,7 +90,7 @@ public class GameType {
      * 
      * @return player2's identifier
      */
-    public int getPLayer2Id() {
+    public int getPlayer2Id() {
         return player2Id;
     }
     

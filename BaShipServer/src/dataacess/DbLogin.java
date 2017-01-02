@@ -80,6 +80,7 @@ public class DbLogin {
             if (player.getValue().equals(pass)) {
                 return player.getKey();
             }
+            
             throw new WrongPasswordException();
         } finally {
             DbUtils.INSTANCE.closeConnection(conn);

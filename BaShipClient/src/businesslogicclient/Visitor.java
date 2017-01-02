@@ -24,16 +24,17 @@ public class Visitor {
      * <p>
      * If successful the user will be given the authenticated user privileges. 
      * 
-     * @param username  the user's name
-     * @param password  the user's password
+     * @param username  user name
+     * @param password  user password
      * @return          <code>true</code> if successful; 
      *                  <code>false</code> otherwise.
      */
     public static boolean login(String username, char[] password){
-        Protocol.validateLogin(username, encryptPassword(String.valueOf(password)));
-        if (ReplyFromServer.getMessage().equals("ok")){
-            Authenticated.setID(ReplyFromServer.getID());
+        int userID = Protocol.validateLogin(username, encryptPassword(String.valueOf(password)));
+        if (userID > 0){
+            Authenticated.setID(userID);
             Authenticated.setUsername(username);
+            Protocol.startServerComs();
             return true;
         }
         else return false;
@@ -47,8 +48,8 @@ public class Visitor {
      * <p>
      * If successful the user will be given the authenticated user privileges. 
      * 
-     * @param email             e-mail address of the user
-     * @param username          name of the user
+     * @param email             user e-mail address
+     * @param username          user name
      * @param pass              password for the user's login
      * @param confirmPass       password for the user's login
      * @param termsAccepted     terms accepted by the user
@@ -70,15 +71,23 @@ public class Visitor {
             return "Passwords don't match!";
         
         
-        Protocol.validateRegister(email, username, password); //true or false dependendo da resposta do server
+        int userID = Protocol.validateRegister(email, username, password);
         
-        if (ReplyFromServer.getMessage().equals("ok")){
-            Authenticated.setID(ReplyFromServer.getID());
-            Authenticated.setUsername(username);
-            return "ok";
+        if (userID == -2){
+            return "Username not available";
+        }
+        else if (userID == -1){
+            return "Error accessing server";
         }
         
-        else return ReplyFromServer.getMessage();
+        else if (userID > 0){ 
+            Authenticated.setID(userID);
+            Authenticated.setUsername(username);
+            Protocol.startServerComs();
+            return "ok";
+        }
+        else
+            return "Unknown Error";
     }
 
     private static String encryptPassword(String password){

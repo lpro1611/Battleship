@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dataacess;
 
 import dataacess.auxiliarstructs.*;
@@ -132,15 +127,39 @@ public class DbGame {
     }
     
     /**
+     * Get the last game's identifier
+     * <p>
+     * This method was create for help on debuging
+     * 
+     * @return last game's DB identifider
+     * @throws SQLException problems interacting with the DB
+     */
+    public static int getLastGameId() throws SQLException {
+        Connection conn = DbUtils.INSTANCE.openConnection();
+        String getIdGame = "SELECT id FROM games WHERE id >= ALL (SELECT id FROM games)";
+        
+        try {
+            try (PreparedStatement prepSt = conn.prepareStatement(getIdGame)) {
+                try (ResultSet rs = prepSt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt("id");
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        } finally {
+            DbUtils.INSTANCE.closeConnection(conn);
+        }
+    }
+    
+    /**
      * Get all ship's positions in a game
      * <p>
-     * This method returns ships order by player (lowest first) and ship's id on game.<p>
-     * To get ships do:<p>
-     * rs.next(): Get next line<p>
-     * rs.getInt("id_on_game"): get id_on_game column of current line 
+     * This method returns ships order by player (lowest first) and ship's id on game.
      * 
      * @param gameId        game's DB identifier
-     * @return              struct with ship's positions
+     * @return              list of classes ShipType, a struct with ship's information
      * @throws SQLException problems interacting with the DB
      */
     public static ArrayList<ShipType> getShipsPositionByGameId(int gameId) throws SQLException {
@@ -166,13 +185,10 @@ public class DbGame {
     /**
      * Get all game's moves
      * <p>
-     * This method returns moves order by time, from first move to last one.<p>
-     * To get moves do: <p>
-     * rs.next(): Get next line<p>
-     * rs.getBoolean("hit"): get hit column of current line
+     * This method returns moves order by time, from first move to last one.
      * 
      * @param gameId        game's DB identifier
-     * @return              struct with game's moves
+     * @return              list of classes MoveType, a struct with game's moves information
      * @throws SQLException problems interacting with the DB
      */
     public static ArrayList<MoveType> getMovesByGameId(int gameId) throws SQLException {
@@ -199,7 +215,7 @@ public class DbGame {
      * Get all player's games
      * 
      * @param playerId      user's DB identifier
-     * @return              struct with player's games
+     * @return              list of classes GameType, a struct with player's games information
      * @throws SQLException problems interacting with the DB
      */
     public static ArrayList<GameType> getGamesByPlayerId(int playerId) throws SQLException {

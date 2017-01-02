@@ -16,20 +16,32 @@ public class Login {
     /**
      * Class Constructor
      */
-    public Login(){}
+    public Login() {}
     
     /**
      * Verifies if this user exists on the data base.
+     * <p>
+     * Returns the user's id, but when someone else is already logged in returns -1.
      * 
      * @param name                      name of the user
      * @param pass                      password of the user
-     * @return                          user's DB identifier
+     * @return                          user's DB identifier 
      * @throws SQLException             problems interacting with DB
      * @throws NotFoundException        cannot find the user's ID
      * @throws WrongPasswordException   password used was incorrect
      */
     public static int verify(String name, String pass) throws SQLException, NotFoundException, WrongPasswordException {
-        return DbLogin.verifyPlayer(name, pass);
+        int id = DbLogin.verifyPlayer(name, pass);
+        
+        boolean duplicatedLogin = AuthenticatedUsers.add(id);
+        
+        if (duplicatedLogin) {
+            return -1;
+        }
+        
+        //new SendMessageSocket("ola", AuthenticatedUsers.authenticatedList.get(id).getSocket()).start();
+        
+        return id;
     }
     
     /**
