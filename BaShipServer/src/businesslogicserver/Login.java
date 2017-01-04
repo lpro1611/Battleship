@@ -59,6 +59,14 @@ public class Login {
      * @throws NotFoundException            cannot find the user's ID
      */
     public static int register(String email, String name, String pass) throws SQLException, DuplicatedNameException, NotFoundException {
-        return DbLogin.registerPlayer(email, name, pass);
+        int id = DbLogin.registerPlayer(email, name, pass);
+        
+        boolean duplicatedLogin = AuthenticatedUsers.add(id);
+        
+        if (duplicatedLogin) {
+            return -1;
+        }
+        
+        return id;
     }
 }
