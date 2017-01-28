@@ -138,7 +138,6 @@ public class Game {
                 break;
         }
         
-        System.out.println(hits);
         if (hits == 5) {
             GameList.get(gameId).setEndGame2();
         }

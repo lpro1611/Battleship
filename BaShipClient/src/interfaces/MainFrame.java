@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
@@ -31,6 +30,9 @@ public class MainFrame extends JFrame{
     public static final String CHALLENGE = "Challenge panel";
     public static JPanel mainPanel;
     private static Image backgroundImage = null;
+    private static Image backgroundImageOne = null;
+    private static Image backgroundImageTwo = null;
+    private static Image backgroundImageThree = null;
     private static Clip clip;
     
     /**
@@ -52,7 +54,6 @@ public class MainFrame extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle("BaShip");
         
-        MainFrame.setBackgroundImage("Simple Grey");
         
         mainPanel = new JPanel(new CardLayout());
         mainPanel.add(new LoginGUI(), LOGIN);
@@ -65,8 +66,27 @@ public class MainFrame extends JFrame{
         mainPanel.add(new ChallengeGUI(), CHALLENGE);
         this.setContentPane(mainPanel);
         
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        try {
+            MainFrame.backgroundImageOne = ImageIO.read(classLoader.getResourceAsStream("resources/images/simplegrey_background.png"));
+            MainFrame.backgroundImageTwo = ImageIO.read(classLoader.getResourceAsStream("resources/images/blurryblue_background.png"));
+            MainFrame.backgroundImageThree = ImageIO.read(classLoader.getResourceAsStream("resources/images/droplets_background.png"));
+        } catch (IOException ex) {
+            System.err.println("Error loading background image");
+        }
         
-        music();
+        MainFrame.setBackgroundImage("Simple Grey");
+        
+        
+        AudioInputStream inputStream;
+        try {
+            inputStream = AudioSystem.getAudioInputStream(classLoader.getResource("resources/music/bensound-epic.wav"));
+            clip = AudioSystem.getClip();
+            clip.open(inputStream);
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+            System.err.println("Error playing sound file");
+        }
         
         addWindowListener(new WindowAdapter()
         {
@@ -124,18 +144,6 @@ public class MainFrame extends JFrame{
         }
     }
     
-    private static void music() {       
-        AudioInputStream inputStream;
-        try {
-            inputStream = AudioSystem.getAudioInputStream(new File("src/resources/music/bensound-epic.wav"));
-            clip = AudioSystem.getClip();
-            clip.open(inputStream);
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
-            System.err.println("Error playing sound file");
-        }
-    }
-    
     /**
      * Starts playing the music in loop.
      * 
@@ -167,23 +175,19 @@ public class MainFrame extends JFrame{
      * @param backgroundName        background image name
      */
     public static void setBackgroundImage(String backgroundName){
-        try {
-            switch (backgroundName){
-                case "Simple Grey":
-                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/simplegrey_background.png"));
-                    break;
-                case "Blurry Blue":
-                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/blurryblue_background.png"));
-                    break;
-                case "Droplets":
-                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/droplets_background.png"));
-                    break;
-                default:
-                    MainFrame.backgroundImage = ImageIO.read(new File("src/resources/images/simplegrey_background.png"));
-                    break;
-            }
-        } catch (IOException ex) {
-            System.err.println("Error loading background image");
+        switch (backgroundName){
+            case "Simple Grey":
+                MainFrame.backgroundImage = MainFrame.backgroundImageOne;
+                break;
+            case "Blurry Blue":
+                MainFrame.backgroundImage = MainFrame.backgroundImageTwo;
+                break;
+            case "Droplets":
+                MainFrame.backgroundImage = MainFrame.backgroundImageThree;
+                break;
+            default:
+                MainFrame.backgroundImage = MainFrame.backgroundImageOne;
+                break;
         }
     }
     

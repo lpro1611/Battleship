@@ -36,7 +36,7 @@ public class AuthenticatedUsers {
     }
     
     /**
-     * This method removes a player from the authenticted users list
+     * This method removes a player from the authenticated users list
      * <p>
      * 
      * After a player is removed the method waits ten second
@@ -45,7 +45,7 @@ public class AuthenticatedUsers {
      * @param userId identification number of user to remove
      */
     public static void remove(int userId) {
-        long timeoutTime = 10 * 1000; //10 segundos
+        long timeoutTime = 500; //0.5 segundos
         
         authenticatedList.remove(userId);
         long startTime = System.currentTimeMillis();
@@ -81,7 +81,7 @@ public class AuthenticatedUsers {
     }
     
     /**
-     * Send the active players to a specific client to create the chllenge menu.
+     * Send the active players to a specific client to create the chasllenge menu.
      * 
      * @param userId    user's identifier
      * @return          list with active users.

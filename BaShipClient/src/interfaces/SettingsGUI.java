@@ -36,8 +36,8 @@ public class SettingsGUI extends javax.swing.JPanel {
         homeButton = new javax.swing.JButton();
         soundToggleButton = new javax.swing.JToggleButton();
         soundLabel = new javax.swing.JLabel();
-        walpaperLabel = new javax.swing.JLabel();
-        walpaperComboBox = new javax.swing.JComboBox<>();
+        wallpaperLabel = new javax.swing.JLabel();
+        wallpaperComboBox = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(220, 220, 225));
         addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -104,13 +104,13 @@ public class SettingsGUI extends javax.swing.JPanel {
         soundLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
         soundLabel.setText("Sound");
 
-        walpaperLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        walpaperLabel.setText("Walpaper");
+        wallpaperLabel.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
+        wallpaperLabel.setText("Wallpaper");
 
-        walpaperComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple Grey", "Blurry Blue", "Droplets" }));
-        walpaperComboBox.addActionListener(new java.awt.event.ActionListener() {
+        wallpaperComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Simple Grey", "Blurry Blue", "Droplets" }));
+        wallpaperComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                walpaperComboBoxActionPerformed(evt);
+                wallpaperComboBoxActionPerformed(evt);
             }
         });
 
@@ -136,11 +136,11 @@ public class SettingsGUI extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(soundLabel)
-                                    .addComponent(walpaperLabel))
+                                    .addComponent(wallpaperLabel))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(soundToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(walpaperComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                    .addComponent(wallpaperComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addGap(190, 190, 190))
         );
         layout.setVerticalGroup(
@@ -158,8 +158,8 @@ public class SettingsGUI extends javax.swing.JPanel {
                         .addComponent(soundLabel)
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(walpaperLabel)
-                            .addComponent(walpaperComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(wallpaperLabel)
+                            .addComponent(wallpaperComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
@@ -245,10 +245,10 @@ public class SettingsGUI extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_soundToggleButtonActionPerformed
 
-    private void walpaperComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_walpaperComboBoxActionPerformed
-        MainFrame.setBackgroundImage(walpaperComboBox.getSelectedItem().toString());
+    private void wallpaperComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wallpaperComboBoxActionPerformed
+        MainFrame.setBackgroundImage(wallpaperComboBox.getSelectedItem().toString());
         this.repaint();
-    }//GEN-LAST:event_walpaperComboBoxActionPerformed
+    }//GEN-LAST:event_wallpaperComboBoxActionPerformed
 
     @Override
     public void paintComponent(Graphics g) {
@@ -266,7 +266,7 @@ public class SettingsGUI extends javax.swing.JPanel {
     private javax.swing.JButton logoutButton;
     private javax.swing.JLabel soundLabel;
     private javax.swing.JToggleButton soundToggleButton;
-    private javax.swing.JComboBox<String> walpaperComboBox;
-    private javax.swing.JLabel walpaperLabel;
+    private javax.swing.JComboBox<String> wallpaperComboBox;
+    private javax.swing.JLabel wallpaperLabel;
     // End of variables declaration//GEN-END:variables
 }
